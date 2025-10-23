@@ -1,0 +1,92 @@
+.nav {
+    height: 100%;
+    background-color: #fff;
+    border-right: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+
+.nav li {
+    list-style: none;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.nav li:hover {
+    background-color: #aeaeae;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    color: #222;
+
+
+}
+
+.nav button {
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: #7e7eff;
+    color: #fff;
+}
+
+.nav button:hover {
+    background-color: #6e6edf;
+}
+
+.nav-mobile {
+    display: none;
+}
+
+/*----------------------------mobile design------------------------------------*/
+@media (max-width: 550px) {
+    .nav {
+        display: none;
+    }
+
+    .nav-mobile {
+        display: inline;
+    }
+
+    .nav-mobile__container-icon {
+        text-align: end;
+    }
+
+    .ul-menu-mobile {
+        position: absolute;
+        background-color: #9583ac;
+        color: #fff;
+        text-align: start;
+        right: 10px;
+        padding: 5px;
+        border-radius: 4px;
+        /* 👇 para animación */
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 20000;
+    }
+.open li a{
+    color: #fff;
+}
+    .ul-menu-mobile.open {
+        max-height: 200px;
+        /* valor suficiente para que entren todos los li */
+        opacity: 1;
+    }
+
+    .ul-menu-mobile li {
+        list-style: none;
+        margin: 5px;
+    }
+
+    .material-symbols-outlined {
+        color: #666;
+    }
+
+}

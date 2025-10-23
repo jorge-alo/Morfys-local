@@ -1,0 +1,139 @@
+.ajustes-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    height: 100%;
+}
+
+.form-ajustes {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+    background-color: #edeffd;
+    box-shadow: 0 0 10px #666;
+    border-radius: 4px;
+    height: fit-content;
+    gap: 20px;
+}
+
+.container-logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    background-color: #fff;
+    padding: 5px 0 5px 5px;
+    border-radius: 4px;
+    width: fit-content;
+}
+
+.container-logo h3 {
+    color: #777;
+    font-size: .9rem;
+}
+
+.form-ajustes .label-logo {
+    background-color: #ccc;
+    padding: 5px;
+    font-size: .8rem; 
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    gap: 10px;
+}
+
+.form-ajustes .label-logo:hover {
+    background-color: #bbb;
+}
+
+.label-logo span {
+    width: 20px;
+    height: 20px;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 50px;
+    background-color: #dfdfdf;
+    color: #888;
+}
+
+.form-ajustes .logo {
+    display: none;
+}
+
+.form-ajuste__horario-mañana {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.form-ajuste__horario-tarde {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.container-horarios select,
+option {
+    font-size: clamp(.7rem, 2.2%, .8rem)
+}
+
+.horario-h3 {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.form-ajustes label {
+    border: none;
+    font-size: clamp(.75rem, 2.2%, 1rem);
+}
+
+.form-ajustes input {
+    padding: 5px;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+}
+
+.container-cel {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.container-envio {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.container-envio-minimo {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.button-ajustes {
+    padding: 5px;
+    border: none;
+    background-color: #9583ac;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.button-ajustes:hover {
+    background-color: #89739c;
+}

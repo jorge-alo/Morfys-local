@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+     font-family: 'Roboto', sans-serif;
+}
+#root {
+    width: 100%;
+}
+body, html {
+    width: 100dvw;
+}
+.app-container {
+    background-image: linear-gradient(to bottom, #f0e2ff, #fff);
+    height: 100dvh;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+}
+
+/*--------------------------mobile design--------------------------------*/
+
+@media (max-width: 550px) {
+  .app-container {
+   flex-direction: column;
+   padding: 10px;
+}
+}
