@@ -28,8 +28,12 @@ export const Ajustes = () => {
     formData.append('diaTardeSalida', valueInput.diaTardeSalida)
     formData.append('horarioTardeEntrada', valueInput.horarioTardeEntrada)
     formData.append('horarioTardeSalida', valueInput.horarioTardeSalida)
-    const response = await handleSetTime(formData);
-    resetForm();
+     try {
+    await handleSetTime(formData);
+    resetForm(); // limpia state después de enviar
+  } catch (error) {
+    console.error("Error enviando datos:", error);
+  }
   }
   return (
     <div className='ajustes-container'>
