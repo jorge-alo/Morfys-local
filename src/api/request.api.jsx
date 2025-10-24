@@ -13,6 +13,10 @@ export const sendDataNewUserApi = async (value) => {
   return await api.post('/addUser', value)
 }
 
+export const logOutApi = async () => {
+  return await api.post('/logout')
+}
+
 export const resetPasswordApi = async (password, token) => {
   return await api.post(`/reset-password/${token}`, {password});
 }

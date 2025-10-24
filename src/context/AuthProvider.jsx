@@ -3,7 +3,7 @@ import {  useNavigate } from 'react-router-dom'
 
 import { AuthContext } from './AuthContext';
 import { useForm } from './FormProvider';
-import { forgotEmailApi, updateLoginApi, verifyTokenApi } from '../api/request.api';
+import { forgotEmailApi, logOutApi, updateLoginApi, verifyTokenApi } from '../api/request.api';
 
 
 
@@ -79,13 +79,17 @@ const handleResetPassword = async (token, newPassword) => {
    
    
 }
-    const handleLogOut = (e) => {
+    const handleLogOut = async(e) => {
         e.preventDefault();
-        document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+       try {
+        const response = await logOutApi();
+       } catch (error) {
+        console.log("Error al hacer logout:", error);
+       }
         setAdmin(0);
         setLogin(false);
-        navigate("/");
         setComidas(null);
+        navigate("/");
     }
 
     return (
