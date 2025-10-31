@@ -13,6 +13,7 @@ export const Form = ({ handleClose }) => {
     console.log("valor de valueInput en Form", valueInput);
 
     const handleSaveEdit = async () => {
+        console.log("Valor real de valueInput antes de enviar:", valueInput);
         const formData = new FormData();
         if (file) {
             formData.append('image', file);
