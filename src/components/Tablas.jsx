@@ -124,7 +124,7 @@ console.log("Valor de comidas en Tablas", comidas)
               comidas && comidas.length > 0 &&
               Object.keys(comidas[0]).map((key, index) => {
                 if (key == "id" || key == "description" || key == "variantes" || key == "tamanio" || key == "image") return null;
-                return <th key={index} className={key === 'name' ? 'name' : ""}>
+                return <th key={index} className={key === 'name' ? 'name' : 'other'}>
                   {key == "standby" ?
                     <>
                       <div className="standby" >
@@ -182,7 +182,7 @@ console.log("Valor de comidas en Tablas", comidas)
 
                         return (
                           <td
-                            className={key === "standby" ? "inputStandby" : key === 'name' ? 'name' : ""}
+                            className={key === "standby" ? "inputStandby" : key === 'name' ? 'name' : "other"}
                             key={i}
                           >
                             {key === "standby" ? (
@@ -244,7 +244,7 @@ console.log("Valor de comidas en Tablas", comidas)
 
                     return (
                       <td
-                        className={key === "standby" ? "inputStandby" : key === "name" ? 'name' : ""}
+                        className={key === "standby" ? "inputStandby" : key === "name" ? 'name' : "other"}
                         key={i}
                       >
                         {key === "standby" ? (
