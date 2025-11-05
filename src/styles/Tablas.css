@@ -5,8 +5,9 @@ table {
 }
 .table-getdata {
   min-width: 800px;
+  width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: auto;
 }
 .scroll-table-wrapper {
   max-height: 500px;
@@ -47,11 +48,15 @@ td, th {
 td.name, th.name {
 width: 100px;
 }
+td.td-button {
+ width: 100px;
+}
 .standby  {
   position: relative;
   display: flex;
   align-items: center;
   gap: 5px;
+  width: fit-content;
 }
 
 .hidden-file-input {

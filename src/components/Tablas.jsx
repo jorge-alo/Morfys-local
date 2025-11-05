@@ -113,7 +113,7 @@ console.log("Valor de comidas en Tablas", comidas)
       <table className="table-getdata">
         <thead>
           <tr>
-            <th>
+            <th className="check-col">
               <input
                 type="checkbox"
                 checked={selectAll}
@@ -159,7 +159,7 @@ console.log("Valor de comidas en Tablas", comidas)
                   v.opciones.map((op, idxOp) => (              // 🔹 abre map
                     <tr key={`${item.id}-${v.id}-${op.id}`}>
                       {/* Checkbox de selección */}
-                      <td>
+                      <td className="check-col">
                         <input
                           type="checkbox"
                           checked={!!acceptSelection[`op-${op.id}`]}
