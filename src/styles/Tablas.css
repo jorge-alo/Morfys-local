@@ -4,7 +4,7 @@ table {
     border-radius: 8px;
 }
 .table-getdata {
-  min-width: 800px;
+  
   width: 100%;
   border-collapse: collapse;
   table-layout: auto;
@@ -36,17 +36,17 @@ th {
 
 td {
   padding: 5px;
-  font-size: .8rem;
+  font-size: .7rem;
   border-bottom: 1px solid #eee;
 }
 td, th {
-  width: fit-content;
+  
   white-space: nowrap;   /* evita salto de línea */
   overflow: hidden;      /* oculta texto que se pase */
-  text-overflow: ellipsis; /* agrega “…” al final */
+  
 }
 td.name, th.name {
-width: 100px;
+  
 }
 td.td-button {
  width: 100px;

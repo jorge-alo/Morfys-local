@@ -9,13 +9,11 @@
 }
 
 .container-table__mainButtons {
-    max-width: 800px;
-    width: 100%;
     display: flex;
     justify-content: start;
     align-items: center;
     gap: 10px;
-    margin: 20px;
+    margin: 20px 0;
 }
 
 .container-table__agregarcomida {
