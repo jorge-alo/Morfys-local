@@ -31,6 +31,7 @@ export const Sidebar = () => {
                 <li onClick={() => setOpenMenu(prev=> !prev)}> <Link to="/dashboard">Dashboard</Link> </li>
                 <li onClick={() => setOpenMenu(prev=> !prev)}> <Link to="/menu">Menu</Link> </li>
                 <li onClick={() => setOpenMenu(prev=> !prev)}> <Link to="/ajustes">Ajustes</Link> </li>
+                <button onClick={handleLogOut}>Cerra sesion</button>
               </ul>
         </div>
 

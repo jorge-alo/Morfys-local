@@ -71,9 +71,11 @@ a {
         transition: all 0.3s ease;
         z-index: 20000;
     }
-.open li a{
-    color: #fff;
-}
+
+    .open li a {
+        color: #fff;
+    }
+
     .ul-menu-mobile.open {
         max-height: 200px;
         /* valor suficiente para que entren todos los li */
@@ -82,11 +84,23 @@ a {
 
     .ul-menu-mobile li {
         list-style: none;
-        margin: 5px;
+        margin: 10px;
     }
 
     .material-symbols-outlined {
         color: #666;
     }
 
+    .nav-mobile button {
+        border: none;
+        padding: 5px;
+        border-radius: 4px;
+        background-color: #cd6767;
+        color: #fff;
+        margin: 5px;
+    }
+
+    .nav-mobile button:hover {
+        background-color: #ad5757;
+    }
 }

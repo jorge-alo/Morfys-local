@@ -123,8 +123,8 @@ console.log("Valor de comidas en Tablas", comidas)
             {
               comidas && comidas.length > 0 &&
               Object.keys(comidas[0]).map((key, index) => {
-                if (key == "id" || key == "variantes" || key == "tamanio" || key == "image") return null;
-                return <th key={index}>
+                if (key == "id" || key == "description" || key == "variantes" || key == "tamanio" || key == "image") return null;
+                return <th key={index} className={key === 'name' ? 'name' : ""}>
                   {key == "standby" ?
                     <>
                       <div className="standby" >
@@ -175,13 +175,14 @@ console.log("Valor de comidas en Tablas", comidas)
                           key === "id" ||
                           key === "variantes" ||
                           key === "tamanio" ||
-                          key === "image"
+                          key === "image" ||
+                          key == "description" 
                         )
                           return null; // ⬅️ este return es solo para saltar keys
 
                         return (
                           <td
-                            className={key === "standby" ? "inputStandby" : ""}
+                            className={key === "standby" ? "inputStandby" : key === 'name' ? 'name' : ""}
                             key={i}
                           >
                             {key === "standby" ? (
@@ -238,12 +239,12 @@ console.log("Valor de comidas en Tablas", comidas)
                   </td>
 
                   {Object.entries(item).map(([key, value], i) => {
-                    if (key === "id" || key === "variantes" || key === "tamanio" || key === "image")
+                    if (key === "id" || key == "description" || key === "variantes" || key === "tamanio" || key === "image")
                       return null;
 
                     return (
                       <td
-                        className={key === "standby" ? "inputStandby" : ""}
+                        className={key === "standby" ? "inputStandby" : key === "name" ? 'name' : ""}
                         key={i}
                       >
                         {key === "standby" ? (

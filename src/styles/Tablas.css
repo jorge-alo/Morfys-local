@@ -39,6 +39,12 @@ td {
   border-bottom: 1px solid #eee;
 }
 
+td.name, th.name {
+  width: 100px;          /* o el valor que quieras */
+  white-space: nowrap;   /* evita salto de línea */
+  overflow: hidden;      /* oculta texto que se pase */
+  text-overflow: ellipsis; /* agrega “…” al final */
+}
 .standby  {
   position: relative;
   display: flex;
