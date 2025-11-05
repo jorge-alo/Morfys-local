@@ -40,7 +40,7 @@ td {
   border-bottom: 1px solid #eee;
 }
 td, th {
-  width: fit-content;          /* o el valor que quieras */
+  width: fit-content;
   white-space: nowrap;   /* evita salto de línea */
   overflow: hidden;      /* oculta texto que se pase */
   text-overflow: ellipsis; /* agrega “…” al final */
