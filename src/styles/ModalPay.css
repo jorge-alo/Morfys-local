@@ -1,0 +1,40 @@
+.container-modal-pay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    height: 100dvh;
+    background-color: #ccc7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+.container-pay {
+    max-width: 350px;
+    min-width: 300px;
+    width: 100%;
+    max-height: 600px;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20000;
+    position: relative;
+}
+
+.container-pay span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 25px;
+    height: 25px;
+    background-color: #ccc;
+    border-radius: 50px;
+    color: #999;
+}

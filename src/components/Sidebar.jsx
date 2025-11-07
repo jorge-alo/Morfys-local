@@ -2,10 +2,16 @@ import { Link } from "react-router-dom"
 import "../styles/Sidebar.css"
 import { AuthContext } from "../context/AuthContext";
 import { useContext, useState } from "react";
+import { useForm } from "../context/FormProvider";
 
 export const Sidebar = () => {
   const { login, handleLogOut, local } = useContext(AuthContext);
+  const { showModalPay, setShowModalPay } = useForm();
   const [openMenu, setOpenMenu] = useState(false);
+
+  const handleShowModalPay = () => {
+    setShowModalPay(true)
+  }
 
   const handleClickMenu = () => {
     setOpenMenu(prev => !prev)
@@ -18,6 +24,7 @@ export const Sidebar = () => {
           <li> <Link to="/dashboard">Dashboard</Link> </li>
           <li> <Link to="/menu">Menu</Link> </li>
           <li> <Link to="/ajustes">Ajustes</Link> </li>
+          <li> <h3 onClick={handleShowModalPay}>Pagar</h3> </li>
         </ul>
         <button onClick={handleLogOut}>Cerra sesion</button>
       </nav>

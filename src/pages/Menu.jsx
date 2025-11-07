@@ -9,13 +9,14 @@ import { Tablas } from "../components/Tablas";
 import { Filter } from "../components/Filter";
 import { TablaUser } from "../components/TablaUser";
 import { ModalUSer } from "../components/ModalUSer";
+import { ModalPay } from "../components/ModalPay";
 
 
 export const Menu = () => {
 
   const { local, admin } = useContext(AuthContext);
   const { handleGetData, sendPorcentage } = useContext(DataContext);
-  const { comidas, setComidas, acceptSelection, setAcceptSelection } = useForm();
+  const { comidas, setComidas, acceptSelection, setAcceptSelection, showModalPay, setShowModalPay } = useForm();
   const [showInputRow, setShowInputRow] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [selectItem, setSelectItem] = useState({});
@@ -105,7 +106,10 @@ export const Menu = () => {
           setShowModalUser={setShowModalUser}
         />
       }
-
+      {
+        showModalPay &&
+        <ModalPay showModalPay={showModalPay} setShowModalPay={setShowModalPay}/>
+      }
       {
         admin
           ? <div>

@@ -8,7 +8,8 @@ export const FormProvider = ({ children }) => {
   const [comidas, setComidas] = useState(null);
    const [categoria, setCategoria] = useState('todas');
     const [inputFilter, setInputFilter] = useState("");
-    const [acceptSelection, setAcceptSelection] = useState({})
+    const [acceptSelection, setAcceptSelection] = useState({});
+    const [showModalPay, setShowModalPay] = useState(false);
   const [valueInput, setValueInput] = useState({
     comida_id: "",
     user_id: "",
@@ -99,7 +100,7 @@ export const FormProvider = ({ children }) => {
 
 
   return (
-    <formContext.Provider value={{acceptSelection, setAcceptSelection, categoria, setCategoria, inputFilter, setInputFilter, inputRef, file, setFile, valueInput, setValueInput, handleChange, resetForm, comidas, setComidas }}>
+    <formContext.Provider value={{showModalPay, setShowModalPay, acceptSelection, setAcceptSelection, categoria, setCategoria, inputFilter, setInputFilter, inputRef, file, setFile, valueInput, setValueInput, handleChange, resetForm, comidas, setComidas }}>
       {children}
     </formContext.Provider>
   )

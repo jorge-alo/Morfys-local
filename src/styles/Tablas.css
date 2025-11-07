@@ -45,9 +45,7 @@ td, th {
   overflow: hidden;      /* oculta texto que se pase */
   
 }
-td.name, th.name {
-  
-}
+
 td.td-button {
  width: 100px;
 }

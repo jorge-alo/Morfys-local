@@ -73,5 +73,10 @@ export const getUsersApi = async () => {
   return await api.get("/users");
 }
 
+export const getPreferencePayApi = async () => {
+  return await api.post('/preference');
+}
+
+
 
 
