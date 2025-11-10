@@ -13,6 +13,8 @@ import { Ajustes } from './pages/Ajustes.jsx'
 import { ResetPassword } from './pages/ResetPassword.jsx'
 import { Admin } from './components/auth/Admin.jsx'
 import { Outlet } from 'react-router-dom'
+import { PagoExitoso } from './pages/PagoExitoso.jsx'
+import { PagoFallido } from './pages/PagoFallido.jsx'
 
 export const App = () => {
   return (
@@ -24,7 +26,9 @@ export const App = () => {
               {/* Rutas públicas */}
               <Route path='/' element={<PublicPage><Login /></PublicPage>} />
               <Route path='/reset-password/:token' element={<PublicPage><ResetPassword /></PublicPage>} />
-
+              <Route path='/pago-exitoso' element={<PagoExitoso />} />
+              <Route path='/pago-fallido' element={<PagoFallido />} />
+              
               {/* Rutas privadas */}
               <Route element={<Admin><PrivatePage><Sidebar /><Outlet /></PrivatePage></Admin>}>
                 <Route path='/dashboard' element={<Dashboard />} />
