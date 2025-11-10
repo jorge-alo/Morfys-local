@@ -7,15 +7,14 @@ export const ModalPay = ({showModalPay, setShowModalPay}) => {
     const handleCloseModal = () => {
         setShowModalPay(false)
     }
-
-    const handleClickPay = async() => {
+    const handleGetPreferencePay = async() => {
       const response = await getPreferencePay();
     }
   return (
     <div className="container-modal-pay">
         <div className="container-pay">
             <span onClick={handleCloseModal}> X </span>
-            <p onClick={handleClickPay}>Haga click aqui para hacer el pago</p>
+            <p onClick={handleGetPreferencePay}>Haga click aqui para hacer el pago</p>
         </div>
     </div>
   )
