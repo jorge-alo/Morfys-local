@@ -9,6 +9,10 @@ export const ModalPay = ({showModalPay, setShowModalPay}) => {
     }
     const handleGetPreferencePay = async() => {
       const response = await getPreferencePay();
+        if (response?.data?.init_point) {
+    // redirige al checkout de Mercado Pago
+    window.location.href = response.data.init_point;
+  }
     }
   return (
     <div className="container-modal-pay">
