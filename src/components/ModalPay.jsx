@@ -12,7 +12,7 @@ export const ModalPay = ({ showModalPay, setShowModalPay }) => {
     console.log('valor de init_point en handleGetPreferencePay',response.data.init_point);
     if (response?.data?.init_point) {
       // redirige al checkout de Mercado Pago
-      window.location.href = response.data.init_point;
+       window.open(response.data.init_point, '_blank');
     }
   }
   return (
