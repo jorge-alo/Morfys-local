@@ -4,26 +4,15 @@ import { DataContext } from '../context/DataContext';
 
 export const ModalPay = ({ showModalPay, setShowModalPay }) => {
   const { getPreferencePay } = useContext(DataContext);
-<<<<<<< HEAD
   const handleCloseModal = () => {
     setShowModalPay(false)
   }
   const handleGetPreferencePay = async () => {
     const response = await getPreferencePay();
+    console.log('valor de init_point en handleGetPreferencePay',response.data.init_point);
     if (response?.data?.init_point) {
       // redirige al checkout de Mercado Pago
       window.location.href = response.data.init_point;
-=======
-    const handleCloseModal = () => {
-        setShowModalPay(false)
-    }
-    const handleGetPreferencePay = async() => {
-      const response = await getPreferencePay();
-        if (response?.data?.init_point) {
-    // redirige al checkout de Mercado Pago
-    window.location.href = response.data.init_point;
-  }
->>>>>>> develop
     }
   }
   return (
