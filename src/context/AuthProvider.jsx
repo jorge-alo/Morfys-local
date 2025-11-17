@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
                 console.log("Adentro del else if de login")
                 setLogin(true);
                 setUserId(response.data.userId);
-                setLocal(response.data.user);
+                setLocal(response.data.local);
             }
         } catch (err) {
             console.log("error:", err);
