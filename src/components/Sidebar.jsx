@@ -10,7 +10,7 @@ export const Sidebar = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleShowModalPay = () => {
-    setShowModalPay(true)
+    setShowModalPay(true);
   }
 
   const handleClickMenu = () => {
@@ -38,6 +38,7 @@ export const Sidebar = () => {
                 <li onClick={() => setOpenMenu(prev=> !prev)}> <Link to="/dashboard">Dashboard</Link> </li>
                 <li onClick={() => setOpenMenu(prev=> !prev)}> <Link to="/menu">Menu</Link> </li>
                 <li onClick={() => setOpenMenu(prev=> !prev)}> <Link to="/ajustes">Ajustes</Link> </li>
+                <h3 onClick={handleShowModalPay}>Pagar</h3>
                 <button onClick={handleLogOut}>Cerra sesion</button>
               </ul>
         </div>
