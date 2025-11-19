@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import "../styles/Sidebar.css"
 import { AuthContext } from "../context/AuthContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "../context/FormProvider";
 
 export const Sidebar = () => {
