@@ -38,3 +38,7 @@
     border-radius: 50px;
     color: #999;
 }
+
+.container-pay p:hover {
+    cursor: pointer;
+}
