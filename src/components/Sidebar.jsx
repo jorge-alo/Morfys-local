@@ -27,6 +27,7 @@ export const Sidebar = () => {
 
   const handleShowModalPay = () => {
     setShowModalPay(true);
+    setOpenMenu(prev => !prev);
   }
 
   const handleClickMenu = () => {
