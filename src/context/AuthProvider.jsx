@@ -3,7 +3,7 @@ import {  useNavigate } from 'react-router-dom'
 
 import { AuthContext } from './AuthContext';
 import { useForm } from './FormProvider';
-import { forgotEmailApi, logOutApi, updateLoginApi, verifyTokenApi } from '../api/request.api';
+import { checkPayAPi, forgotEmailApi, logOutApi, updateLoginApi, verifyTokenApi } from '../api/request.api';
 
 
 
@@ -75,10 +75,7 @@ export const AuthProvider = ({ children }) => {
             return error;
         }
     };
-const handleResetPassword = async (token, newPassword) => {
-   
-   
-}
+
     const handleLogOut = async(e) => {
         e.preventDefault();
        try {
@@ -92,8 +89,17 @@ const handleResetPassword = async (token, newPassword) => {
         navigate("/");
     }
 
+    const checkPay = async () => {
+        try {
+            const response = await checkPayAPi();
+            return response.data;
+        } catch (error) {
+            console.log("Error:", error);
+        }
+        
+    }
     return (
-        <AuthContext.Provider value={{loading, handleResetPassword, success, setSuccess, showForgotPassword, setShowForgotPassword, emailForReset, setEmailForReset, handleForgotPassword, setAdmin, local, setLocal, error, setError, admin, handleLoginSubmit, handleLogOut, login, setLogin, userId, checkAuth}}>
+        <AuthContext.Provider value={{checkPay, loading, success, setSuccess, showForgotPassword, setShowForgotPassword, emailForReset, setEmailForReset, handleForgotPassword, setAdmin, local, setLocal, error, setError, admin, handleLoginSubmit, handleLogOut, login, setLogin, userId, checkAuth}}>
             {children}
         </AuthContext.Provider>
     )

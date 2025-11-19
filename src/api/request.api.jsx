@@ -77,6 +77,9 @@ export const getPreferencePayApi = async () => {
   return await api.post('/preference');
 }
 
+export const checkPayAPi = async () => {
+  return await api.get("/checkPay");
+}
 
 
 
