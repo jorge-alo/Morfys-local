@@ -4,7 +4,7 @@ import { DataContext } from '../context/DataContext';
 
 export const ModalPay = ({ showModalPay, setShowModalPay }) => {
   const { getPreferencePay } = useContext(DataContext);
-  onst[touchStartX, setTouchStartX] = useState(null);
+  const[touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
 
   // Comienza el gesto
