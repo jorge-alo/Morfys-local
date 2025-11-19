@@ -23,6 +23,7 @@
     justify-content: center;
     z-index: 20000;
     position: relative;
+    padding: 10px;
 }
 
 .container-pay span {
