@@ -2,7 +2,15 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
+});
+
+// 🔥 Interceptor para mandar el token
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 export const updateLoginApi = async (login) => {
@@ -18,11 +26,11 @@ export const logOutApi = async () => {
 }
 
 export const resetPasswordApi = async (password, token) => {
-  return await api.post(`/reset-password/${token}`, {password});
+  return await api.post(`/reset-password/${token}`, { password });
 }
 
 export const forgotEmailApi = async (email) => {
-  return await api.post('/forgotEmail', {email})
+  return await api.post('/forgotEmail', { email })
 }
 
 export const verifyTokenApi = async () => {
@@ -54,11 +62,11 @@ export const destroyApi = async (id) => {
 }
 
 export const apiAddStandAll = async (categoria, data) => {
-  return await api.put('/standbyAll', {categoria, data} );
+  return await api.put('/standbyAll', { categoria, data });
 }
 
 export const sendPorcentageApi = async (data) => {
-  return await api.put('/porcentage', data );
+  return await api.put('/porcentage', data);
 }
 
 export const handleSetTimeApi = async (data) => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { AuthContext } from './AuthContext';
 import { useForm } from './FormProvider';
@@ -20,16 +20,16 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-   const checkAuth = async () => {
+    const checkAuth = async () => {
         try {
             const response = await verifyTokenApi();
             console.log("Respuesta de verificación:", response.data);
-            if(response.data.auth){
+            if (response.data.auth) {
                 setAdmin(1)
                 setLoading(true);
-            console.log("Adentro del if de auth")   
+                console.log("Adentro del if de auth")
             }
-           else if (response.data.login) {
+            else if (response.data.login) {
                 console.log("Adentro del else if de login")
                 setLogin(true);
                 setUserId(response.data.userId);
@@ -38,8 +38,8 @@ export const AuthProvider = ({ children }) => {
         } catch (err) {
             console.log("error:", err);
         } finally {
-        setLoading(false); // ✅ Importante: terminamos de verificar
-    }
+            setLoading(false); // ✅ Importante: terminamos de verificar
+        }
     };
 
     useEffect(() => {
@@ -47,18 +47,22 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
 
-    const handleLoginSubmit = async (credentials) => {      
+    const handleLoginSubmit = async (credentials) => {
         setError(false);
-         
+
         console.log(credentials);
         try {
             const response = await updateLoginApi(credentials);
             console.log("Valor de response en handleloginsubmit:", response);
-            if(response.data.auth){
+
+            // 🔥 Guardamos token
+            localStorage.setItem("token", response.data.token);
+
+            if (response.data.auth) {
                 setAdmin(response.data.auth)
             }
             setLogin(response.data.login);
-             navigate('/menu');
+            navigate('/menu');
         } catch (error) {
             console.error("Error:", error);
             setError(error.response?.data?.message);
@@ -66,7 +70,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const handleForgotPassword = async (email) => {
-        console.log("Valor de email en handleForgotPassword",email)
+        console.log("Valor de email en handleForgotPassword", email)
         try {
             const response = await forgotEmailApi(email);
             return response
@@ -76,13 +80,8 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const handleLogOut = async(e) => {
-        e.preventDefault();
-       try {
-        const response = await logOutApi();
-       } catch (error) {
-        console.log("Error al hacer logout:", error);
-       }
+    const handleLogOut = async (e) => {
+        localStorage.removeItem("token");
         setAdmin(0);
         setLogin(false);
         setComidas(null);
@@ -96,10 +95,10 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.log("Error:", error);
         }
-        
+
     }
     return (
-        <AuthContext.Provider value={{checkPay, loading, success, setSuccess, showForgotPassword, setShowForgotPassword, emailForReset, setEmailForReset, handleForgotPassword, setAdmin, local, setLocal, error, setError, admin, handleLoginSubmit, handleLogOut, login, setLogin, userId, checkAuth}}>
+        <AuthContext.Provider value={{ checkPay, loading, success, setSuccess, showForgotPassword, setShowForgotPassword, emailForReset, setEmailForReset, handleForgotPassword, setAdmin, local, setLocal, error, setError, admin, handleLoginSubmit, handleLogOut, login, setLogin, userId, checkAuth }}>
             {children}
         </AuthContext.Provider>
     )
