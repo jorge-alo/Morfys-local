@@ -23,7 +23,18 @@ export const Sidebar = () => {
     fetchPay();
   }, []);
 
-  const isExpired = activeUntil ? new Date(activeUntil) < new Date() : true;
+  const showPayButton = (() => {
+    if(!activeUntil) return false
+
+     const hoy = new Date();
+  const vencimiento = new Date(activeUntil);
+
+  const diferenciaMs = vencimiento - hoy;
+  const diasRestantes = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
+console.log("Valor de de dias Restantes", diasRestantes);
+  return diasRestantes <= 7; 
+
+  })()
 
   const handleShowModalPay = () => {
     setShowModalPay(true);
@@ -41,7 +52,7 @@ export const Sidebar = () => {
           <li> <Link to="/dashboard">Dashboard</Link> </li>
           <li> <Link to="/menu">Menu</Link> </li>
           <li> <Link to="/ajustes">Ajustes</Link> </li>
-          {isExpired && (
+          {showPayButton && (
             <li>
               <h3 onClick={handleShowModalPay}>Pagar</h3>
             </li>
@@ -59,7 +70,7 @@ export const Sidebar = () => {
             <li onClick={() => setOpenMenu(prev => !prev)}> <Link to="/dashboard">Dashboard</Link> </li>
             <li onClick={() => setOpenMenu(prev => !prev)}> <Link to="/menu">Menu</Link> </li>
             <li onClick={() => setOpenMenu(prev => !prev)}> <Link to="/ajustes">Ajustes</Link> </li>
-            {isExpired && (
+            {showPayButton && (
               <li>
                 <h3 onClick={handleShowModalPay}>Pagar</h3>
               </li>
