@@ -24,15 +24,15 @@ export const Sidebar = () => {
   }, []);
 
   const showPayButton = (() => {
-    if(!activeUntil) return false
+    if (!activeUntil) return false
 
-     const hoy = new Date();
-  const vencimiento = new Date(activeUntil);
+    const hoy = new Date();
+    const vencimiento = new Date(activeUntil);
 
-  const diferenciaMs = vencimiento - hoy;
-  const diasRestantes = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
-console.log("Valor de de dias Restantes", diasRestantes);
-  return diasRestantes <= 7; 
+    const diferenciaMs = vencimiento - hoy;
+    const diasRestantes = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
+    console.log("Valor de de dias Restantes", diasRestantes);
+    return diasRestantes <= 7;
 
   })()
 
@@ -54,7 +54,11 @@ console.log("Valor de de dias Restantes", diasRestantes);
           <li> <Link to="/ajustes">Ajustes</Link> </li>
           {showPayButton && (
             <li>
-              <h3 onClick={handleShowModalPay}>Pagar</h3>
+              <div>
+                <h3 onClick={handleShowModalPay}>Pagar</h3>
+                <h5 className="h5-pagar"> Tu factura vence el {new Date(activeUntil).toLocaleDateString("es-AR")}</h5>
+              </div>
+
             </li>
           )}
         </ul>
@@ -72,7 +76,10 @@ console.log("Valor de de dias Restantes", diasRestantes);
             <li onClick={() => setOpenMenu(prev => !prev)}> <Link to="/ajustes">Ajustes</Link> </li>
             {showPayButton && (
               <li>
-                <h3 onClick={handleShowModalPay}>Pagar</h3>
+                <div>
+                  <h3 onClick={handleShowModalPay}>Pagar</h3>
+                  <h5 className="h5-pagar"> Tu factura vence el {new Date(activeUntil).toLocaleDateString("es-AR")}</h5>
+                </div>
               </li>
             )}
             <button onClick={handleLogOut}>Cerra sesion</button>

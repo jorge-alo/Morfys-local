@@ -42,6 +42,10 @@ a {
     display: none;
 }
 
+.h5-pagar {
+    color: #82c523;
+}
+
 /*----------------------------mobile design------------------------------------*/
 @media (max-width: 550px) {
     .nav {
