@@ -23,22 +23,37 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
         try {
             const response = await verifyTokenApi();
-            console.log("Respuesta de verificación:", response.data);
-            if (response.data.auth) {
-                setAdmin(1)
-                setLoading(true);
-                console.log("Adentro del if de auth")
+
+            if (response.data.status === "expired") {
+                setLogin(false);
+                setUserId(null);
+                setLocal(null);
+                navigate("/pago-vencido");
+                return;
             }
-            else if (response.data.login) {
-                console.log("Adentro del else if de login")
+
+            if (response.data.auth) {
+                setAdmin(1);
+            } else if (response.data.login) {
                 setLogin(true);
                 setUserId(response.data.userId);
                 setLocal(response.data.local);
             }
+
         } catch (err) {
-            console.log("error:", err);
+            console.log("Error en checkAuth:", err.response?.data);
+
+            // ⛔ AQUI ESTABA EL PROBLEMA
+            if (err.response?.data?.status === "expired") {
+                setLogin(false);
+                setUserId(null);
+                setLocal(null);
+                navigate("/pago-vencido");  // 🔥 Redirige en caso de 403
+                return;
+            }
+
         } finally {
-            setLoading(false); // ✅ Importante: terminamos de verificar
+            setLoading(false);
         }
     };
 
