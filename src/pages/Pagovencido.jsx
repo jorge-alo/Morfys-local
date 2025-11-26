@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useForm } from "../context/FormProvider";
+import { DataContext } from "../context/DataContext";
 
 export const PagoVencido = () => {
   const { handleLogOut, userId } = useContext(AuthContext);
   const { setShowModalPay } = useForm();
+  const { getPreferencePay } = useContext(DataContext)
 
     const handleGetPreferencePay = async () => {
     const response = await getPreferencePay({userId});
