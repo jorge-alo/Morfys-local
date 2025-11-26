@@ -3,12 +3,17 @@ import { AuthContext } from "../context/AuthContext";
 import { useForm } from "../context/FormProvider";
 
 export const PagoVencido = () => {
-  const { handleLogOut } = useContext(AuthContext);
+  const { handleLogOut, userId } = useContext(AuthContext);
   const { setShowModalPay } = useForm();
 
-  const handlePagar = () => {
-    setShowModalPay(true);
-  };
+    const handleGetPreferencePay = async () => {
+    const response = await getPreferencePay({userId});
+    console.log('valor de init_point en handleGetPreferencePay', response.data.init_point);
+    if (response?.data?.init_point) {
+      // redirige al checkout de Mercado Pago
+      window.open(response.data.init_point, '_blank');
+    }
+  }
 
   return (
     <div style={{ 
@@ -20,7 +25,7 @@ export const PagoVencido = () => {
       <h1>Tu suscripción ha vencido 😕</h1>
       <p>Para seguir usando el sistema, es necesario realizar el pago de la suscripción.</p>
 
-      <button onClick={handlePagar} style={{ marginTop: 20 }}>
+      <button onClick={handleGetPreferencePay} style={{ marginTop: 20 }}>
         Realizar pago
       </button>
 

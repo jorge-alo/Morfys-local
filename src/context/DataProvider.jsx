@@ -102,9 +102,9 @@ export const DataProvider = ({ children }) => {
       console.log("ERROR:", error);
     }
   }
-  const getPreferencePay = async () => {
+  const getPreferencePay = async ({userId}) => {
     try {
-      const response = await getPreferencePayApi();
+      const response = await getPreferencePayApi({userId});
       console.log("Valor de response en getPreferencePay", response);
       return response;
     } catch (error) {

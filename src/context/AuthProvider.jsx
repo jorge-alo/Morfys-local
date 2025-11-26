@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 
             if (response.data.status === "expired") {
                 setLogin(false);
-                setUserId(null);
+                setUserId(response.data.userId);
                 setLocal(null);
                 navigate("/pago-vencido");
                 return;
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
             // ⛔ AQUI ESTABA EL PROBLEMA
             if (err.response?.data?.status === "expired") {
                 setLogin(false);
-                setUserId(null);
+                setUserId(response.data.userId);
                 setLocal(null);
                 navigate("/pago-vencido");  // 🔥 Redirige en caso de 403
                 return;

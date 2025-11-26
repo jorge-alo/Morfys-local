@@ -1,9 +1,11 @@
 import { useContext, useState } from 'react';
 import '../styles/ModalPay.css';
 import { DataContext } from '../context/DataContext';
+import { AuthContext } from '../context/AuthContext';
 
 export const ModalPay = ({ showModalPay, setShowModalPay }) => {
   const { getPreferencePay } = useContext(DataContext);
+  const {userId} = useContext(AuthContext);
   const[touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
 
@@ -44,7 +46,7 @@ export const ModalPay = ({ showModalPay, setShowModalPay }) => {
   }
 
   const handleGetPreferencePay = async () => {
-    const response = await getPreferencePay();
+    const response = await getPreferencePay({userId});
     console.log('valor de init_point en handleGetPreferencePay', response.data.init_point);
     if (response?.data?.init_point) {
       // redirige al checkout de Mercado Pago
