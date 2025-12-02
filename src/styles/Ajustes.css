@@ -45,7 +45,6 @@
     align-items: center;
     width: fit-content;
     gap: 10px;
-    overflow: hidden;
 }
 
 .form-ajustes .label-logo:hover {

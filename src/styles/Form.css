@@ -65,3 +65,7 @@
 .form__item button:hover {
   background-color: #8d6d9d;
 }
+
+.agregararchivo {
+  overflow: hidden;
+}
