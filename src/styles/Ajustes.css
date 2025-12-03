@@ -21,7 +21,7 @@
     gap: 20px;
 }
 
-.container-logo {
+.container-logo, .container-banner {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -32,12 +32,12 @@
     width: fit-content;
 }
 
-.container-logo h3 {
+.container-logo h3, .container-banner h3  {
     color: #777;
     font-size: 1rem;
 }
 
-.form-ajustes .label-logo {
+.form-ajustes .label-logo, .form-ajustes .label-banner{
     background-color: #ccc;
     padding: 5px;
     font-size: 1rem; 
@@ -47,11 +47,11 @@
     gap: 10px;
 }
 
-.form-ajustes .label-logo:hover {
+.form-ajustes .label-logo:hover, .form-ajustes .label-banner:hover {
     background-color: #bbb;
 }
 
-.label-logo span {
+.label-logo span, .label-banner span {
     width: 20px;
     height: 20px;
     font-size: 1rem;
@@ -61,7 +61,7 @@
     color: #888;
 }
 
-.form-ajustes .logo {
+.form-ajustes .logo, .form-ajustes .banner {
     display: none;
 }
 

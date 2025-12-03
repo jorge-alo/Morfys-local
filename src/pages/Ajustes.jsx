@@ -5,17 +5,15 @@ import { DataContext } from '../context/DataContext';
 
 
 export const Ajustes = () => {
-  const { valueInput, file, handleChange, resetForm } = useForm();
+  const { valueInput, fileLogo, fileBanner, handleChange, resetForm } = useForm();
   const { handleSetTime } = useContext(DataContext);
   console.log("Valor de valueInput en Ajustes", valueInput);
-  console.log("Valor de file en Ajustes", file);
 
-  const handleClickSend = async(e) => {
+  const handleClickSend = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    if (file) {
-      formData.append('image', file)
-    }
+    if (fileLogo) formData.append("logo", fileLogo);
+    if (fileBanner) formData.append("banner", fileBanner);
     formData.append('local', valueInput.local)
     formData.append('cel', valueInput.cel)
     formData.append('envio', valueInput.envio)
@@ -28,23 +26,33 @@ export const Ajustes = () => {
     formData.append('diaTardeSalida', valueInput.diaTardeSalida)
     formData.append('horarioTardeEntrada', valueInput.horarioTardeEntrada)
     formData.append('horarioTardeSalida', valueInput.horarioTardeSalida)
-     try {
-    await handleSetTime(formData);
-    resetForm(); // limpia state después de enviar
-  } catch (error) {
-    console.error("Error enviando datos:", error);
-  }
+    try {
+      await handleSetTime(formData);
+      resetForm(); // limpia state después de enviar
+    } catch (error) {
+      console.error("Error enviando datos:", error);
+    }
   }
   return (
     <div className='ajustes-container'>
       <form className='form-ajustes' >
         <div className='container-logo'>
           <h3>Logo:</h3>
-          <label className='label-logo' htmlFor="logo">{file ? file.name : 'Cargar imagen'} <span>+</span></label>
+          <label className='label-logo' htmlFor="logo">{fileLogo ? fileLogo.name : 'Cargar imagen'} <span>+</span></label>
           <input
             className='logo'
             type="file"
             id="logo"
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className='container-banner'>
+          <h3>Banner:</h3>
+          <label className='label-banner' htmlFor="banner">{fileBanner ? fileBanner.name : 'Cargar imagen'} <span>+</span></label>
+          <input
+            className='banner'
+            type="file"
+            id="banner"
             onChange={(e) => handleChange(e)}
           />
         </div>

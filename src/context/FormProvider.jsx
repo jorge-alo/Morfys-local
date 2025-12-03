@@ -4,7 +4,8 @@ const formContext = createContext();
 
 export const FormProvider = ({ children }) => {
 
-  const [file, setFile] = useState("");
+  const [fileLogo, setFileLogo] = useState("");
+  const [fileBanner, setFileBanner] = useState("");
   const [comidas, setComidas] = useState(null);
    const [categoria, setCategoria] = useState('todas');
     const [inputFilter, setInputFilter] = useState("");
@@ -50,8 +51,8 @@ export const FormProvider = ({ children }) => {
 
   const handleChange = (e) => {
     if (e.target.type == 'file') {
-      setFile(e.target.files[0]);
-      console.log("valor de file en formProvider", file);
+       if (e.target.id === 'logo') setFileLogo(e.target.files[0]);
+    if (e.target.id === 'banner') setFileBanner(e.target.files[0]);
     } else {
       setValueInput({ ...valueInput, [e.target.name]: e.target.value });
     }
@@ -95,12 +96,13 @@ export const FormProvider = ({ children }) => {
     horarioDiftardeSalida: ""
     });
     if (inputRef.current) inputRef.current.value = "";
-    setFile(null);
+    setFileLogo(null);
+    setFileBanner(null);
   };
 
 
   return (
-    <formContext.Provider value={{showModalPay, setShowModalPay, acceptSelection, setAcceptSelection, categoria, setCategoria, inputFilter, setInputFilter, inputRef, file, setFile, valueInput, setValueInput, handleChange, resetForm, comidas, setComidas }}>
+    <formContext.Provider value={{showModalPay, setShowModalPay, acceptSelection, setAcceptSelection, categoria, setCategoria, inputFilter, setInputFilter, inputRef, fileLogo, setFileLogo, fileBanner, setFileBanner, valueInput, setValueInput, handleChange, resetForm, comidas, setComidas }}>
       {children}
     </formContext.Provider>
   )
