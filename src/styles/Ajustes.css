@@ -113,6 +113,28 @@ option {
     justify-content: space-between;
     gap: 5px;
 }
+.cel-inputs {
+    display: flex;
+    gap: 5px;
+}
+
+
+.container-provincia, .container-pais, .container-celNumber {
+   display: flex;
+   flex-direction: column;
+}
+
+.container-celNumber {
+    width: 100%;
+}
+
+
+.pais {
+    width: 50px;
+}
+.provincia {
+    width: 50px;
+}
 
 .container-envio {
     display: flex;

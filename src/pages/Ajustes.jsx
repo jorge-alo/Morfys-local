@@ -72,29 +72,45 @@ export const Ajustes = () => {
           <label htmlFor="cel">Ingrese su numero de celular</label>
           <div className='cel-inputs'>
 
-            <input
-              type="text"
-              name="celPais"
-              placeholder="País"
-              value={valueInput.celPais}
-              onChange={handleChange}
-            />
+            <div className='container-pais'>
+              <label htmlFor="pais">pais</label>
+              <input
+                className='pais'
+                type="text"
+                id='pais'
+                name="celPais"
+                placeholder="54"
+                value={valueInput.celPais}
+                onChange={handleChange}
+              />
+            </div>
 
-            <input
-              type="text"
-              name="celProvincia"
-              placeholder="Área"
-              value={valueInput.celProvincia}
-              onChange={handleChange}
-            />
+            <div className='container-provincia'>
+              <label htmlFor="provincia">provi.</label>
+              <input
+                className='provincia'
+                type="text"
+                id='provincia'
+                name="celProvincia"
+                placeholder="11"
+                value={valueInput.celProvincia}
+                onChange={handleChange}
+              />
+            </div>
 
-            <input
-              type="text"
-              id='cel'
-              name='cel'
-              value={valueInput.cel}
-              onChange={(e) => handleChange(e)}
-            />
+            <div className='container-celNumber'>
+              <label htmlFor="provincia">numero</label>
+              <input
+                className='celNumber'
+                type="text"
+                id='cel'
+                name='cel'
+                placeholder="12345678"
+                value={valueInput.cel}
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+
           </div>
 
         </div>
