@@ -128,12 +128,15 @@ option {
     width: 100%;
 }
 
-
 .pais {
     width: 50px;
 }
 .provincia {
     width: 50px;
+}
+
+.pais::placeholder, .provincia::placeholder, .celNumber::placeholder{
+    color: #ccc;
 }
 
 .container-envio {

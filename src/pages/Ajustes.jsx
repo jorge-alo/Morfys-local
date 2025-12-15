@@ -79,7 +79,7 @@ export const Ajustes = () => {
                 type="text"
                 id='pais'
                 name="celPais"
-                placeholder="54"
+                placeholder="ej: 54"
                 value={valueInput.celPais}
                 onChange={handleChange}
               />
@@ -92,7 +92,7 @@ export const Ajustes = () => {
                 type="text"
                 id='provincia'
                 name="celProvincia"
-                placeholder="11"
+                placeholder="ej: 11"
                 value={valueInput.celProvincia}
                 onChange={handleChange}
               />
@@ -105,7 +105,7 @@ export const Ajustes = () => {
                 type="text"
                 id='cel'
                 name='celNumero'
-                placeholder="12345678"
+                placeholder="ej: 12345678"
                 value={valueInput.celNumero}
                 onChange={(e) => handleChange(e)}
               />
