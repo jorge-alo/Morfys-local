@@ -15,7 +15,9 @@ export const Ajustes = () => {
     if (fileLogo) formData.append("logo", fileLogo);
     if (fileBanner) formData.append("banner", fileBanner);
     formData.append('local', valueInput.local)
-    formData.append('cel', valueInput.cel)
+    formData.append('celNumero', valueInput.celNumero)
+    formData.append('celPais', valueInput.celPais);
+    formData.append('celProvincia', valueInput.celProvincia);
     formData.append('envio', valueInput.envio)
     formData.append('envioMinimo', valueInput.envioMinimo)
     formData.append('diaManianaEntrada', valueInput.diaMañanaEntrada)
@@ -68,13 +70,33 @@ export const Ajustes = () => {
         </div>
         <div className='container-cel'>
           <label htmlFor="cel">Ingrese su numero de celular</label>
-          <input
-            type="text"
-            id='cel'
-            name='cel'
-            value={valueInput.cel}
-            onChange={(e) => handleChange(e)}
-          />
+          <div className='cel-inputs'>
+
+            <input
+              type="text"
+              name="celPais"
+              placeholder="País"
+              value={valueInput.celPais}
+              onChange={handleChange}
+            />
+
+            <input
+              type="text"
+              name="celProvincia"
+              placeholder="Área"
+              value={valueInput.celProvincia}
+              onChange={handleChange}
+            />
+
+            <input
+              type="text"
+              id='cel'
+              name='cel'
+              value={valueInput.cel}
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+
         </div>
         <div className='container-envio'>
           <label htmlFor="envio">Ingrese valor de envio</label>

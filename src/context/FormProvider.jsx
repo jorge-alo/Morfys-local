@@ -7,10 +7,10 @@ export const FormProvider = ({ children }) => {
   const [fileLogo, setFileLogo] = useState("");
   const [fileBanner, setFileBanner] = useState("");
   const [comidas, setComidas] = useState(null);
-   const [categoria, setCategoria] = useState('todas');
-    const [inputFilter, setInputFilter] = useState("");
-    const [acceptSelection, setAcceptSelection] = useState({});
-    const [showModalPay, setShowModalPay] = useState(false);
+  const [categoria, setCategoria] = useState('todas');
+  const [inputFilter, setInputFilter] = useState("");
+  const [acceptSelection, setAcceptSelection] = useState({});
+  const [showModalPay, setShowModalPay] = useState(false);
   const [valueInput, setValueInput] = useState({
     comida_id: "",
     user_id: "",
@@ -27,10 +27,12 @@ export const FormProvider = ({ children }) => {
     local: "",
     latitud: "",
     longitud: "",
-    cel: "",
+    celNumero: "",
+    celPais: "",
+    celProvincia: "",
     variantes: [], // <--- nuevo campo
     envio: "",
-    envioMinimo: "" ,
+    envioMinimo: "",
     diaMañanaEntrada: "",
     diaMañanaSalida: "",
     horarioManianaEntrada: "",
@@ -51,8 +53,8 @@ export const FormProvider = ({ children }) => {
 
   const handleChange = (e) => {
     if (e.target.type == 'file') {
-       if (e.target.id === 'logo') setFileLogo(e.target.files[0]);
-    if (e.target.id === 'banner') setFileBanner(e.target.files[0]);
+      if (e.target.id === 'logo') setFileLogo(e.target.files[0]);
+      if (e.target.id === 'banner') setFileBanner(e.target.files[0]);
     } else {
       setValueInput({ ...valueInput, [e.target.name]: e.target.value });
     }
@@ -77,23 +79,23 @@ export const FormProvider = ({ children }) => {
       longitud: "",
       cel: "",
       tamanio: 0,
-       variantes: [], // <--- nuevo campo
-        envio: "",
-         envioMinimo: "" ,
-    diaMañanaEntrada: "",
-    diaMañanaSalida: "",
-    horarioManianaEntrada: "",
-    horarioManianaSalida: "",
-    diaTardeEntrada: "",
-    diaTardeSalida: "",
-    horarioTardeEntrada: "",
-    horarioTardeSalida: "",
-    diaDifMañanaEntrada: "",
-    horarioDifMañanaEntrada: "",
-    horarioDifMañanaSalida: "",
-    diaDifTardeEntrada: "",
-    horarioDifTardeEntrada: "",
-    horarioDiftardeSalida: ""
+      variantes: [], // <--- nuevo campo
+      envio: "",
+      envioMinimo: "",
+      diaMañanaEntrada: "",
+      diaMañanaSalida: "",
+      horarioManianaEntrada: "",
+      horarioManianaSalida: "",
+      diaTardeEntrada: "",
+      diaTardeSalida: "",
+      horarioTardeEntrada: "",
+      horarioTardeSalida: "",
+      diaDifMañanaEntrada: "",
+      horarioDifMañanaEntrada: "",
+      horarioDifMañanaSalida: "",
+      diaDifTardeEntrada: "",
+      horarioDifTardeEntrada: "",
+      horarioDiftardeSalida: ""
     });
     if (inputRef.current) inputRef.current.value = "";
     setFileLogo(null);
@@ -102,7 +104,7 @@ export const FormProvider = ({ children }) => {
 
 
   return (
-    <formContext.Provider value={{showModalPay, setShowModalPay, acceptSelection, setAcceptSelection, categoria, setCategoria, inputFilter, setInputFilter, inputRef, fileLogo, setFileLogo, fileBanner, setFileBanner, valueInput, setValueInput, handleChange, resetForm, comidas, setComidas }}>
+    <formContext.Provider value={{ showModalPay, setShowModalPay, acceptSelection, setAcceptSelection, categoria, setCategoria, inputFilter, setInputFilter, inputRef, fileLogo, setFileLogo, fileBanner, setFileBanner, valueInput, setValueInput, handleChange, resetForm, comidas, setComidas }}>
       {children}
     </formContext.Provider>
   )
