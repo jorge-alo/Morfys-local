@@ -77,7 +77,9 @@ export const FormProvider = ({ children }) => {
       local: "",
       latitud: "",
       longitud: "",
-      cel: "",
+      celNumero: "",
+      celPais: "",
+      celProvincia: "",
       tamanio: 0,
       variantes: [], // <--- nuevo campo
       envio: "",

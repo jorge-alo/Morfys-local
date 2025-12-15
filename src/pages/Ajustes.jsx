@@ -104,9 +104,9 @@ export const Ajustes = () => {
                 className='celNumber'
                 type="text"
                 id='cel'
-                name='cel'
+                name='celNumero'
                 placeholder="12345678"
-                value={valueInput.cel}
+                value={valueInput.celNumero}
                 onChange={(e) => handleChange(e)}
               />
             </div>
