@@ -1,46 +1,37 @@
-import { useContext, useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import '../styles/Dashboard.css';
-import { DataContext } from '../context/DataContext';
-import { AuthContext } from '../context/AuthContext';
-
 export const Dashboard = ({ restaurantId }) => {
     const { localId } = useContext(AuthContext);
-    const { getDataChart } = useContext(DataContext)
+    const { getDataChart } = useContext(DataContext);
     const [dataChart, setDataChart] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    /* useEffect(() => {
-         // Aquí llamarías a tu función de API
-         fetch(`http://localhost:5175/api/dashboard/${localId}`)
-             .then(res => res.json())
-             .then(data => {
-                 setStats(data);
-                 setLoading(false);
-             })
-             .catch(err => console.error("Error:", err));
-     }, [restaurantId]);*/
+    const handleGetDataChart = async () => {
+        // Si no hay localId, no hacemos la petición para evitar el "undefined"
+        if (!localId) return; 
 
-
-
-    const handleGetDataChart = () => {
         try {
-            const result = getDataChart(localId);
-            setDataChart(result);
-            setLoading(false);
-
+            setLoading(true);
+            const result = await getDataChart(localId);
+            // Validamos que result y result.data existan
+            if (result && result.data) {
+                setDataChart(result.data);
+            }
         } catch (error) {
-            console.log("Error:", error);
+            console.error("Error al obtener datos:", error);
+        } finally {
+            setLoading(false);
         }
-
-    }
+    };
 
     useEffect(() => {
-      handleGetDataChart();
-    }, [])
-    
+        handleGetDataChart();
+    }, [localId]); // Se ejecuta cuando localId esté disponible
 
     if (loading) return <div className="loader">Cargando estadísticas...</div>;
+
+    // SI NO HAY DATOS, MOSTRAR UN MENSAJE EN LUGAR DE ROMPERSE
+    if (!dataChart || !dataChart.resumen) {
+        return <div className="error-msg">No se pudieron cargar los datos del dashboard.</div>;
+    }
     return (
 
         <div className="dashboard-wrapper">
