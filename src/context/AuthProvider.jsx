@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
     const [error, setError] = useState(null)
     const [admin, setAdmin] = useState(0);
     const [local, setLocal] = useState(null);
+    const [localId, setLocalId] = useState(null);
     const [showForgotPassword, setShowForgotPassword] = useState(false); // Nuevo estado
     const [emailForReset, setEmailForReset] = useState(""); // Email para recuperación
     const [success, setSuccess] = useState("");
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }) => {
                 setLogin(false);
                 setUserId(response.data.userId);
                 setLocal(null);
+                setLocalId(null);
                 navigate("/pago-vencido");
                 return;
             }
@@ -38,6 +40,7 @@ export const AuthProvider = ({ children }) => {
                 setLogin(true);
                 setUserId(response.data.userId);
                 setLocal(response.data.local);
+                setLocalId(response.data.localId)
             }
 
         } catch (err) {
@@ -48,6 +51,7 @@ export const AuthProvider = ({ children }) => {
                 setLogin(false);
                  setUserId(err.response.data.userId);
                 setLocal(null);
+                setLocalId(null);
                 navigate("/pago-vencido");  // 🔥 Redirige en caso de 403
                 return;
             }
@@ -113,7 +117,7 @@ export const AuthProvider = ({ children }) => {
 
     }
     return (
-        <AuthContext.Provider value={{ checkPay, loading, success, setSuccess, showForgotPassword, setShowForgotPassword, emailForReset, setEmailForReset, handleForgotPassword, setAdmin, local, setLocal, error, setError, admin, handleLoginSubmit, handleLogOut, login, setLogin, userId, checkAuth }}>
+        <AuthContext.Provider value={{localId, checkPay, loading, success, setSuccess, showForgotPassword, setShowForgotPassword, emailForReset, setEmailForReset, handleForgotPassword, setAdmin, local, setLocal, error, setError, admin, handleLoginSubmit, handleLogOut, login, setLogin, userId, checkAuth }}>
             {children}
         </AuthContext.Provider>
     )

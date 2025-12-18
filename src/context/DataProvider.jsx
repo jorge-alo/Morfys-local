@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 import { DataContext } from "./DataContext";
-import { apiAddStandAll, cargarComidasApi, destroyApi, getAllData, getPreferencePayApi, getUsersApi, handleSetTimeApi, resetPasswordApi, sendDataNewUserApi, sendPorcentageApi, updateDataApi } from "../api/request.api";
+import { apiAddStandAll, cargarComidasApi, destroyApi, getAllData, getDataChartApi, getPreferencePayApi, getUsersApi, handleSetTimeApi, resetPasswordApi, sendDataNewUserApi, sendPorcentageApi, updateDataApi } from "../api/request.api";
 
 
 export const DataProvider = ({ children }) => {
@@ -112,8 +112,18 @@ export const DataProvider = ({ children }) => {
     }
     
   }
+
+  const getDataChart = async(idLocal) => {
+    try {
+      const result = await getDataChartApi(idLocal);
+      return result
+    } catch (error) {
+      console.log("Error:", error);
+    }
+    
+  }
   return (
-    <DataContext.Provider value={{ getPreferencePay, sendDataNewUser, getUsers, handleResetPassword, sendPorcentage, addStandbyAll, handleSetTime, handleUpdateBanner, handleDestroy, setError, handleGetData, handleCargarComidas, handleUpdate }}>
+    <DataContext.Provider value={{getDataChart, getPreferencePay, sendDataNewUser, getUsers, handleResetPassword, sendPorcentage, addStandbyAll, handleSetTime, handleUpdateBanner, handleDestroy, setError, handleGetData, handleCargarComidas, handleUpdate }}>
       {children}
     </DataContext.Provider>
   )
