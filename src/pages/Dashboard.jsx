@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import './PanelControl.css';
+import '../styles/DashBoard.css';
 import { DataContext } from '../context/DataContext';
 import { AuthContext } from '../context/AuthContext';
 
