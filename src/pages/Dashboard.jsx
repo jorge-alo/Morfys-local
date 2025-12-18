@@ -87,7 +87,7 @@ export const Dashboard = ({ restaurantId }) => {
                             >
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                                 <XAxis
-                                    dataKey="comida_name"
+                                    dataKey="nombre_item"
                                     interval={0}
                                     angle={-45}
                                     textAnchor="end"
@@ -117,7 +117,7 @@ export const Dashboard = ({ restaurantId }) => {
                         <tbody>
                             {dataChart.platos.map((plato, idx) => (
                                 <tr key={idx}>
-                                    <td>{plato.comida_name}</td>
+                                    <td>{plato.nombre_item}</td>
                                     <td>${Number(plato.total).toLocaleString('es-AR')}</td>
                                 </tr>
                             ))}
