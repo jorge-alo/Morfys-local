@@ -14,7 +14,7 @@ import { ModalPay } from "../components/ModalPay";
 
 export const Menu = () => {
 
-  const { local, admin } = useContext(AuthContext);
+  const { local, admin, localId } = useContext(AuthContext);
   const { handleGetData, sendPorcentage } = useContext(DataContext);
   const { comidas, setComidas, acceptSelection, setAcceptSelection, showModalPay, setShowModalPay } = useForm();
   const [showInputRow, setShowInputRow] = useState(false);
@@ -23,6 +23,8 @@ export const Menu = () => {
   const [porcentage, setPorcentage] = useState("");
   const [selectAll, setSelectAll] = useState(false);
   const [showModalUser, setShowModalUser] = useState(false);
+
+  console.log("Valor de localId en menu", localId);
 
   const handleLocales = async () => {
     const result = await handleGetData(local);
