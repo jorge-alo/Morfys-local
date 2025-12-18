@@ -78,11 +78,27 @@ export const Dashboard = ({ restaurantId }) => {
             <div className="dashboard-main-content">
                 {/* 2. GRÁFICO DE VENTAS POR PLATO */}
                 <div className="chart-section">
-                    <h3>Recaudación por Producto</h3>
-                    <div className="chart-container"> {/* <--- Usa esta clase */}
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={dataChart.platos}>
-                                {/* ... tu contenido del gráfico ... */}
+                    <h3>Recaudación por Producto (Base + Opciones)</h3>
+                    <div className="chart-container">
+                        <ResponsiveContainer width="100%" aspect={2}> {/* aspect={2} significa que el ancho será el doble que el alto */}
+                            <BarChart
+                                data={dataChart.platos}
+                                margin={{ top: 20, right: 30, left: 20, bottom: 60 }} // Aumentamos bottom para los nombres
+                            >
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                <XAxis
+                                    dataKey="comida_name"
+                                    interval={0}
+                                    angle={-45}
+                                    textAnchor="end"
+                                    tick={{ fontSize: 12 }}
+                                />
+                                <YAxis tick={{ fontSize: 12 }} />
+                                <Tooltip
+                                    cursor={{ fill: '#f5f5f5' }}
+                                    formatter={(value) => [`$${Number(value).toLocaleString('es-AR')}`, 'Total']}
+                                />
+                                <Bar dataKey="total" fill="#ff6347" radius={[4, 4, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
