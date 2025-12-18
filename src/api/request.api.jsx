@@ -90,7 +90,7 @@ export const checkPayAPi = async () => {
 }
 
 export const getDataChartApi = async (localId) => {
-  return await api.get("/chart", localId);
+  return await api.get(`/chart/${localId}`);
 }
 
 
