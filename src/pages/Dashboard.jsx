@@ -4,7 +4,7 @@ import '../styles/Dashboard.css';
 import { DataContext } from '../context/DataContext';
 import { AuthContext } from '../context/AuthContext';
 
-export const DashBoard = ({ restaurantId }) => {
+export const Dashboard = ({ restaurantId }) => {
     const { localId } = useContext(AuthContext);
     const { getDataChart } = useContext(DataContext)
     const [dataChart, setDataChart] = useState(null);
