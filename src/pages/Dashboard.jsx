@@ -10,6 +10,8 @@ export const Dashboard = ({ restaurantId }) => {
     const [dataChart, setDataChart] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    console.log("Valor de localId en dashboard", localId);
+
     const handleGetDataChart = async () => {
         // Si no hay localId, no hacemos la petición para evitar el "undefined"
         if (!localId) return;
@@ -49,7 +51,7 @@ export const Dashboard = ({ restaurantId }) => {
             {/* 1. CARDS DE MÉTRICAS */}
             <section className="metrics-grid">
                 <div className="metric-card">
-                    span<span className="icon">💰</span>
+                    <span className="icon">💰</span>
                     <div>
                         <p className="label">Ingresos Totales</p>
                         <p className="value">${Number(dataChart.resumen.ingresos_netos).toLocaleString('es-AR')}</p>
@@ -76,17 +78,11 @@ export const Dashboard = ({ restaurantId }) => {
             <div className="dashboard-main-content">
                 {/* 2. GRÁFICO DE VENTAS POR PLATO */}
                 <div className="chart-section">
-                    <h3>Recaudación por Producto (Base + Opciones)</h3>
-                    <div style={{ width: '100%', height: 300 }}>
-                        <ResponsiveContainer>
+                    <h3>Recaudación por Producto</h3>
+                    <div className="chart-container"> {/* <--- Usa esta clase */}
+                        <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={dataChart.platos}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="comida_name" />
-                                <YAxis />
-                                <Tooltip
-                                    formatter={(value) => [`$${value}`, 'Total Recaudado']}
-                                />
-                                <Bar dataKey="total" fill="#ff6347" radius={[4, 4, 0, 0]} />
+                                {/* ... tu contenido del gráfico ... */}
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
