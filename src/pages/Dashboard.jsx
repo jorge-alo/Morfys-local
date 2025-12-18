@@ -1,3 +1,9 @@
+import { useContext, useEffect, useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import '../styles/Dashboard.css';
+import { DataContext } from '../context/DataContext';
+import { AuthContext } from '../context/AuthContext';
+
 export const Dashboard = ({ restaurantId }) => {
     const { localId } = useContext(AuthContext);
     const { getDataChart } = useContext(DataContext);
@@ -6,7 +12,7 @@ export const Dashboard = ({ restaurantId }) => {
 
     const handleGetDataChart = async () => {
         // Si no hay localId, no hacemos la petición para evitar el "undefined"
-        if (!localId) return; 
+        if (!localId) return;
 
         try {
             setLoading(true);
