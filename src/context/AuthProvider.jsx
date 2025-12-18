@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
                 setUserId(response.data.userId);
                 setLocal(response.data.local);
                 setLocalId(response.data.localId)
+                console.log("Valor de localId en AuthProvider", localId);
             }
 
         } catch (err) {
