@@ -132,7 +132,7 @@ export const DataProvider = ({ children }) => {
     }
   }
   return (
-    <DataContext.Provider value={{getLocalesApi, getDataChart, getPreferencePay, sendDataNewUser, getUsers, handleResetPassword, sendPorcentage, addStandbyAll, handleSetTime, handleUpdateBanner, handleDestroy, setError, handleGetData, handleCargarComidas, handleUpdate }}>
+    <DataContext.Provider value={{getLocales, getDataChart, getPreferencePay, sendDataNewUser, getUsers, handleResetPassword, sendPorcentage, addStandbyAll, handleSetTime, handleUpdateBanner, handleDestroy, setError, handleGetData, handleCargarComidas, handleUpdate }}>
       {children}
     </DataContext.Provider>
   )

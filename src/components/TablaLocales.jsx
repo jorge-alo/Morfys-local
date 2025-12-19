@@ -6,8 +6,15 @@ export const TablaLocales = () => {
     const [locales, setLocales] = useState([]);
 
     const handleGetLocales = async () => {
-        const locales = await getLocales();
-        setLocales(locales.locales);
+
+        try {
+            const result = await getLocales();
+            const lista = result?.locales || result || [];
+            setLocales(lista);
+        } catch (error) {
+            console.error("Error al obtener locales:", error);
+        }
+
         console.log("Valor de locales en TablaUser", locales);
     }
 
@@ -18,37 +25,44 @@ export const TablaLocales = () => {
 
     return (
         <div>
-            <table>
-                <thead>
-                    <tr>  
-                    <th >id</th>
-                    <th >logo</th>
-                    <th >celular</th>
-                    <th >user_id</th>
-                     <th >accion</th>
-                    
-                    </tr>
-                </thead>
-                <tbody>
-                    {locales.map((res) => (
-                        <tr key={res.id}>
-                            <td>{res.id}</td>
-                            <td>
-                                <div className="local-info">
-                                    {res.logo && <img src={res.logo} alt="logo" className="mini-logo" />}
-                                    <strong>{res.local}</strong>
-                                </div>
-                            </td>
-                            <td>{res.cel}</td>
-                            <td>{res.user_id ? `Asignado (ID: ${res.user_id})` : "Sin Dueño"}</td>
-                            <td>
-                                <button className="btn-edit">Configurar Horarios</button>
-                                <button className="btn-delete">Eliminar</button>
-                            </td>
+
+            {/* Si el array está vacío, mostrar un mensaje */}
+            {locales.length === 0 ? (
+                <p>No hay locales registrados o cargando...</p>
+            ) : (
+                <table>
+                    <thead>
+                        <tr>
+                            <th >id</th>
+                            <th >logo</th>
+                            <th >celular</th>
+                            <th >user_id</th>
+                            <th >accion</th>
+
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {locales.map((res) => (
+                            <tr key={res.id}>
+                                <td>{res.id}</td>
+                                <td>
+                                    <div className="local-info">
+                                        {res.logo && <img src={res.logo} alt="logo" className="mini-logo" />}
+                                        <strong>{res.local}</strong>
+                                    </div>
+                                </td>
+                                <td>{res.cel}</td>
+                                <td>{res.user_id ? `Asignado (ID: ${res.user_id})` : "Sin Dueño"}</td>
+                                <td>
+                                    <button className="btn-edit">Configurar Horarios</button>
+                                    <button className="btn-delete">Eliminar</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+
         </div>
     )
 }
