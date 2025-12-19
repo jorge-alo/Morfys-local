@@ -16,6 +16,9 @@ import { Outlet } from 'react-router-dom'
 import { PagoExitoso } from './pages/PagoExitoso.jsx'
 import { PagoFallido } from './pages/PagoFallido.jsx'
 import { PagoVencido } from './pages/Pagovencido.jsx'
+import { GestionLocales } from './pages/GestionLocales.jsx'
+import { GestionUsuarios } from './pages/GestionUsuarios.jsx'
+import { DashboardAdmin } from './pages/DashboardAdmin.jsx'
 
 export const App = () => {
   return (
@@ -29,14 +32,20 @@ export const App = () => {
               <Route path='/reset-password/:token' element={<PublicPage><ResetPassword /></PublicPage>} />
               <Route path='/pago-exitoso' element={<PagoExitoso />} />
               <Route path='/pago-fallido' element={<PagoFallido />} />
-              <Route path='/pago-vencido' element={ <PagoVencido/> } />
-              
-              {/* Rutas privadas */}
-              <Route element={<Admin><PrivatePage><Sidebar /><Outlet /></PrivatePage></Admin>}>
+              <Route path='/pago-vencido' element={<PagoVencido />} />
+
+              {/* --- RUTAS PARA TODOS (Admin y Owners) --- */}
+              <Route element={<PrivatePage><Sidebar /><Outlet /></PrivatePage>}>
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/menu' element={<Menu />} />
                 <Route path='/ajustes' element={<Ajustes />} />
-                <Route path='*' element={<Navigate to='/menu' />} />
+              </Route>
+
+              {/* --- RUTAS EXCLUSIVAS (Solo SuperAdmin) --- */}
+              <Route path='/admin' element={<Admin><PrivatePage><Sidebar /><Outlet /></PrivatePage></Admin>}>
+                <Route path='locales' element={<GestionLocales />} />
+                <Route path='usuarios' element={<GestionUsuarios />} />
+                <Route path='dashboard' element={<DashboardAdmin />} />
               </Route>
             </Routes>
           </DataProvider>

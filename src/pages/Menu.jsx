@@ -22,7 +22,7 @@ export const Menu = () => {
   const [selectItem, setSelectItem] = useState({});
   const [porcentage, setPorcentage] = useState("");
   const [selectAll, setSelectAll] = useState(false);
-  const [showModalUser, setShowModalUser] = useState(false);
+ 
 
   console.log("Valor de localId en menu", localId);
 
@@ -86,11 +86,6 @@ export const Menu = () => {
     setSelectAll(false);
   }
 
-  const handleAddUser = () => {
-    setShowModalUser(true);
-  }
-
-
   return (
     <div className="container-table">
       {(editIndex != null || showInputRow) &&
@@ -103,22 +98,12 @@ export const Menu = () => {
       }
 
       {
-        showModalUser &&
-        <ModalUSer
-          setShowModalUser={setShowModalUser}
-        />
-      }
-      {
         showModalPay &&
         <ModalPay showModalPay={showModalPay} setShowModalPay={setShowModalPay}/>
       }
-      {
-        admin
-          ? <div>
-            <button onClick={handleAddUser}> Agregar usuario </button>
-          </div>
-          :
-          <>
+      
+       
+          
             <Filter />
             <div className="container-table__mainButtons">
               <button className="container-table__agregarcomida" onClick={handleShowForm}>Agregar Comida</button>
@@ -136,24 +121,15 @@ export const Menu = () => {
                 <button onClick={handleSendChangePorsentage}>Actualizar precio</button>
               </div>
             </div>
-          </>
+          
 
-      }
-
-
-      {
-        admin
-          ? <TablaUser />
-          : <Tablas
+          <Tablas
             comidas={comidas}
             setEditIndex={setEditIndex}
             handleLocales={handleLocales}
             selectAll={selectAll}
             setSelectAll={setSelectAll}
           />
-      }
-
-
     </div>
 
   )
