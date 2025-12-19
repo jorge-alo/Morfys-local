@@ -69,7 +69,8 @@ export const Dashboard = ({ restaurantId }) => {
                     <div>
                         <p className="label">Ticket Promedio</p>
                         <p className="value">
-                            ${(Number(dataChart.resumen.ingresos_netos) / dataChart.resumen.total_pedidos || 0).toFixed(2)}
+                            ${(Number(dataChart.resumen.ingresos_netos) / (dataChart.resumen.total_pedidos || 1))
+                                .toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </p>
                     </div>
                 </div>
