@@ -9,7 +9,7 @@ export const TablaLocales = () => {
 
         try {
             const result = await getLocales();
-            const lista = result?.locales || result || [];
+            const lista = result?.data.locales || result || [];
             setLocales(lista);
         } catch (error) {
             console.error("Error al obtener locales:", error);
@@ -34,6 +34,7 @@ export const TablaLocales = () => {
                     <thead>
                         <tr>
                             <th >id</th>
+                            <th >nombre</th>
                             <th >logo</th>
                             <th >celular</th>
                             <th >user_id</th>
@@ -45,6 +46,7 @@ export const TablaLocales = () => {
                         {locales.map((res) => (
                             <tr key={res.id}>
                                 <td>{res.id}</td>
+                                <td>{res.local}</td>
                                 <td>
                                     <div className="local-info">
                                         {res.logo && <img src={res.logo} alt="logo" className="mini-logo" />}
