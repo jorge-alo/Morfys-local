@@ -116,7 +116,7 @@ export const DataProvider = ({ children }) => {
   const getDataChart = async(idLocal) => {
     try {
       const result = await getDataChartApi(idLocal);
-      return result
+      return result;
     } catch (error) {
       console.log("Error:", error);
     }
