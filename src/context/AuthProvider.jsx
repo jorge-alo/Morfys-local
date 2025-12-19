@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
             // ⛔ AQUI ESTABA EL PROBLEMA
             if (err.response?.data?.status === "expired") {
                 setLogin(false);
-                 setUserId(err.response.data.userId);
+                setUserId(err.response.data.userId);
                 setLocal(null);
                 setLocalId(null);
                 navigate("/pago-vencido");  // 🔥 Redirige en caso de 403
@@ -80,9 +80,12 @@ export const AuthProvider = ({ children }) => {
 
             if (response.data.auth) {
                 setAdmin(response.data.auth)
+                navigate('/admin/usuarios');
+            } else {
+                setLogin(response.data.login);
+                navigate('/dashboard');
             }
-            setLogin(response.data.login);
-            navigate('/menu');
+
         } catch (error) {
             console.error("Error:", error);
             setError(error.response?.data?.message);
@@ -118,7 +121,7 @@ export const AuthProvider = ({ children }) => {
 
     }
     return (
-        <AuthContext.Provider value={{localId, checkPay, loading, success, setSuccess, showForgotPassword, setShowForgotPassword, emailForReset, setEmailForReset, handleForgotPassword, setAdmin, local, setLocal, error, setError, admin, handleLoginSubmit, handleLogOut, login, setLogin, userId, checkAuth }}>
+        <AuthContext.Provider value={{ localId, checkPay, loading, success, setSuccess, showForgotPassword, setShowForgotPassword, emailForReset, setEmailForReset, handleForgotPassword, setAdmin, local, setLocal, error, setError, admin, handleLoginSubmit, handleLogOut, login, setLogin, userId, checkAuth }}>
             {children}
         </AuthContext.Provider>
     )

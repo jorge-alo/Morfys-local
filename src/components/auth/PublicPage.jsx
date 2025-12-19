@@ -16,5 +16,5 @@ export const PublicPage = ( {children} ) => {
     }
     console.log( "este es el valor de login:", login);
     console.log( "este es el valor de local:", local);
-  return (login || admin) ? <Navigate to='/menu'/>  : children
+  return login ? <Navigate to='/dashboard'/>  : admin ? <Navigate to='/admin/usuarios'/> : children
 }
