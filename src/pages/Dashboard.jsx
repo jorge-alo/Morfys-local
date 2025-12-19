@@ -78,7 +78,7 @@ export const Dashboard = ({ restaurantId }) => {
 
             <div className="dashboard-main-content">
                 {/* 2. GRÁFICO DE VENTAS POR PLATO */}
-                <div className="chart-section">
+                <div className="chart-section chart-desktop-only">
                     <h3>Recaudación por Producto (Base + Opciones)</h3>
                     <div className="chart-container">
                         <ResponsiveContainer width="100%" aspect={2}> {/* aspect={2} significa que el ancho será el doble que el alto */}

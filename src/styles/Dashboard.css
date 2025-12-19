@@ -107,4 +107,14 @@
     .dashboard-main-content {
         grid-template-columns: 1fr;
     }
+    /* OCULTAR EL GRÁFICO EN MÓVIL */
+    .chart-desktop-only {
+        display: none;
+    }
+
+    /* Opcional: Quitar el límite de altura a la tabla en móvil 
+       para que el usuario haga scroll de la página y no solo del cuadrito */
+    .table-section {
+        max-height: none;
+    }
 }
