@@ -9,6 +9,7 @@ export const Dashboard = ({ restaurantId }) => {
     const { getDataChart } = useContext(DataContext);
     const [dataChart, setDataChart] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [periodo, setPeriodo] = useState('7d');
 
     console.log("Valor de localId en dashboard", localId);
 
@@ -18,7 +19,7 @@ export const Dashboard = ({ restaurantId }) => {
 
         try {
             setLoading(true);
-            const result = await getDataChart(localId);
+            const result = await getDataChart(localId, periodo);
             // Validamos que result y result.data existan
             if (result && result.data) {
                 setDataChart(result.data);
@@ -32,7 +33,7 @@ export const Dashboard = ({ restaurantId }) => {
 
     useEffect(() => {
         handleGetDataChart();
-    }, [localId]); // Se ejecuta cuando localId esté disponible
+    }, [localId, periodo]); // Se ejecuta cuando localId esté disponible
 
     if (loading) return <div className="loader">Cargando estadísticas...</div>;
 
@@ -47,6 +48,16 @@ export const Dashboard = ({ restaurantId }) => {
                 <h1>Panel de Control del Local</h1>
                 <p>Resumen general de actividad</p>
             </header>
+
+            <div className="filter-container">
+                <select value={periodo} onChange={(e) => setPeriodo(e.target.value)} className="period-select">
+                    <option value="today">Hoy</option>
+                    <option value="7d">Últimos 7 días</option>
+                    <option value="30d">Últimos 30 días</option>
+                    <option value="month">Este Mes</option>
+                    <option value="year">Este Año</option>
+                </select>
+            </div>
 
             {/* 1. CARDS DE MÉTRICAS */}
             <section className="metrics-grid">
@@ -108,9 +119,9 @@ export const Dashboard = ({ restaurantId }) => {
                 {/* 3. TABLA DE DETALLES */}
                 <div className='container__table-section'>
                     <h3>Ranking de Ventas</h3>
-                <div className="table-section">
-                    
-                   
+                    <div className="table-section">
+
+
                         <table className="stats-table">
                             <thead>
                                 <tr>
@@ -127,9 +138,9 @@ export const Dashboard = ({ restaurantId }) => {
                                 ))}
                             </tbody>
                         </table>
+                    </div>
                 </div>
-                </div>
-                
+
             </div>
         </div>
     );

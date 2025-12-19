@@ -81,16 +81,18 @@ export const getUsersApi = async () => {
   return await api.get("/users");
 }
 
-export const getPreferencePayApi = async ({userId}) => {
-  return await api.post('/preference', {userId});
+export const getPreferencePayApi = async ({ userId }) => {
+  return await api.post('/preference', { userId });
 }
 
 export const checkPayAPi = async () => {
   return await api.get("/checkPay");
 }
 
-export const getDataChartApi = async (localId) => {
-  return await api.get(`/chart/${localId}`);
+export const getDataChartApi = async (localId, periodo) => {
+  return await api.get(`/chart/${localId}`, {
+    params: { periodo } // Esto generará: /chart/123?periodo=7d
+  });
 }
 
 

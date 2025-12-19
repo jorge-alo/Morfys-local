@@ -113,9 +113,9 @@ export const DataProvider = ({ children }) => {
     
   }
 
-  const getDataChart = async(idLocal) => {
+  const getDataChart = async(idLocal, periodo) => {
     try {
-      const result = await getDataChartApi(idLocal);
+      const result = await getDataChartApi(idLocal, periodo);
       return result;
     } catch (error) {
       console.log("Error:", error);
