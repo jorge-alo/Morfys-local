@@ -1,7 +1,10 @@
+import { TablaLocales } from "../components/TablaLocales"
 
 
 export const GestionLocales = () => {
   return (
-    <div>GestionLocales</div>
+    <div>
+        <TablaLocales/>
+    </div>
   )
 }
