@@ -108,6 +108,10 @@ export const AuthProvider = ({ children }) => {
         setAdmin(0);
         setLogin(false);
         setComidas(null);
+        setUserId(null);
+        setLocal(null);      // <--- IMPORTANTE: Borra el nombre del local anterior
+        setLocalId(null);    // <--- IMPORTANTE: Borra el ID del local anterior
+        setError(null);
         navigate("/");
     }
 

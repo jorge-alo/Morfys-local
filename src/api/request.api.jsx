@@ -95,5 +95,11 @@ export const getDataChartApi = async (localId, periodo) => {
   });
 }
 
+export const getLocalesApi = async () => {
+  return await api.get("/restaurantes");
+}
+
+
+
 
 
