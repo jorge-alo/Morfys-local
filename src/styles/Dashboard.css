@@ -1,9 +1,13 @@
 .dashboard-wrapper {
     padding: 20px;
-    background: #f8f9fa;
+    background: transparent;
     min-height: 100vh;
+    width: 100%;
 }
-
+.dashboard-header {
+    text-align: center;
+    padding: 20px;
+}
 .metrics-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -54,7 +58,7 @@
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     /* AJUSTES PARA RECHARTS */
-    min-height: 400px;
+    min-height: 100px;
     width: 100%;
     overflow: hidden;
     /* Importante para que el gráfico no se desborde */
@@ -65,7 +69,7 @@
 /* Contenedor específico para el ResponsiveContainer */
 .chart-container {
     width: 100%;
-    height: 300px;
+    height: fit-content;
     /* Altura fija para que Recharts pueda calcular el ancho */
     margin-top: 15px;
 }
