@@ -106,25 +106,30 @@ export const Dashboard = ({ restaurantId }) => {
                 </div>
 
                 {/* 3. TABLA DE DETALLES */}
-                <div className="table-section">
+                <div className='container__table-section'>
                     <h3>Ranking de Ventas</h3>
-                    <table className="stats-table">
-                        <thead>
-                            <tr>
-                                <th>Producto</th>
-                                <th>Total Generado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {dataChart.platos.map((plato, idx) => (
-                                <tr key={idx}>
-                                    <td>{plato.nombre_item}</td>
-                                    <td>${Number(plato.total).toLocaleString('es-AR')}</td>
+                <div className="table-section">
+                    
+                   
+                        <table className="stats-table">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Total Generado</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {dataChart.platos.map((plato, idx) => (
+                                    <tr key={idx}>
+                                        <td>{plato.nombre_item}</td>
+                                        <td>${Number(plato.total).toLocaleString('es-AR')}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                 </div>
+                </div>
+                
             </div>
         </div>
     );

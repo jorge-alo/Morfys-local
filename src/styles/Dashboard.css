@@ -73,21 +73,30 @@
     /* Altura fija para que Recharts pueda calcular el ancho */
     margin-top: 15px;
 }
-
+.container__table-section {
+    background-color: #fff;
+     border-radius: 12px;
+     padding: 20px 0px 0px 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+.container__table-section h3 {
+  
+}
 .table-section {
     background: white;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    
     max-height: 450px;
     /* Opcional: para que no sea infinita si hay muchos platos */
-    overflow-y: auto;
+   overflow-y: auto;
 }
 
 .stats-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
+     
 }
 
 .stats-table th {
