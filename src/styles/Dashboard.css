@@ -4,10 +4,33 @@
     min-height: 100vh;
     width: 100%;
 }
+
 .dashboard-header {
     text-align: center;
     padding: 20px;
 }
+
+.filter-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.period-select {
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.period-select:focus {
+    border-color: #ff6347;
+    /* El color de tus barras */
+}
+
 .metrics-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -73,28 +96,29 @@
     /* Altura fija para que Recharts pueda calcular el ancho */
     margin-top: 15px;
 }
+
 .container__table-section {
     background-color: #fff;
-     border-radius: 12px;
-     padding: 20px 0px 0px 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 20px 0px 0px 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .table-section {
     background: white;
     padding: 20px;
     border-radius: 12px;
-    
+
     max-height: 450px;
     /* Opcional: para que no sea infinita si hay muchos platos */
-   overflow-y: auto;
+    overflow-y: auto;
 }
 
 .stats-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
-     
+
 }
 
 .stats-table th {
@@ -114,6 +138,7 @@
     .dashboard-main-content {
         grid-template-columns: 1fr;
     }
+
     /* OCULTAR EL GRÁFICO EN MÓVIL */
     .chart-desktop-only {
         display: none;
