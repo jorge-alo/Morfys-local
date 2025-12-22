@@ -4,19 +4,29 @@ import { DataContext } from '../context/DataContext';
 import { useForm } from '../context/FormProvider';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/Tablas.css'
+import { useFormStore } from '../store/useFormStore';
 
 export const Tablas = ({ setEditIndex, handleLocales, selectAll, setSelectAll }) => {
   const { handleDestroy, addStandbyAll } = useContext(DataContext);
-  const { setValueInput, categoria, comidas, acceptSelection, setAcceptSelection } = useForm();
+  //const { setValueInput, categoria, comidas, acceptSelection, setAcceptSelection } = useForm();
+
+  const comidas = useFormStore((state) => state.comidas);
+  const setValueInput = useFormStore((state) => state.setValueInput);
+  const valueInput = useFormStore((state) => state.valueInput);
+  const acceptSelection = useFormStore((state) => state.acceptSelection);
+  const setAcceptSelection = useFormStore((state) => state.setAcceptSelection);
+  const categoria = useFormStore((state) => state.categoria);
+  const handleAcceptSelection = useFormStore((state) => state.handleAcceptSelection);
+
   const { userId } = useContext(AuthContext);
   const [acepto, setacepto] = useState({});
   const [aceptarHeaderCheck, setAceptarHeaderCheck] = useState(false);
-console.log("Valor de comidas en Tablas", comidas)
+  console.log("Valor de comidas en Tablas", comidas)
   const handleEdit = (index) => {
     setEditIndex(index);
-    setValueInput(prev => ({
-      ...prev, ...comidas[index]
-    }))
+    setValueInput( {
+      ...comidas[index]
+    })
   }
 
   const handleEliminar = async (id) => {
@@ -48,7 +58,7 @@ console.log("Valor de comidas en Tablas", comidas)
     setacepto(prev => {
       const newAcepto = { ...prev };
       comidas.forEach(item => {
-        if ((item.tamanio == 1 && Array.isArray(item.variantes) )|| (item.price == 0 && Array.isArray(item.variantes))) {
+        if ((item.tamanio == 1 && Array.isArray(item.variantes)) || (item.price == 0 && Array.isArray(item.variantes))) {
           item.variantes[0].opciones.forEach(op => {
             newAcepto[`op-${op.id}`] = { opId: op.id, check: checked };
           })
@@ -93,20 +103,7 @@ console.log("Valor de comidas en Tablas", comidas)
     setAcceptSelection(newSelectAll);
   }
 
-  const handleAcceptSelection = (item, checked, op = null) => {
-    setAcceptSelection(prev => {
-      if (item.tamanio == 1 || item.price == 0) {
-        return {
-          ...prev,
-          [`op-${op.id}`]: checked
-        }
-      }
-      return {
-        ...prev,
-        [`item-${item.id}`]: checked
-      }
-    })
-  }
+
 
   return (
     <div className="scroll-table-wrapper">
@@ -176,7 +173,7 @@ console.log("Valor de comidas en Tablas", comidas)
                           key === "variantes" ||
                           key === "tamanio" ||
                           key === "image" ||
-                          key == "description" 
+                          key == "description"
                         )
                           return null; // ⬅️ este return es solo para saltar keys
 

@@ -3,20 +3,26 @@ import { use } from 'react';
 import '../styles/Form.css'
 import { useForm } from '../context/FormProvider';
 import { DataContext } from '../context/DataContext';
+import { useFormStore } from '../store/useFormStore';
 
 export const Form = ({ handleClose }) => {
     const [acepto, setAcepto] = useState(false);
-    const { valueInput, setValueInput, handleChange, file } = useForm();
+    // const { valueInput, setValueInput, handleChange, file } = useForm();
+
+    const valueInput = useFormStore((state) => state.valueInput);
+    const setValueInput = useFormStore((state) => state.setValueInput);
+    const handleChange = useFormStore((state) => state.handleChange);
+    const imageFile = useFormStore((state) => state.imageFile);
+
     const { handleUpdate } = useContext(DataContext);
     const variantesBackup = useRef([]);
-    console.log("valor de file en Form", file);
-    console.log("valor de valueInput en Form", valueInput);
+
 
     const handleSaveEdit = async () => {
         console.log("Valor real de valueInput antes de enviar:", valueInput);
         const formData = new FormData();
-        if (file) {
-            formData.append('image', file);
+        if (imageFile) {
+            formData.append('image', imageFile);
         }
         formData.append('id', valueInput.id);
         formData.append('name', valueInput.name);
@@ -44,6 +50,20 @@ export const Form = ({ handleClose }) => {
             setValueInput(prev => ({ ...prev, variantes: [] }))
         }
     }
+
+    const handleOpcionChange = (vIndex, oIndex, campo, valor) => {
+        const nuevasVariantes = valueInput.variantes.map((v, i) => {
+            if (i !== vIndex) return v;
+            return {
+                ...v,
+                opciones: v.opciones.map((op, j) =>
+                    j === oIndex ? { ...op, [campo]: valor } : op
+                )
+            };
+        });
+
+        setValueInput({ variantes: nuevasVariantes });
+    };
     return (
         <form className='form'>
             <div className='form__item'>
@@ -68,7 +88,7 @@ export const Form = ({ handleClose }) => {
             </div>
             <div className='form__item'>
                 <label htmlFor="image">Imagen</label>
-                <label htmlFor="image" className="agregararchivo">{file ? file.name : valueInput.image ? valueInput.image : "cargar imagen"}</label>
+                <label htmlFor="image" className="agregararchivo">{imageFile ? imageFile.name : valueInput.image ? valueInput.image : "cargar imagen"}</label>
                 <input
                     type="file"
                     name="image"
@@ -113,32 +133,32 @@ export const Form = ({ handleClose }) => {
             {
                 valueInput.variantes.map((variante, i) => (
                     <div className='form__item variantes' key={i}>
-                        <label htmlFor="nombreVariante">Nombre de variante</label>
+                        <label htmlFor={`nombreVariante-${i}`}>Nombre de variante</label>
                         <input
                             type="text"
                             name="nombre"
-                            id="nombreVariante"
+                            id={`nombreVariante-${i}`}
                             value={variante.nombre}
                             onChange={(e) => {
-                                setValueInput(prev => {
-                                    const nuevas = [...valueInput.variantes];
-                                    nuevas[i].nombre = e.target.value;
-                                    return { ...prev, variantes: nuevas }
-                                })
+
+                                const nuevas = [...valueInput.variantes];
+                                nuevas[i].nombre = e.target.value;
+                                setValueInput({ variantes: nuevas });
+
                             }}
                         />
-                        <label htmlFor="cantidadVariante">Cantidad de variantes</label>
+                        <label htmlFor={`cantidadVariante-${i}`}>Cantidad de variantes</label>
                         <input
                             type="number"
                             name="nombrevariante"
-                            id="cantidadVariante"
+                            id={`cantidadVariante-${i}`}
                             value={variante.limite}
                             onChange={(e) => {
-                                setValueInput(prev => {
-                                    const nuevas = [...valueInput.variantes];
-                                    nuevas[i].limite = e.target.value;
-                                    return { ...prev, variantes: nuevas }
-                                })
+
+                                const nuevas = [...valueInput.variantes];
+                                nuevas[i].limite = e.target.value;
+                                setValueInput({ variantes: nuevas });
+
                             }}
                         />
 
@@ -152,28 +172,7 @@ export const Form = ({ handleClose }) => {
                                         name="nombreopcion"
                                         id={`nombreopcion-${i}-${j}`}
                                         value={op.nombre}
-                                        onChange={(e) => {
-                                            setValueInput(prev => {
-                                                const nuevas = prev.variantes.map((v, index) => {
-                                                    if (index == i) {
-                                                        return {
-                                                            ...v,
-                                                            opciones: v.opciones.map((op, jindex) => {
-                                                                if (j == jindex) {
-                                                                    return {
-                                                                        ...op,
-                                                                        nombre: e.target.value
-                                                                    }
-                                                                }
-                                                                return op
-                                                            })
-                                                        }
-                                                    }
-                                                    return v;
-                                                })
-                                                return { ...prev, variantes: nuevas }
-                                            })
-                                        }}
+                                        onChange={(e) => handleOpcionChange(i,j, 'nombre', e.target.value)}
                                     />
                                 </div>
                                 <div>
@@ -183,36 +182,15 @@ export const Form = ({ handleClose }) => {
                                         name="precioopcion"
                                         id={`precioopcion-${i}-${j}`}
                                         value={op.precio_adicional}
-                                        onChange={(e) => {
-                                            setValueInput(prev => {
-                                                const nuevas = prev.variantes.map((v, index) => {
-                                                    if (index == i) {
-                                                        return {
-                                                            ...v,
-                                                            opciones: v.opciones.map((op, jindex) => {
-                                                                if (j == jindex) {
-                                                                    return {
-                                                                        ...op,
-                                                                        precio_adicional: e.target.value
-                                                                    }
-                                                                }
-                                                                return op
-                                                            })
-                                                        }
-                                                    }
-                                                    return v
-                                                });
-                                                return { ...prev, variantes: nuevas }
-                                            })
-                                        }}
+                                        onChange={(e) => handleOpcionChange(i,j, 'precio_adicional', e.target.value)}
                                     />
                                 </div>
                             </div>
                         ))}
 
                         <button className='button-opcion' type='button' onClick={() => {
-                            setValueInput(prev => {
-                                const nuevas = prev.variantes.map((v, index) => {
+                           
+                                const nuevas = valueInput.variantes.map((v, index) => {
                                     if (index === i) {
                                         return {
                                             ...v,
@@ -221,8 +199,8 @@ export const Form = ({ handleClose }) => {
                                     }
                                     return v;
                                 });
-                                return { ...prev, variantes: nuevas };
-                            });
+                                setValueInput({  variantes: nuevas });
+                            
                         }}>
                             +opcion
                         </button>

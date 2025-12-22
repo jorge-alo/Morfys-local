@@ -2,9 +2,15 @@ import { useContext } from "react";
 import { useForm } from "../context/FormProvider"
 import '../styles/ModalUser.css'
 import { DataContext } from "../context/DataContext";
+import { useFormStore } from "../store/useFormStore";
 export const ModalUSer = ({ setShowModalUser }) => {
-    const { valueInput, resetForm, handleChange } = useForm();
-    const { sendDataNewUser} = useContext(DataContext);
+    //const { valueInput, resetForm, handleChange } = useForm();
+
+    const valueInput = useFormStore((state) => state.valueInput);
+    const resetForm = useFormStore((state) => state.resetForm);
+    const handleChange = useFormStore((state) => state.handleChange);
+
+    const { sendDataNewUser } = useContext(DataContext);
 
     const handleClose = () => {
         resetForm()
@@ -16,7 +22,7 @@ export const ModalUSer = ({ setShowModalUser }) => {
         }
     }
 
-    const handleEnviarUser = async(e) => {
+    const handleEnviarUser = async (e) => {
         e.preventDefault()
         const response = await sendDataNewUser(valueInput);
         handleClose();

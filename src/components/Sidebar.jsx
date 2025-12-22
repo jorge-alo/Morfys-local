@@ -3,10 +3,15 @@ import "../styles/Sidebar.css"
 import { AuthContext } from "../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "../context/FormProvider";
+import { useFormStore } from "../store/useFormStore";
 
 export const Sidebar = () => {
   const { admin, handleLogOut, local, checkPay } = useContext(AuthContext);
-  const { showModalPay, setShowModalPay } = useForm();
+  //const { showModalPay, setShowModalPay } = useForm();
+
+  const showModalPay = useFormStore((state) => state.showModalPay);
+  const setShowModalPay = useFormStore((state) => state.setShowModalPay);
+
   const [openMenu, setOpenMenu] = useState(false);
   const [activeUntil, setActiveUntil] = useState(null);
 
@@ -85,7 +90,7 @@ export const Sidebar = () => {
   const renderLinksDesktop = () => {
     if (admin) {
       return (
-         <>
+        <>
           <li><Link to="/admin/locales" >Gestionar Locales</Link></li>
           <li><Link to="/admin/usuarios" >Gestionar Usuarios</Link></li>
           {/* Si quieres que el admin vea estadísticas globales */}

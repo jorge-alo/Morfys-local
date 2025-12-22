@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from './AuthContext';
 import { useForm } from './FormProvider';
 import { checkPayAPi, forgotEmailApi, logOutApi, updateLoginApi, verifyTokenApi } from '../api/request.api';
+import { useFormStore } from '../store/useFormStore';
 
 
 
 export const AuthProvider = ({ children }) => {
-    const { resetForm, setComidas } = useForm()
+   /* const { resetForm, setComidas } = useForm()*/
+    const setComidas = useFormStore((state) => state.setComidas);
     const [login, setLogin] = useState(false);
     const [userId, setUserId] = useState(null);
     const [error, setError] = useState(null)

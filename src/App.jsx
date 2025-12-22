@@ -23,7 +23,7 @@ import { DashboardAdmin } from './pages/DashboardAdmin.jsx'
 export const App = () => {
   return (
     <div className="app-container">
-      <FormProvider>
+      
         <AuthProvider>
           <DataProvider>
             <Routes>
@@ -50,7 +50,7 @@ export const App = () => {
             </Routes>
           </DataProvider>
         </AuthProvider>
-      </FormProvider>
+      
     </div>
   )
 }

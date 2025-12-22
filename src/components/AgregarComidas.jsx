@@ -4,18 +4,25 @@ import { useContext } from 'react';
 import { DataContext } from '../context/DataContext';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/AgregarComidas.css'
+import { useFormStore } from '../store/useFormStore';
 
 export const AgregarComidas = ({ handleClose }) => {
 
-  const { valueInput, setValueInput, handleChange, file } = useForm();
+  // const { valueInput, setValueInput, handleChange, file } = useForm();
+
+  const valueInput = useFormStore((state) => state.valueInput);
+  const setValueInput = useFormStore((state) => state.setValueInput);
+  const handleChange = useFormStore((state) => state.handleChange);
+  const imageFile = useFormStore((state) => state.imageFile);
+
   const { handleCargarComidas } = useContext(DataContext);
   const [acepto, setAcepto] = useState(false);
   const [aceptoTamanio, setAceptoTamanio] = useState(false);
   const variantesBackup = useRef([]);
   const handleSaveEdit = async () => {
     const formData = new FormData();
-    if (file) {
-      formData.append('image', file);
+    if (imageFile) {
+      formData.append('image', imageFile);
     }
     formData.append('id', valueInput.id);
     formData.append('name', valueInput.name);
@@ -31,29 +38,43 @@ export const AgregarComidas = ({ handleClose }) => {
   const handleToggleVariantes = (checked) => {
     setAcepto(checked);
     if (checked) {
-      setValueInput(prev => ({
-        ...prev,
-        variantes: variantesBackup.current.length > 0
-          ? variantesBackup.current
-          : (prev.variantes && prev.variantes.length > 0)
-            ? prev.variantes
-            : [{ nombre: "", limite: 0, opciones: [{ nombre: "", precio_adicional: 0 }] }]
-      }))
+
+      const nuevasVariantes = variantesBackup.current.length > 0
+        ? variantesBackup.current
+        : (valueInput.variantes && valueInput.variantes.length > 0)
+          ? valueInput.variantes
+          : [{ nombre: "", limite: 0, opciones: [{ nombre: "", precio_adicional: 0 }] }]
+      setValueInput({ variantes: nuevasVariantes });
     } else {
       variantesBackup.current = valueInput.variantes;
-      setValueInput(prev => ({ ...prev, variantes: [] }))
+      setValueInput({ variantes: [] })
     }
   }
 
   const handleChangeTamanio = (checked) => {
     setAceptoTamanio(checked)
-    setValueInput(prev => (
+    setValueInput(
       {
-        ...prev,
         tamanio: checked ? 1 : 0
       }
-    ))
+    )
   }
+
+const handleOpcionChange = (vIndex, oIndex, campo, valor) => {
+  const nuevasVariantes = valueInput.variantes.map((v, i) => {
+    if (i !== vIndex) return v;
+    return {
+      ...v,
+      opciones: v.opciones.map((op, j) => 
+        j === oIndex ? { ...op, [campo]: valor } : op
+      )
+    };
+  });
+  
+  setValueInput({ variantes: nuevasVariantes });
+};
+
+
   return (
     <form className='form'>
       <div className='form__item'>
@@ -78,7 +99,7 @@ export const AgregarComidas = ({ handleClose }) => {
       </div>
       <div className='form__item'>
         <label htmlFor="image">Imagen</label>
-        <label htmlFor="image" className="agregararchivo">{file ? file.name : valueInput.image ? valueInput.image : "cargar imagen"}</label>
+        <label htmlFor="image" className="agregararchivo">{imageFile ? imageFile.name : "cargar imagen"}</label>
         <input
           type="file"
           name="image"
@@ -143,11 +164,9 @@ export const AgregarComidas = ({ handleClose }) => {
               id="nombreVariante"
               value={variante.nombre}
               onChange={(e) => {
-                setValueInput(prev => {
                   const nuevas = [...valueInput.variantes];
                   nuevas[i].nombre = e.target.value;
-                  return { ...prev, variantes: nuevas }
-                })
+                 setValueInput({ variantes: nuevas });            
               }}
             />
             <label htmlFor="cantidadVariante">Cantidad de variantes</label>
@@ -157,11 +176,11 @@ export const AgregarComidas = ({ handleClose }) => {
               id="cantidadVariante"
               value={variante.limite}
               onChange={(e) => {
-                setValueInput(prev => {
+                
                   const nuevas = [...valueInput.variantes];
                   nuevas[i].limite = e.target.value;
-                  return { ...prev, variantes: nuevas }
-                })
+                  setValueInput({ variantes: nuevas }); 
+               
               }}
             />
 
@@ -175,28 +194,7 @@ export const AgregarComidas = ({ handleClose }) => {
                     name="nombreopcion"
                     id={`nombreopcion-${i}-${j}`}
                     value={op.nombre}
-                    onChange={(e) => {
-                      setValueInput(prev => {
-                        const nuevas = prev.variantes.map((v, index) => {
-                          if (index == i) {
-                            return {
-                              ...v,
-                              opciones: v.opciones.map((op, jindex) => {
-                                if (j == jindex) {
-                                  return {
-                                    ...op,
-                                    nombre: e.target.value
-                                  }
-                                }
-                                return op
-                              })
-                            }
-                          }
-                          return v;
-                        })
-                        return { ...prev, variantes: nuevas }
-                      })
-                    }}
+                   onChange={(e) => handleOpcionChange(i, j, 'nombre', e.target.value)}
                   />
                 </div>
                 <div>
@@ -206,36 +204,15 @@ export const AgregarComidas = ({ handleClose }) => {
                     name="precioopcion"
                     id={`precioopcion-${i}-${j}`}
                     value={op.precio_adicional}
-                    onChange={(e) => {
-                      setValueInput(prev => {
-                        const nuevas = prev.variantes.map((v, index) => {
-                          if (index == i) {
-                            return {
-                              ...v,
-                              opciones: v.opciones.map((op, jindex) => {
-                                if (j == jindex) {
-                                  return {
-                                    ...op,
-                                    precio_adicional: e.target.value
-                                  }
-                                }
-                                return op
-                              })
-                            }
-                          }
-                          return v
-                        });
-                        return { ...prev, variantes: nuevas }
-                      })
-                    }}
+                    onChange={(e) => handleOpcionChange(i, j, 'precio_adicional', Number(e.target.value))}
                   />
                 </div>
               </div>
             ))}
 
             <button type='button' onClick={() => {
-              setValueInput(prev => {
-                const nuevas = prev.variantes.map((v, index) => {
+              
+                const nuevas = valueInput.variantes.map((v, index) => {
                   if (index === i) {
                     return {
                       ...v,
@@ -244,8 +221,8 @@ export const AgregarComidas = ({ handleClose }) => {
                   }
                   return v;
                 });
-                return { ...prev, variantes: nuevas };
-              });
+                setValueInput({ variantes: nuevas });
+              
             }}>
               +opcion
             </button>

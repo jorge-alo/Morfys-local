@@ -2,12 +2,17 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useForm } from "../context/FormProvider";
 import '../styles/Login.css'
+import { useFormStore } from "../store/useFormStore";
 
 
 
 export const Login = () => {
     const { handleLoginSubmit, handleForgotPassword, error, setError, showForgotPassword, setShowForgotPassword, emailForReset, setEmailForReset } = useContext(AuthContext);
-    const { handleChange, valueInput, resetForm } = useForm()
+    /*const { handleChange, valueInput, resetForm } = useForm()*/
+
+    const handleChange = useFormStore((state) => state.handleChange);
+    const valueInput = useFormStore((state) => state.valueInput);
+    const resetForm = useFormStore((state) => state.resetForm);
 
     useEffect(() => {
         setError(null);
