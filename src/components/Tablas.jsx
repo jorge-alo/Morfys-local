@@ -5,11 +5,10 @@ import { useForm } from '../context/FormProvider';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/Tablas.css'
 import { useFormStore } from '../store/useFormStore';
+import { useAuthStore } from '../store/useAuthStore';
 
 export const Tablas = ({ setEditIndex, handleLocales, selectAll, setSelectAll }) => {
   const { handleDestroy, addStandbyAll } = useContext(DataContext);
-  //const { setValueInput, categoria, comidas, acceptSelection, setAcceptSelection } = useForm();
-
   const comidas = useFormStore((state) => state.comidas);
   const setValueInput = useFormStore((state) => state.setValueInput);
   const valueInput = useFormStore((state) => state.valueInput);
@@ -17,14 +16,13 @@ export const Tablas = ({ setEditIndex, handleLocales, selectAll, setSelectAll })
   const setAcceptSelection = useFormStore((state) => state.setAcceptSelection);
   const categoria = useFormStore((state) => state.categoria);
   const handleAcceptSelection = useFormStore((state) => state.handleAcceptSelection);
-
-  const { userId } = useContext(AuthContext);
+  const userId = useAuthStore((state) => state.userId)
   const [acepto, setacepto] = useState({});
   const [aceptarHeaderCheck, setAceptarHeaderCheck] = useState(false);
-  console.log("Valor de comidas en Tablas", comidas)
+
   const handleEdit = (index) => {
     setEditIndex(index);
-    setValueInput( {
+    setValueInput({
       ...comidas[index]
     })
   }

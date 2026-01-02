@@ -11,13 +11,15 @@ import { TablaUser } from "../components/TablaUser";
 import { ModalUSer } from "../components/ModalUSer";
 import { ModalPay } from "../components/ModalPay";
 import { useFormStore } from "../store/useFormStore";
+import { useAuthStore } from "../store/useAuthStore";
 
 
 export const Menu = () => {
 
-  const { local, admin, localId } = useContext(AuthContext);
+  const admin = useAuthStore((state) => state.admin);
+  const local = useAuthStore((state) => state.local);
+  const localId = useAuthStore((state) => state.localId);
   const { handleGetData, sendPorcentage } = useContext(DataContext);
-  /*const { comidas, setComidas, acceptSelection, setAcceptSelection, showModalPay, setShowModalPay } = useForm();*/
 
   const comidas = useFormStore((state) => state.comidas);
   const setComidas = useFormStore((state) => state.setComidas);
@@ -32,8 +34,6 @@ export const Menu = () => {
   const [porcentage, setPorcentage] = useState("");
   const [selectAll, setSelectAll] = useState(false);
 
-
-  console.log("Valor de localId en menu", localId);
 
   const handleLocales = async () => {
     const result = await handleGetData(local);

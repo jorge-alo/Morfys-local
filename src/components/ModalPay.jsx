@@ -2,10 +2,11 @@ import { useContext, useState } from 'react';
 import '../styles/ModalPay.css';
 import { DataContext } from '../context/DataContext';
 import { AuthContext } from '../context/AuthContext';
+import { useAuthStore } from '../store/useAuthStore';
 
 export const ModalPay = ({ showModalPay, setShowModalPay }) => {
   const { getPreferencePay } = useContext(DataContext);
-  const {userId} = useContext(AuthContext);
+  const userId = useAuthStore((state) => state.userId)
   const[touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
 

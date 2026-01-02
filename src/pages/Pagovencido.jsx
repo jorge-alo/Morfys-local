@@ -2,16 +2,17 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useForm } from "../context/FormProvider";
 import { DataContext } from "../context/DataContext";
+import { useAuthStore } from "../store/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 export const PagoVencido = () => {
-  const { handleLogOut, userId } = useContext(AuthContext);
- // const { setShowModalPay } = useForm();
 
+  const handleLogOut = useAuthStore((state) => state.handleLogOut);
+  const userId = useAuthStore((state) => state.userId);
   const { getPreferencePay } = useContext(DataContext)
-
-    const handleGetPreferencePay = async () => {
-    const response = await getPreferencePay({userId});
-    console.log('valor de init_point en handleGetPreferencePay', response.data.init_point);
+  const navigate = useNavigate();
+  const handleGetPreferencePay = async () => {
+    const response = await getPreferencePay({ userId });
     if (response?.data?.init_point) {
       // redirige al checkout de Mercado Pago
       window.open(response.data.init_point, '_blank');
@@ -19,12 +20,12 @@ export const PagoVencido = () => {
   }
 
   return (
-    <div style={{ 
-        display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center",
-        height: "100vh", textAlign: "center", padding: "20px"
+    <div style={{
+      display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center",
+      height: "100vh", textAlign: "center", padding: "20px"
     }}>
-      
+
       <h1>Tu suscripción ha vencido 😕</h1>
       <p>Para seguir usando el sistema, es necesario realizar el pago de la suscripción.</p>
 
@@ -32,7 +33,7 @@ export const PagoVencido = () => {
         Realizar pago
       </button>
 
-      <button onClick={handleLogOut} style={{ marginTop: 10 }}>
+      <button onClick={() => handleLogOut(navigate)} style={{ marginTop: 10 }}>
         Cerrar sesión
       </button>
     </div>

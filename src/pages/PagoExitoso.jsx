@@ -1,24 +1,37 @@
 import { useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
 
 export const PagoExitoso = () => {
-  const { checkAuth } = useContext(AuthContext);
+
+  const checkAuth = useAuthStore((state) => state.checkAuth);
   const navigate = useNavigate();
 
   useEffect(() => {
     const refresh = async () => {
-      await checkAuth(); // 🔥 ACTUALIZA login, admin, local, etc.
-      navigate("/menu"); // 🔥 Te manda al panel
+      try {
+        // ✅ Ejecutamos la verificación
+        await checkAuth(navigate);
+
+        // Damos un pequeño respiro para que el estado se asiente antes de navegar
+        setTimeout(() => {
+          navigate("/menu");
+        }, 1500);
+      } catch (error) {
+        console.error("Error al refrescar tras el pago:", error);
+        navigate("/"); // Si falla, al inicio
+      }
     };
 
     refresh();
-  }, []);
+  }, [checkAuth, navigate]);
 
   return (
     <div style={{ textAlign: 'center', marginTop: '4rem' }}>
-      <h2>Procesando pago...</h2>
-      <p>Un momento por favor...</p>
+      <div className="loader"></div> {/* Opcional: un spinner visual */}
+      <h2>¡Pago procesado con éxito!</h2>
+      <p>Estamos actualizando tu cuenta, un momento por favor...</p>
     </div>
   );
 };

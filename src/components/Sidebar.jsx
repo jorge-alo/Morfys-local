@@ -1,21 +1,23 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import "../styles/Sidebar.css"
 import { AuthContext } from "../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "../context/FormProvider";
 import { useFormStore } from "../store/useFormStore";
+import { useAuthStore } from "../store/useAuthStore";
 
 export const Sidebar = () => {
-  const { admin, handleLogOut, local, checkPay } = useContext(AuthContext);
-  //const { showModalPay, setShowModalPay } = useForm();
-
+  
+  const admin = useAuthStore((state) => state.admin);
+  const local = useAuthStore((state) => state.local);
+  const handleLogOut = useAuthStore((state) => state.handleLogOut);
+  const checkPay = useAuthStore((state) => state.checkPay);
   const showModalPay = useFormStore((state) => state.showModalPay);
   const setShowModalPay = useFormStore((state) => state.setShowModalPay);
-
+  const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(false);
   const [activeUntil, setActiveUntil] = useState(null);
 
-  console.log("Valor de admin en sideBar", admin);
 
   useEffect(() => {
 
@@ -123,7 +125,7 @@ export const Sidebar = () => {
         <ul>
           {renderLinksDesktop()}
         </ul>
-        <button onClick={handleLogOut}>Cerra sesion</button>
+        <button onClick={() => handleLogOut(navigate)}>Cerra sesion</button>
       </nav>
 
       <nav className="nav-mobile">
@@ -133,7 +135,7 @@ export const Sidebar = () => {
           </span>
           <ul className={`ul-menu-mobile ${openMenu ? "open" : ""}`}>
             {renderLinksMobile()}
-            <button onClick={handleLogOut}>Cerra sesion</button>
+            <button onClick={() => handleLogOut(navigate)}>Cerra sesion</button>
           </ul>
         </div>
 

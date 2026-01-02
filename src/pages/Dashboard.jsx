@@ -3,15 +3,15 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGri
 import '../styles/Dashboard.css';
 import { DataContext } from '../context/DataContext';
 import { AuthContext } from '../context/AuthContext';
+import { useAuthStore } from '../store/useAuthStore';
 
 export const Dashboard = ({ restaurantId }) => {
-    const { localId } = useContext(AuthContext);
+
+    const localId = useAuthStore((state) => state.localId);
     const { getDataChart } = useContext(DataContext);
     const [dataChart, setDataChart] = useState(null);
     const [loading, setLoading] = useState(true);
     const [periodo, setPeriodo] = useState('7d');
-
-    console.log("Valor de localId en dashboard", localId);
 
     const handleGetDataChart = async () => {
         // Si no hay localId, no hacemos la petición para evitar el "undefined"
@@ -91,8 +91,8 @@ export const Dashboard = ({ restaurantId }) => {
                 {/* 2. GRÁFICO DE VENTAS POR PLATO */}
                 <div className="chart-section chart-desktop-only">
                     <h3>Recaudación por Producto (Base + Opciones)</h3>
-                    <div className="chart-container">
-                        <ResponsiveContainer width="100%" aspect={2}> {/* aspect={2} significa que el ancho será el doble que el alto */}
+                    <div className="chart-container" style={{ width: '100%', height: '400px', minHeight: '300px' }}>
+                        <ResponsiveContainer width="100%" height="100%"> {/* aspect={2} significa que el ancho será el doble que el alto */}
                             <BarChart
                                 data={dataChart.platos}
                                 margin={{ top: 20, right: 30, left: 20, bottom: 60 }} // Aumentamos bottom para los nombres
