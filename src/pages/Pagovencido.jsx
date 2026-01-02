@@ -5,7 +5,8 @@ import { DataContext } from "../context/DataContext";
 
 export const PagoVencido = () => {
   const { handleLogOut, userId } = useContext(AuthContext);
-  const { setShowModalPay } = useForm();
+ // const { setShowModalPay } = useForm();
+
   const { getPreferencePay } = useContext(DataContext)
 
     const handleGetPreferencePay = async () => {
