@@ -1,8 +1,10 @@
-import { useContext, useEffect, useState } from "react"
-import { DataContext } from "../context/DataContext"
+import { useEffect, useState } from "react"
+
+import { useDataStore } from "../store/useDataStore";
 
 export const TablaUser = () => {
-    const { getUsers } = useContext(DataContext);
+    
+    const getUsers = useDataStore((state) => state.getUsers);
     const [users, setUsers] = useState([]);
 
     const handleGetUsers = async () => {

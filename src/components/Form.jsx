@@ -1,20 +1,16 @@
-import React, { useContext, useRef, useState } from 'react'
-import { use } from 'react';
+import { useRef, useState } from 'react'
 import '../styles/Form.css'
-import { useForm } from '../context/FormProvider';
-import { DataContext } from '../context/DataContext';
 import { useFormStore } from '../store/useFormStore';
+import { useDataStore } from '../store/useDataStore';
 
 export const Form = ({ handleClose }) => {
     const [acepto, setAcepto] = useState(false);
-    // const { valueInput, setValueInput, handleChange, file } = useForm();
-
     const valueInput = useFormStore((state) => state.valueInput);
     const setValueInput = useFormStore((state) => state.setValueInput);
     const handleChange = useFormStore((state) => state.handleChange);
     const imageFile = useFormStore((state) => state.imageFile);
-
-    const { handleUpdate } = useContext(DataContext);
+    
+    const handleUpdate = useDataStore((state) => state.handleUpdate);
     const variantesBackup = useRef([]);
 
 

@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { useContext } from 'react';
-import { DataContext } from '../context/DataContext';
-import { useForm } from '../context/FormProvider';
-import { AuthContext } from '../context/AuthContext';
+import { useEffect, useState } from 'react'
 import '../styles/Tablas.css'
 import { useFormStore } from '../store/useFormStore';
 import { useAuthStore } from '../store/useAuthStore';
+import { useDataStore } from '../store/useDataStore';
 
 export const Tablas = ({ setEditIndex, handleLocales, selectAll, setSelectAll }) => {
-  const { handleDestroy, addStandbyAll } = useContext(DataContext);
+  
+  const handleDestroy = useDataStore((state) => state.handleDestroy);
+  const addStandbyAll = useDataStore((state) => state.addStandbyAll);
   const comidas = useFormStore((state) => state.comidas);
   const setValueInput = useFormStore((state) => state.setValueInput);
   const valueInput = useFormStore((state) => state.valueInput);

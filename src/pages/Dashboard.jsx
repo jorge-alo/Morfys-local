@@ -1,14 +1,13 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import '../styles/Dashboard.css';
-import { DataContext } from '../context/DataContext';
-import { AuthContext } from '../context/AuthContext';
 import { useAuthStore } from '../store/useAuthStore';
+import { useDataStore } from '../store/useDataStore';
 
 export const Dashboard = ({ restaurantId }) => {
 
     const localId = useAuthStore((state) => state.localId);
-    const { getDataChart } = useContext(DataContext);
+    const getDataChart = useDataStore((state) => state.getDataChart);
     const [dataChart, setDataChart] = useState(null);
     const [loading, setLoading] = useState(true);
     const [periodo, setPeriodo] = useState('7d');

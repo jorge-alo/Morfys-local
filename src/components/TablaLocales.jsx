@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react"
-import { DataContext } from "../context/DataContext"
+import { useEffect, useState } from "react"
+
+import { useDataStore } from "../store/useDataStore";
 
 export const TablaLocales = () => {
-    const { getLocales } = useContext(DataContext);
+    const getLocales = useDataStore((state) => state.getLocales);
     const [locales, setLocales] = useState([]);
 
     const handleGetLocales = async () => {

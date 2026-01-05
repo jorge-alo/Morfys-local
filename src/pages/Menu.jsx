@@ -1,9 +1,6 @@
-import { useContext, useEffect } from "react"
-import { AuthContext } from "../context/AuthContext"
-import { DataContext } from "../context/DataContext";
+import { useEffect } from "react"
 import '../styles/Menu.css'
 import { useState } from "react";
-import { useForm } from "../context/FormProvider";
 import { Modal } from "../components/Modal";
 import { Tablas } from "../components/Tablas";
 import { Filter } from "../components/Filter";
@@ -12,6 +9,7 @@ import { ModalUSer } from "../components/ModalUSer";
 import { ModalPay } from "../components/ModalPay";
 import { useFormStore } from "../store/useFormStore";
 import { useAuthStore } from "../store/useAuthStore";
+import { useDataStore } from "../store/useDataStore";
 
 
 export const Menu = () => {
@@ -19,8 +17,8 @@ export const Menu = () => {
   const admin = useAuthStore((state) => state.admin);
   const local = useAuthStore((state) => state.local);
   const localId = useAuthStore((state) => state.localId);
-  const { handleGetData, sendPorcentage } = useContext(DataContext);
-
+  const handleGetData = useDataStore((state) => state.handleGetData);
+  const sendPorcentage = useDataStore((state) => state.sendPorcentage);
   const comidas = useFormStore((state) => state.comidas);
   const setComidas = useFormStore((state) => state.setComidas);
   const acceptSelection = useFormStore((state) => state.acceptSelection);

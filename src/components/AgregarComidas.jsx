@@ -1,21 +1,15 @@
-import React, { useRef, useState } from 'react'
-import { useForm } from '../context/FormProvider';
-import { useContext } from 'react';
-import { DataContext } from '../context/DataContext';
-import { AuthContext } from '../context/AuthContext';
+import { useRef, useState } from 'react'
 import '../styles/AgregarComidas.css'
 import { useFormStore } from '../store/useFormStore';
+import { useDataStore } from '../store/useDataStore';
 
 export const AgregarComidas = ({ handleClose }) => {
-
-  // const { valueInput, setValueInput, handleChange, file } = useForm();
 
   const valueInput = useFormStore((state) => state.valueInput);
   const setValueInput = useFormStore((state) => state.setValueInput);
   const handleChange = useFormStore((state) => state.handleChange);
   const imageFile = useFormStore((state) => state.imageFile);
-
-  const { handleCargarComidas } = useContext(DataContext);
+  const handleCargarComidas = useDataStore((state) => state.handleCargarComidas);
   const [acepto, setAcepto] = useState(false);
   const [aceptoTamanio, setAceptoTamanio] = useState(false);
   const variantesBackup = useRef([]);

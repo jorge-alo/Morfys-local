@@ -1,16 +1,19 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { useForm } from "../context/FormProvider";
+import { useEffect } from "react";
 import '../styles/Login.css'
 import { useFormStore } from "../store/useFormStore";
 import { useAuthStore } from "../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 
-
-
 export const Login = () => {
 
-    const { handleLoginSubmit, handleForgotPassword, error, setError, showForgotPassword, setShowForgotPassword, emailForReset, setEmailForReset } = useAuthStore();
+    const handleLoginSubmit = useAuthStore((state) => state.handleLoginSubmit);
+    const handleForgotPassword = useAuthStore((state) => state.handleForgotPassword);
+    const error = useAuthStore((state) => state. error);
+    const setError = useAuthStore((state) => state.setError);
+    const showForgotPassword = useAuthStore((state) => state.showForgotPassword);
+    const setShowForgotPassword = useAuthStore((state) => state.setShowForgotPassword);
+    const emailForReset = useAuthStore((state) => state.emailForReset);
+    const setEmailForReset = useAuthStore((state) => state.setEmailForReset);
     const navigate = useNavigate();
     const handleChange = useFormStore((state) => state.handleChange);
     const valueInput = useFormStore((state) => state.valueInput);

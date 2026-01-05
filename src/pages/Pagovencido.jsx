@@ -1,15 +1,13 @@
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { useForm } from "../context/FormProvider";
-import { DataContext } from "../context/DataContext";
+
 import { useAuthStore } from "../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import { useDataStore } from "../store/useDataStore";
 
 export const PagoVencido = () => {
 
   const handleLogOut = useAuthStore((state) => state.handleLogOut);
   const userId = useAuthStore((state) => state.userId);
-  const { getPreferencePay } = useContext(DataContext)
+  const getPreferencePay = useDataStore((state) => state.getPreferencePay)
   const navigate = useNavigate();
   const handleGetPreferencePay = async () => {
     const response = await getPreferencePay({ userId });

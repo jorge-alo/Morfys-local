@@ -1,22 +1,17 @@
-import { useContext } from 'react'
+
 import '../styles/Ajustes.css'
-import { useForm } from '../context/FormProvider'
-import { DataContext } from '../context/DataContext';
 import { useFormStore } from '../store/useFormStore';
+import { useDataStore } from '../store/useDataStore';
 
 
 export const Ajustes = () => {
-  /*const { valueInput, fileLogo, fileBanner, handleChange, resetForm } = useForm();*/
 
   const valueInput = useFormStore((state) => state.valueInput);
   const fileLogo = useFormStore((state) => state.fileLogo);
   const fileBanner = useFormStore((state) => state.fileBanner);
   const handleChange = useFormStore((state) => state.handleChange);
   const resetForm = useFormStore((state) => state.resetForm);
-  
-
-  const { handleSetTime } = useContext(DataContext);
-  console.log("Valor de valueInput en Ajustes", valueInput);
+  const handleSetTime = useDataStore((state) => state.handleSetTime);
 
   const handleClickSend = async (e) => {
     e.preventDefault();

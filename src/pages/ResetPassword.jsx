@@ -1,9 +1,8 @@
-import { useContext } from 'react'
-import { useForm } from '../context/FormProvider'
+
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DataContext } from '../context/DataContext';
 import { useFormStore } from '../store/useFormStore';
+import { useDataStore } from '../store/useDataStore';
 
 export const ResetPassword = () => {
    /* const { handleChange, valueInput, resetForm } = useForm();*/
@@ -11,7 +10,7 @@ export const ResetPassword = () => {
     const handleChange = useFormStore((state) => state.handleChange);
     const valueInput = useFormStore((state) => state.valueInput);
     const resetForm = useFormStore((state) => state.resetForm);
-    const { handleResetPassword } = useContext(DataContext);
+    const handleResetPassword = useDataStore((state) => state.handleResetPassword);
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const { token } = useParams();

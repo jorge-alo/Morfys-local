@@ -1,16 +1,14 @@
-import { useContext } from "react";
-import { useForm } from "../context/FormProvider"
+
 import '../styles/ModalUser.css'
-import { DataContext } from "../context/DataContext";
 import { useFormStore } from "../store/useFormStore";
+import { useDataStore } from "../store/useDataStore";
 export const ModalUSer = ({ setShowModalUser }) => {
-    //const { valueInput, resetForm, handleChange } = useForm();
 
     const valueInput = useFormStore((state) => state.valueInput);
     const resetForm = useFormStore((state) => state.resetForm);
     const handleChange = useFormStore((state) => state.handleChange);
 
-    const { sendDataNewUser } = useContext(DataContext);
+    const sendDataNewUser = useDataStore((state) => state.sendDataNewUser);
 
     const handleClose = () => {
         resetForm()
