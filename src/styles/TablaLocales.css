@@ -1,0 +1,41 @@
+.container-tablaLocales {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100dvw;
+    height: 100dvh;
+}
+
+.container-tabalLocales__container-tabla {
+   overflow: auto;
+}
+
+.local-info div {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+}
+.local-info div img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/*---------------------------------------*/
+
+@media (max-width: 550px) {
+    .container-tablaLocales {
+        width: 100%;
+        height: 100dvh; 
+        padding-top: 60px; /* 👈 Deja espacio para el nav fijo */
+        overflow: hidden; /* Evita el scroll doble */
+    }
+
+    .container-tabalLocales__container-tabla {
+        width: 100%;
+        height: 100%;
+        overflow: auto; /* El scroll solo sucede dentro de este div */
+        -webkit-overflow-scrolling: touch;
+    }
+}

@@ -3,7 +3,7 @@ import { TablaLocales } from "../components/TablaLocales"
 
 export const GestionLocales = () => {
   return (
-    <div>
+    <div className="container-GestionLocales">
         <TablaLocales/>
     </div>
   )

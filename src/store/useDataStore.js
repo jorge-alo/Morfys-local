@@ -1,5 +1,5 @@
 import {create} from 'zustand'
-import { apiAddStandAll, cargarComidasApi, destroyApi, getAllData, getDataChartApi, getLocalesApi, getPreferencePayApi, getUsersApi, handleSetTimeApi, resetPasswordApi, sendDataNewUserApi, sendPorcentageApi, updateDataApi } from '../api/request.api';
+import { apiAddStandAll, cargarComidasApi, destroyApi, getAllData, getDataChartApi, getLocalesApi, getPreferencePayApi, getUsersApi, handleSetTimeApi, resetPasswordApi, sendDataNewUserApi, sendPorcentageApi, updateDataApi, updateUserDataApi } from '../api/request.api';
 
 export const useDataStore = create((set) => ({
     error: null,
@@ -101,6 +101,15 @@ export const useDataStore = create((set) => ({
     sendDataNewUser: async (value) => {
       try {
         const response = await sendDataNewUserApi(value);
+        set({ error: null });
+        return response;
+      } catch (error) {
+        set({ error: error.message || "Error al actualizar" });
+      }
+    },
+      updateUserData: async (email) => {
+      try {
+        const response = await updateUserDataApi(email);
         set({ error: null });
         return response;
       } catch (error) {

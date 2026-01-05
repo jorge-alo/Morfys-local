@@ -100,4 +100,15 @@ export const useFormStore = create((set) => ({
     fileLogo: null,
     fileBanner: null
   }),
+
+  setFormValues: (user) => set((state) => ({
+  valueInput: {
+    ...state.valueInput,
+    // Mapeamos 'nombre' del backend a 'name' que usa tu input
+    name: user.nombre || "", 
+    email: user.email || "",
+    // El password normalmente no se carga por seguridad
+    password: "" 
+  }
+})),
 }));

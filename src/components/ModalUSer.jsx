@@ -2,13 +2,24 @@
 import '../styles/ModalUser.css'
 import { useFormStore } from "../store/useFormStore";
 import { useDataStore } from "../store/useDataStore";
-export const ModalUSer = ({ setShowModalUser }) => {
+import { useEffect } from 'react';
+export const ModalUSer = ({ setShowModalUser, userToEdit }) => {
 
     const valueInput = useFormStore((state) => state.valueInput);
     const resetForm = useFormStore((state) => state.resetForm);
     const handleChange = useFormStore((state) => state.handleChange);
-
+    const setFormValues = useFormStore((state) => state.setFormValues);
     const sendDataNewUser = useDataStore((state) => state.sendDataNewUser);
+    const updateUserData = useDataStore((state) => state.updateUserData);
+
+    // Efecto para cargar datos si es edición
+    useEffect(() => {
+        if (userToEdit) {
+            setFormValues(userToEdit);
+        } else {
+            resetForm();
+        }
+    }, [userToEdit]);
 
     const handleClose = () => {
         resetForm()
@@ -21,15 +32,25 @@ export const ModalUSer = ({ setShowModalUser }) => {
     }
 
     const handleEnviarUser = async (e) => {
-        e.preventDefault()
-        const response = await sendDataNewUser(valueInput);
+        e.preventDefault();
+        
+        if (userToEdit) {
+            // Lógica para EDITAR (deberías pasar el ID o Email único)
+            await updateUserData(userToEdit.email);
+        } else {
+            // Lógica para CREAR
+            await sendDataNewUser(valueInput);
+        }
+        
         handleClose();
-    }
+    };
     return (
         <div className='modal-overlay' onClick={handleOverlayCloseModal}>
             <div className='modal-container' onClick={(e) => e.stopPropagation()}>
                 <span className='close' onClick={handleClose}>X</span>
+                
                 <form className="form-user">
+                    <h3>{userToEdit ? 'Editar Usuario' : 'Nuevo Usuario'}</h3>
                     <div className="form-user__container-data">
                         <label htmlFor="name"> Nombre de usuario</label>
                         <input
