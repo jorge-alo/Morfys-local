@@ -15,7 +15,15 @@ export const ModalUSer = ({ setShowModalUser, userToEdit }) => {
     // Efecto para cargar datos si es edición
     useEffect(() => {
         if (userToEdit) {
-            setFormValues(userToEdit);
+            // Creamos una copia para no mutar el original
+            const dataForForm = { ...userToEdit };
+
+            // Si existe la fecha, la formateamos a YYYY-MM-DD
+            if (dataForForm.active_untill) {
+                dataForForm.active_untill = dataForForm.active_untill.split('T')[0];
+            }
+
+            setFormValues(dataForForm);
         } else {
             resetForm();
         }
@@ -33,7 +41,7 @@ export const ModalUSer = ({ setShowModalUser, userToEdit }) => {
 
     const handleEnviarUser = async (e) => {
         e.preventDefault();
-        
+
         if (userToEdit) {
             // Lógica para EDITAR (deberías pasar el ID o Email único)
             await updateUserData(valueInput, userToEdit.email);
@@ -41,14 +49,14 @@ export const ModalUSer = ({ setShowModalUser, userToEdit }) => {
             // Lógica para CREAR
             await sendDataNewUser(valueInput);
         }
-        
+
         handleClose();
     };
     return (
         <div className='modal-overlay' onClick={handleOverlayCloseModal}>
             <div className='modal-container' onClick={(e) => e.stopPropagation()}>
                 <span className='close' onClick={handleClose}>X</span>
-                
+
                 <form className="form-user">
                     <h3>{userToEdit ? 'Editar Usuario' : 'Nuevo Usuario'}</h3>
                     <div className="form-user__container-data">
@@ -81,6 +89,19 @@ export const ModalUSer = ({ setShowModalUser, userToEdit }) => {
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
+
+                    <div className="form-user__container-data">
+                        <label htmlFor="active_untill">Activo hasta:</label>
+                        <input
+                            type="date"
+                            id="active_untill"
+                            name="active_untill"
+                            value={valueInput.active_untill || ""}
+                            onChange={(e) => handleChange(e)}
+                        />
+                    </div>
+
+
                     <button onClick={handleEnviarUser}>enviar</button>
                 </form>
 

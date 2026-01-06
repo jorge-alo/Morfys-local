@@ -17,6 +17,7 @@ const initialFormValues = {
     latitud: "",
     longitud: "",
     celNumero: "",
+    active_untill: null,
     celPais: "",
     celProvincia: "",
     variantes: [], // <--- nuevo campo
