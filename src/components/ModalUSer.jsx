@@ -91,12 +91,12 @@ export const ModalUSer = ({ setShowModalUser, userToEdit }) => {
                     </div>
 
                     <div className="form-user__container-data">
-                        <label htmlFor="active_untill">Activo hasta:</label>
+                        <label htmlFor="active_until">Activo hasta:</label>
                         <input
                             type="date"
-                            id="active_untill"
-                            name="active_untill"
-                            value={valueInput.active_untill || ""}
+                            id="active_until"
+                            name="active_until"
+                            value={valueInput.active_until || ""}
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
