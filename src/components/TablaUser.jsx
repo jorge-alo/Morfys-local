@@ -5,16 +5,10 @@ import { useDataStore } from "../store/useDataStore";
 export const TablaUser = ({onEdit}) => {
 
   const getUsers = useDataStore((state) => state.getUsers);
-  const [users, setUsers] = useState([]);
-
-  const handleGetUsers = async () => {
-    const users = await getUsers();
-    setUsers(users.users);
-    console.log("Valor de users en TablaUser", users);
-  }
+  const users = useDataStore((state) => state.users);
 
   useEffect(() => {
-    handleGetUsers()
+   getUsers()
   }, [])
 
 
@@ -32,7 +26,7 @@ export const TablaUser = ({onEdit}) => {
 
         </thead>
         <tbody>
-          {users.map((user, i) => (
+          {users?.map((user, i) => (
             <tr key={i}>
               {Object.values(user).map((val, j) => (
                 <td key={j}>{String(val)}</td>
