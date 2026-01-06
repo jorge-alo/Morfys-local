@@ -1,4 +1,5 @@
 import '../styles/Ajustes.css'
+import '../styles/ModalUser.css'
 import { useFormStore } from '../store/useFormStore';
 import { useDataStore } from '../store/useDataStore';
 
@@ -48,8 +49,8 @@ export const ModalLocal = ({ userId, setShowModalLocal }) => {
         }
     }
     return (
-        <div className='ajustes-container' onClick={handleOverlayCloseModal}>
-            <div onClick={(e) => e.stopPropagation()}>
+        <div className='modal-overlay' onClick={handleOverlayCloseModal}>
+            <div className='ajustes-container' onClick={(e) => e.stopPropagation()}>
                 <span className='close' onClick={handleClose}>X</span>
                 <form className='form-ajustes' >
                     <div className='container-logo'>
@@ -328,6 +329,7 @@ export const ModalLocal = ({ userId, setShowModalLocal }) => {
                 </form>
             </div>
         </div>
+
 
     )
 }
