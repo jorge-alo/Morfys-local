@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import { useDataStore } from "../store/useDataStore";
 
-export const TablaUser = ({onEdit}) => {
+export const TablaUser = ({onEdit, handleAddLocal}) => {
 
   const getUsers = useDataStore((state) => state.getUsers);
   const users = useDataStore((state) => state.users);
@@ -32,6 +32,7 @@ export const TablaUser = ({onEdit}) => {
                 <td key={j}>{String(val)}</td>
               ))}
               <td>
+                <button onClick={() => handleAddLocal(user.id)}>Agregar local</button>
                 <button onClick={() => onEdit(user)}>Editar</button>
                 <button onClick={() => handleDelete(user.id)}>Eliminar</button>
               </td>

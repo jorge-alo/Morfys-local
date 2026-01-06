@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { apiAddStandAll, cargarComidasApi, destroyApi, getAllData, getDataChartApi, getLocalesApi, getPreferencePayApi, getUsersApi, handleSetTimeApi, resetPasswordApi, sendDataNewUserApi, sendPorcentageApi, updateDataApi, updateUserDataApi } from '../api/request.api';
+import { apiAddStandAll, cargarComidasApi, destroyApi, getAllData, getDataChartApi, getLocalesApi, getPreferencePayApi, getUsersApi, handleSetTimeApi, resetPasswordApi, sendDataNewLocalApi, sendDataNewUserApi, sendPorcentageApi, updateDataApi, updateUserDataApi } from '../api/request.api';
 
 export const useDataStore = create((set, get) => ({
   error: null,
@@ -155,7 +155,16 @@ export const useDataStore = create((set, get) => ({
     } catch (error) {
       set({ error: error.message || "Error al actualizar" });
     }
+  },
+  sendDataNewLocal: async (localData) => {
+  try {
+    const response = await sendDataNewLocalApi(localData);
+    await get().getLocales(); // Actualiza la tabla de locales
+    return response.data;
+  } catch (error) {
+    console.error("Error al crear local");
   }
+}
 }))
 
 

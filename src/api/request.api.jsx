@@ -80,6 +80,13 @@ export const handleSetTimeApi = async (data) => {
     }
   });
 }
+export const sendDataNewLocalApi = async (data) => {
+  return await api.put('/addLocal', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+}
 
 export const getUsersApi = async () => {
   return await api.get("/users");
