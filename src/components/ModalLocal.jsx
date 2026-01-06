@@ -44,7 +44,7 @@ export const ModalLocal = ({ userId, setShowModalLocal }) => {
         setShowModalLocal(false)
     }
     const handleOverlayCloseModal = (e) => {
-        if (e.target.classList.contains('ajustes-container')) {
+        if (e.target.classList.contains('modal-overlay')) {
             handleClose()
         }
     }
