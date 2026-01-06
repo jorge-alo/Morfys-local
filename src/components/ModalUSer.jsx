@@ -36,7 +36,7 @@ export const ModalUSer = ({ setShowModalUser, userToEdit }) => {
         
         if (userToEdit) {
             // Lógica para EDITAR (deberías pasar el ID o Email único)
-            await updateUserData(valueInput);
+            await updateUserData(valueInput, userToEdit.email);
         } else {
             // Lógica para CREAR
             await sendDataNewUser(valueInput);

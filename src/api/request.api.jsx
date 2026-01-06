@@ -69,8 +69,8 @@ export const sendPorcentageApi = async (data) => {
   return await api.put('/porcentage', data);
 }
 
-export const updateUserDataApi = async (data) => {
-  return await api.put('/updateUser', data);
+export const updateUserDataApi = async ({value, email}) => {
+  return await api.put('/updateUser', {value, email});
 }
 
 export const handleSetTimeApi = async (data) => {
