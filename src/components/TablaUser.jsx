@@ -15,7 +15,7 @@ export const TablaUser = ({onEdit, handleAddLocal}) => {
   return (
     <div className="container-tablaUser">
       <table className="container-tablaUser__table">
-        <thead container-tablaUser-table__thead>
+        <thead className="container-tablaUser-table__thead">
           <tr>
             {users.length > 0 &&
               Object.keys(users[0]).map((key, index) => (
@@ -25,7 +25,7 @@ export const TablaUser = ({onEdit, handleAddLocal}) => {
           </tr>
 
         </thead>
-        <tbody container-tablaUser-table__tbody>
+        <tbody className="container-tablaUser-table__tbody">
           {users?.map((user, i) => (
             <tr key={i}>
               {Object.values(user).map((val, j) => (
