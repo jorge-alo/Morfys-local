@@ -108,7 +108,7 @@ export const Sidebar = () => {
         <li onClick={() => setOpenMenu(prev => !prev)}> <Link to="/menu">Menu</Link> </li>
         <li onClick={() => setOpenMenu(prev => !prev)}> <Link to="/ajustes">Ajustes</Link> </li>
         {
-          showPayButton && (
+          payStatus.show && (
             <li>
               <div className={`container-pagar ${payStatus.isExpired ? 'vencido' : ''}`}>
                 <h3 onClick={handleShowModalPay}>Pagar</h3>
@@ -138,7 +138,7 @@ export const Sidebar = () => {
         <li> <Link to="/dashboard">Dashboard</Link> </li>
         <li> <Link to="/menu">Menu</Link> </li>
         <li> <Link to="/ajustes">Ajustes</Link> </li>
-        {showPayButton && (
+        {payStatus.show && (
           <li>
             <div className={`container-pagar ${payStatus.isExpired ? 'vencido' : ''}`}>
               <h3 onClick={handleShowModalPay}>Pagar</h3>
