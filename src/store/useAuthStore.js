@@ -26,6 +26,7 @@ export const useAuthStore = create((set, get) => ({
             const response = await verifyTokenApi();
             if (response.data.auth) {
                 set({ admin: 1, isExpired: false });
+                navigate('/admin/usuarios'); // Redirige al admin si todo está OK
             } else if (response.data.login) {
                 set({
                     login: true,
@@ -34,25 +35,26 @@ export const useAuthStore = create((set, get) => ({
                     local: response.data.local,
                     localId: response.data.localId
                 });
+                navigate('/dashboard'); // Redirige al usuario si todo está OK
             }
         } catch (err) {
             // SI EL PAGO ESTÁ VENCIDO (Error 403 del backend)
-        if (err.response?.data?.status === "expired") {
-            set({
-                login: true, 
-                isExpired: true,
-                userId: err.response.data.userId,
-                local: err.response.data.local,
-                loading: false
-            });
-            navigate("/pago-vencido");
-            return; // Salimos sin hacer Logout
-        }
+            if (err.response?.data?.status === "expired") {
+                set({
+                    login: true,
+                    isExpired: true,
+                    userId: err.response.data.userId,
+                    local: err.response.data.local,
+                    loading: false
+                });
+                navigate("/pago-vencido");
+                return; // Salimos sin hacer Logout
+            }
 
-        // SI EL TOKEN ES INVÁLIDO (Error 401)
-        if (err.response?.status === 401) {
-            get().handleLogOut(navigate, "/");
-        }
+            // SI EL TOKEN ES INVÁLIDO (Error 401)
+            if (err.response?.status === 401) {
+                get().handleLogOut(navigate, "/");
+            }
         } finally {
             set({ loading: false });
         }
@@ -63,20 +65,9 @@ export const useAuthStore = create((set, get) => ({
         try {
             const response = await updateLoginApi(credentials);
             localStorage.setItem("token", response.data.token);
-
-            if (response.data.auth) {
-                set({ admin: response.data.auth });
-                navigate('/admin/usuarios');
-            } else {
-                set({
-                    login: response.data.login,
-                    isExpired: false,
-                    userId: response.data.userId,
-                    local: response.data.local,
-                    localId: response.data.localId
-                });
-                navigate('/dashboard');
-            }
+            // 2. Delegar toda la responsabilidad a checkAuth
+            // Esta función verificará si está vencido o no y hará el navigate correspondiente
+            await get().checkAuth(navigate);
         } catch (error) {
             set({ error: error.response?.data?.message });
         }
