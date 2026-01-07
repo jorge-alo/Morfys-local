@@ -110,8 +110,8 @@ export const Sidebar = () => {
         {
           payStatus.show && (
             <li>
-              <div className={`container-pagar ${payStatus.isExpired ? 'vencido' : ''}`}>
-                <h3 onClick={handleShowModalPay}>Pagar</h3>
+              <div className={`container-pagar ${payStatus.isExpired ? 'vencido' : ''}`} onClick={handleShowModalPay}>
+                <h3 >Pagar</h3>
                 <h5 className="h5-pagar"> {payStatus.message} ({new Date(activeUntil).toLocaleDateString("es-AR")})</h5>
               </div>
             </li>
@@ -140,8 +140,8 @@ export const Sidebar = () => {
         <li> <Link to="/ajustes">Ajustes</Link> </li>
         {payStatus.show && (
           <li>
-            <div className={`container-pagar ${payStatus.isExpired ? 'vencido' : ''}`}>
-              <h3 onClick={handleShowModalPay}>Pagar</h3>
+            <div className={`container-pagar ${payStatus.isExpired ? 'vencido' : ''}`} onClick={handleShowModalPay}>
+              <h3 >Pagar</h3>
               <h5 className="h5-pagar"> {payStatus.message} ({new Date(activeUntil).toLocaleDateString("es-AR")})</h5>
             </div>
 
