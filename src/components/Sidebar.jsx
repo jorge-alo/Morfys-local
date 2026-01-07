@@ -36,7 +36,7 @@ export const Sidebar = () => {
 
   }, []);
 
-  const showPayButton = (() => {
+  /*const showPayButton = (() => {
     if (!activeUntil || admin) return false
 
     const hoy = new Date();
@@ -47,7 +47,39 @@ export const Sidebar = () => {
     console.log("Valor de de dias Restantes", diasRestantes);
     return diasRestantes <= 7;
 
-  })()
+  })()*/
+
+  const payStatus = (() => {
+  if (!activeUntil || admin) return { show: false, message: "", isExpired: false };
+
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0); // Normalizamos hoy a medianoche
+  
+  const vencimiento = new Date(activeUntil);
+  vencimiento.setHours(0, 0, 0, 0); // Normalizamos vencimiento
+
+  const diferenciaMs = vencimiento - hoy;
+  const diasRestantes = Math.round(diferenciaMs / (1000 * 60 * 60 * 24));
+
+  let message = "";
+  let isExpired = false;
+
+  if (diasRestantes < 0) {
+    message = "Tu factura ha vencido";
+    isExpired = true;
+  } else if (diasRestantes === 0) {
+    message = "Tu factura vence hoy";
+  } else if (diasRestantes <= 7) {
+    message = `Tu factura vence en ${diasRestantes} día${diasRestantes > 1 ? 's' : ''}`;
+  }
+
+  // Mostramos el bloque si ya venció o faltan 7 días o menos
+  return {
+    show: diasRestantes <= 7,
+    message,
+    isExpired
+  };
+})();
 
   const handleShowModalPay = () => {
     setShowModalPay(true);
@@ -78,9 +110,9 @@ export const Sidebar = () => {
         {
           showPayButton && (
             <li>
-              <div>
+              <div className={`container-pagar ${payStatus.isExpired ? 'vencido' : ''}`}>
                 <h3 onClick={handleShowModalPay}>Pagar</h3>
-                <h5 className="h5-pagar"> Tu factura vence el {new Date(activeUntil).toLocaleDateString("es-AR")}</h5>
+                <h5 className="h5-pagar"> {payStatus.message} ({new Date(activeUntil).toLocaleDateString("es-AR")})</h5>
               </div>
             </li>
           )
@@ -108,9 +140,9 @@ export const Sidebar = () => {
         <li> <Link to="/ajustes">Ajustes</Link> </li>
         {showPayButton && (
           <li>
-            <div>
+            <div className={`container-pagar ${payStatus.isExpired ? 'vencido' : ''}`}>
               <h3 onClick={handleShowModalPay}>Pagar</h3>
-              <h5 className="h5-pagar"> Tu factura vence el {new Date(activeUntil).toLocaleDateString("es-AR")}</h5>
+              <h5 className="h5-pagar"> {payStatus.message} ({new Date(activeUntil).toLocaleDateString("es-AR")})</h5>
             </div>
 
           </li>

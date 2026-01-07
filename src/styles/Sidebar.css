@@ -45,6 +45,10 @@ a {
 .h5-pagar {
     color: #82c523;
 }
+.container-pagar.vencido .h5-pagar {
+  color: #f44336; /* Rojo para vencidos */
+  font-weight: bold;
+}
 
 /*----------------------------mobile design------------------------------------*/
 @media (max-width: 550px) {
