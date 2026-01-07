@@ -16,7 +16,7 @@ export const PagoExitoso = () => {
 
         // Damos un pequeño respiro para que el estado se asiente antes de navegar
         setTimeout(() => {
-          navigate("/menu");
+          navigate("/dashboard");
         }, 1500);
       } catch (error) {
         console.error("Error al refrescar tras el pago:", error);
