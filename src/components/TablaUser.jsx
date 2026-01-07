@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-
+import '../styles/TablaUser.css'
 import { useDataStore } from "../store/useDataStore";
 
 export const TablaUser = ({onEdit, handleAddLocal}) => {
@@ -13,9 +13,9 @@ export const TablaUser = ({onEdit, handleAddLocal}) => {
 
 
   return (
-    <div>
-      <table>
-        <thead>
+    <div className="container-tablaUser">
+      <table className="container-tablaUser__table">
+        <thead container-tablaUser-table__thead>
           <tr>
             {users.length > 0 &&
               Object.keys(users[0]).map((key, index) => (
@@ -25,7 +25,7 @@ export const TablaUser = ({onEdit, handleAddLocal}) => {
           </tr>
 
         </thead>
-        <tbody>
+        <tbody container-tablaUser-table__tbody>
           {users?.map((user, i) => (
             <tr key={i}>
               {Object.values(user).map((val, j) => (
