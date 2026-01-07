@@ -5,6 +5,7 @@ import { useFormStore } from './useFormStore'; // Para limpiar comidas al salir
 export const useAuthStore = create((set, get) => ({
 
     login: false,
+    isExpired: false,
     userId: null,
     admin: 0,
     local: null,
@@ -26,6 +27,7 @@ export const useAuthStore = create((set, get) => ({
             if (response.data.status === "expired") {
                 set({
                     login: true, // Mantenemos el login
+                    isExpired: true,
                     userId: response.data.userId,
                     local: response.data.local,
                     localId: response.data.localId
@@ -39,6 +41,7 @@ export const useAuthStore = create((set, get) => ({
             } else if (response.data.login) {
                 set({
                     login: true,
+                    isExpired: false,
                     userId: response.data.userId,
                     local: response.data.local,
                     localId: response.data.localId
@@ -49,6 +52,7 @@ export const useAuthStore = create((set, get) => ({
         if (err.response?.data?.status === "expired") {
             set({
                 login: true, 
+                isExpired: true,
                 userId: err.response.data.userId,
                 local: err.response.data.local,
                 loading: false
@@ -78,6 +82,7 @@ export const useAuthStore = create((set, get) => ({
             } else {
                 set({
                     login: response.data.login,
+                    isExpired: false,
                     userId: response.data.userId,
                     local: response.data.local,
                     localId: response.data.localId
