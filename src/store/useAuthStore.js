@@ -45,9 +45,22 @@ export const useAuthStore = create((set, get) => ({
                 });
             }
         } catch (err) {
-            if (err.response?.data?.status === "expired") {
-                get().handleLogOut(navigate, "/pago-vencido");
-            }
+            // SI EL PAGO ESTÁ VENCIDO (Error 403 del backend)
+        if (err.response?.data?.status === "expired") {
+            set({
+                login: true, 
+                userId: err.response.data.userId,
+                local: err.response.data.local,
+                loading: false
+            });
+            navigate("/pago-vencido");
+            return; // Salimos sin hacer Logout
+        }
+
+        // SI EL TOKEN ES INVÁLIDO (Error 401)
+        if (err.response?.status === 401) {
+            get().handleLogOut(navigate, "/");
+        }
         } finally {
             set({ loading: false });
         }
