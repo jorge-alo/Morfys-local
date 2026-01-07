@@ -1,4 +1,4 @@
-import '../styles/Ajustes.css'
+import '../styles/ModalLocal.css'
 import { useFormStore } from '../store/useFormStore';
 import { useDataStore } from '../store/useDataStore';
 
@@ -43,16 +43,17 @@ export const ModalLocal = ({ userId, setShowModalLocal }) => {
         setShowModalLocal(false)
     }
     const handleOverlayCloseModal = (e) => {
-        if (e.target.classList.contains('ajustes-container')) {
+        if (e.target.classList.contains('modalLocal-container')) {
             handleClose()
         }
     }
     return (
-        <div className='ajustes-container' onClick={handleOverlayCloseModal}>
+        <div className='modalLocal-container' onClick={handleOverlayCloseModal}>
             <div onClick={(e) => e.stopPropagation()}>
-                <span className='close' onClick={handleClose}>X</span>
-                <form className='form-ajustes' >
-                    <div className='container-logo'>
+
+                <form className='modalLocal-container__form-ajustes' >
+                    <span className='close' onClick={handleClose}>X</span>
+                    <div className='modalLocal-container__form-ajustes__container-logo'>
                         <h3>Logo:</h3>
                         <label className='label-logo' htmlFor="logo">{fileLogo ? fileLogo.name : 'Cargar imagen'} <span>+</span></label>
                         <input
@@ -62,7 +63,7 @@ export const ModalLocal = ({ userId, setShowModalLocal }) => {
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
-                    <div className='container-banner'>
+                    <div className='modalLocal-container__form-ajustes__container-banner'>
                         <h3>Banner:</h3>
                         <label className='label-banner' htmlFor="banner">{fileBanner ? fileBanner.name : 'Cargar imagen'} <span>+</span></label>
                         <input
@@ -72,7 +73,7 @@ export const ModalLocal = ({ userId, setShowModalLocal }) => {
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
-                    <div className='container-cel'>
+                    <div className='modalLocal-container__form-ajustes__container-localName'>
                         <label htmlFor="local">Ingrese nombre del local</label>
                         <input
                             type="text"
@@ -82,7 +83,7 @@ export const ModalLocal = ({ userId, setShowModalLocal }) => {
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
-                    <div className='container-cel'>
+                    <div className='modalLocal-container__form-ajustes__container-cel'>
                         <label htmlFor="cel">Ingrese su numero de celular</label>
                         <div className='cel-inputs'>
 
