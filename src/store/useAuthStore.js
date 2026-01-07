@@ -24,20 +24,9 @@ export const useAuthStore = create((set, get) => ({
     checkAuth: async (navigate) => {
         try {
             const response = await verifyTokenApi();
-            if (response.data.status === "expired") {
-                set({
-                    login: true, // Mantenemos el login
-                    isExpired: true,
-                    userId: response.data.userId,
-                    local: response.data.local,
-                    localId: response.data.localId
-                });
-                navigate("/pago-vencido"); // Redirigimos pero seguimos logueados
-                return;
-            }
 
             if (response.data.auth) {
-                set({ admin: 1 });
+                set({ admin: 1, isExpired: false });
             } else if (response.data.login) {
                 set({
                     login: true,
