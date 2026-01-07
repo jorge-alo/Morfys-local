@@ -32,7 +32,7 @@ export const TablaUser = ({onEdit, handleAddLocal}) => {
                 <td key={j}>{String(val)}</td>
               ))}
               <td>
-                <button onClick={() => handleAddLocal(user.id)}>Agregar local</button>
+                <button onClick={() => handleAddLocal(user.id)}>Datos del local</button>
                 <button onClick={() => onEdit(user)}>Editar</button>
                 <button onClick={() => handleDelete(user.id)}>Eliminar</button>
               </td>
