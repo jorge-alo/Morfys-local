@@ -24,7 +24,13 @@ export const useAuthStore = create((set, get) => ({
         try {
             const response = await verifyTokenApi();
             if (response.data.status === "expired") {
-                get().handleLogOut(navigate, "/pago-vencido");
+                set({
+                    login: true, // Mantenemos el login
+                    userId: response.data.userId,
+                    local: response.data.local,
+                    localId: response.data.localId
+                });
+                navigate("/pago-vencido"); // Redirigimos pero seguimos logueados
                 return;
             }
 
@@ -57,12 +63,12 @@ export const useAuthStore = create((set, get) => ({
                 set({ admin: response.data.auth });
                 navigate('/admin/usuarios');
             } else {
-                set({ 
-                login: response.data.login,
-                userId: response.data.userId,
-                local: response.data.local,
-                localId: response.data.localId 
-            });
+                set({
+                    login: response.data.login,
+                    userId: response.data.userId,
+                    local: response.data.local,
+                    localId: response.data.localId
+                });
                 navigate('/dashboard');
             }
         } catch (error) {
@@ -99,8 +105,8 @@ export const useAuthStore = create((set, get) => ({
             loading: false
         });
         if (typeof navigate === 'function') {
-        navigate(redirectTo);
-    }
+            navigate(redirectTo);
+        }
     },
 
     checkPay: async () => {
