@@ -23,8 +23,6 @@ export const Menu = () => {
   const setComidas = useFormStore((state) => state.setComidas);
   const acceptSelection = useFormStore((state) => state.acceptSelection);
   const setAcceptSelection = useFormStore((state) => state.setAcceptSelection);
-  const showModalPay = useFormStore((state) => state.showModalPay);
-  const setShowModalPay = useFormStore((state) => state.setShowModalPay);
 
   const [showInputRow, setShowInputRow] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
@@ -103,13 +101,6 @@ export const Menu = () => {
           handleLocales={handleLocales}
         />
       }
-
-      {
-        showModalPay &&
-        <ModalPay showModalPay={showModalPay} setShowModalPay={setShowModalPay} />
-      }
-
-
 
       <Filter />
       <div className="container-table__mainButtons">

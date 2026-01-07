@@ -2,12 +2,15 @@ import { useState } from 'react';
 import '../styles/ModalPay.css';
 import { useAuthStore } from '../store/useAuthStore';
 import { useDataStore } from '../store/useDataStore';
+import { useFormStore } from '../store/useFormStore';
 
-export const ModalPay = ({ showModalPay, setShowModalPay }) => {
- 
+export const ModalPay = () => {
+
   const getPreferencePay = useDataStore((state) => state.getPreferencePay);
+  const showModalPay = useFormStore((state) => state.showModalPay);
+  const setShowModalPay = useFormStore((state) => state.setShowModalPay);
   const userId = useAuthStore((state) => state.userId)
-  const[touchStartX, setTouchStartX] = useState(null);
+  const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
 
   // Comienza el gesto
@@ -47,7 +50,7 @@ export const ModalPay = ({ showModalPay, setShowModalPay }) => {
   }
 
   const handleGetPreferencePay = async () => {
-    const response = await getPreferencePay({userId});
+    const response = await getPreferencePay({ userId });
     console.log('valor de init_point en handleGetPreferencePay', response.data.init_point);
     if (response?.data?.init_point) {
       // redirige al checkout de Mercado Pago
