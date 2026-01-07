@@ -19,6 +19,7 @@ import { DashboardAdmin } from './pages/DashboardAdmin.jsx'
 import { useEffect } from 'react'
 import { useAuthStore } from './store/useAuthStore'
 import { useFormStore } from './store/useFormStore.js'
+import { ModalPay } from './components/ModalPay.jsx'
 
 export const App = () => {
   const checkAuth = useAuthStore((state) => state.checkAuth);
