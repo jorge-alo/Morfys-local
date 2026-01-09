@@ -20,6 +20,7 @@ export const useAuthStore = create((set, get) => ({
     setSuccess: (msg) => set({ success: msg }),
     setError: (msg) => set({ error: msg }),
     setShowForgotPassword: (bool) => set({ showForgotPassword: bool }),
+    setEmailForReset: (email) => set({emailForReset: email}),
 
     checkAuth: async (navigate) => {
         try {
