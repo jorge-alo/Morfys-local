@@ -32,7 +32,6 @@ export const ResetPassword = () => {
             console.log("ERROR:", error);
             setError(error);
         }
-        setShowForgotPassword(true);
 
     }
     return (
