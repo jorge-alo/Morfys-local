@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormStore } from '../store/useFormStore';
 import { useDataStore } from '../store/useDataStore';
+import { useAuthStore } from '../store/useAuthStore';
 
 export const ResetPassword = () => {
    /* const { handleChange, valueInput, resetForm } = useForm();*/
@@ -11,6 +12,7 @@ export const ResetPassword = () => {
     const valueInput = useFormStore((state) => state.valueInput);
     const resetForm = useFormStore((state) => state.resetForm);
     const handleResetPassword = useDataStore((state) => state.handleResetPassword);
+    const setShowForgotPassword = useAuthStore((state) => state.setShowForgotPassword);
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const { token } = useParams();
@@ -30,6 +32,7 @@ export const ResetPassword = () => {
             console.log("ERROR:", error);
             setError(error);
         }
+        setShowForgotPassword(true);
 
     }
     return (
