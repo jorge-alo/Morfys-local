@@ -36,6 +36,7 @@ export const Login = () => {
             console.log("valor de response en login", response);
             alert(response.data.message);
             setShowForgotPassword(false);
+            setEmailForReset("");
         } catch (error) {
             // El error ya fue manejado en handleForgotPassword
             console.error("Error en handleSubmitForgotPassword:", error);
