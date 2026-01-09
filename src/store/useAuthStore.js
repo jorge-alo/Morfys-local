@@ -20,7 +20,7 @@ export const useAuthStore = create((set, get) => ({
     setSuccess: (msg) => set({ success: msg }),
     setError: (msg) => set({ error: msg }),
     setShowForgotPassword: (bool) => set({ showForgotPassword: bool }),
-    setEmailForReset: (email) => set({emailForReset: email}),
+    setEmailForReset: (email) => set({ emailForReset: email }),
 
     checkAuth: async (navigate) => {
         try {
@@ -54,7 +54,10 @@ export const useAuthStore = create((set, get) => ({
 
             // SI EL TOKEN ES INVÁLIDO (Error 401)
             if (err.response?.status === 401) {
-                get().handleLogOut(navigate, "/");
+                // Solo redirigir si NO estamos en la página de reset
+                if (!window.location.pathname.includes('/reset-password/')) {
+                    get().handleLogOut(navigate, "/");
+                }
             }
         } finally {
             set({ loading: false });
