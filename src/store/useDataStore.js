@@ -112,9 +112,9 @@ export const useDataStore = create((set, get) => ({
       set({ error: error.message || "Error al actualizar" });
     }
   },
-  updateUserData: async (value) => {
+  updateUserData: async (value, id) => {
     try {
-      const response = await updateUserDataApi({ value });
+      const response = await updateUserDataApi({ value, id });
       set({ error: null });
       if (response.data.status == "OK") {
         await get().getUsers();
