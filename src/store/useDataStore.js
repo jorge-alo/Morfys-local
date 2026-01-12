@@ -163,7 +163,7 @@ export const useDataStore = create((set, get) => ({
     return response.data;
   } catch (error) {
     console.error("Error al crear local");
-    console.error(error);
+    console.error(error.response.data);
   }
 }
 }))
