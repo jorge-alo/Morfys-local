@@ -19,8 +19,8 @@ export const ModalUSer = ({ setShowModalUser, userToEdit }) => {
             const dataForForm = { ...userToEdit };
 
             // Si existe la fecha, la formateamos a YYYY-MM-DD
-            if (dataForForm.active_untill) {
-                dataForForm.active_untill = dataForForm.active_untill.split('T')[0];
+            if (dataForForm.active_until) {
+                dataForForm.active_until = dataForForm.active_until.split('T')[0];
             }
 
             setFormValues(dataForForm);
@@ -44,7 +44,7 @@ export const ModalUSer = ({ setShowModalUser, userToEdit }) => {
 
         if (userToEdit) {
             // Lógica para EDITAR (deberías pasar el ID o Email único)
-            await updateUserData(valueInput, userToEdit.email);
+            await updateUserData(valueInput);
         } else {
             // Lógica para CREAR
             await sendDataNewUser(valueInput);
@@ -58,6 +58,7 @@ export const ModalUSer = ({ setShowModalUser, userToEdit }) => {
                 <span className='close' onClick={handleClose}>X</span>
 
                 <form className="form-user">
+                    <input type="hidden" name="id" value={valueInput.user_id || ""} />
                     <h3>{userToEdit ? 'Editar Usuario' : 'Nuevo Usuario'}</h3>
                     <div className="form-user__container-data">
                         <label htmlFor="name"> Nombre de usuario</label>
