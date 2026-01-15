@@ -25,7 +25,6 @@ export const App = () => {
   const checkAuth = useAuthStore((state) => state.checkAuth);
   const loading = useAuthStore((state) => state.loading);
   const showModalPay = useFormStore((state) => state.showModalPay);
-  const setShowModalPay = useFormStore((state) => state.setShowModalPay);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,9 +61,9 @@ export const App = () => {
           <Route path='dashboard' element={<DashboardAdmin />} />
         </Route>
       </Routes>
-    {/*showModalPay && (
+    {showModalPay && (
         <ModalPay/>
-      )*/}
+      )}
 
     </div>
   )
