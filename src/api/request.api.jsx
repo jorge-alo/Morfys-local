@@ -57,8 +57,10 @@ export const cargarComidasApi = async (data) => {
   });
 }
 
-export const destroyApi = async (id) => {
-  return await api.delete(`/destroy/${id}`);
+export const destroyApi = async (id, opId) => {
+  // Si opId existe, lo agregamos como parámetro de consulta
+  const url = opId ? `/destroy/${id}?opId=${opId}` : `/destroy/${id}`;
+  return await api.delete(url);
 }
 
 export const apiAddStandAll = async (categoria, data) => {

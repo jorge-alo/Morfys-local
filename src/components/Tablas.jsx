@@ -27,10 +27,10 @@ export const Tablas = ({ setEditIndex, handleLocales, selectAll, setSelectAll })
     })
   }
 
-  const handleEliminar = async (id) => {
+  const handleEliminar = async (id, opId = null) => {
     const confirmar = confirm("Esta seguro de quere eliminar esta comida");
     if (confirmar) {
-      const result = await handleDestroy(id)
+      const result = await handleDestroy(id, opId = null)
       handleLocales(userId);
     } else {
       // Si hace clic en "Cancelar"
@@ -213,7 +213,7 @@ export const Tablas = ({ setEditIndex, handleLocales, selectAll, setSelectAll })
                       {/* Acciones */}
                       <td className="td-button">
                         <button className='td-button__editar' onClick={() => handleEdit(index)}>Editar</button>
-                        <button className='td-button__eliminar' onClick={() => handleEliminar(item.id)}>Eliminar</button>
+                        <button className='td-button__eliminar' onClick={() => handleEliminar(item.id, op.id)}>Eliminar</button>
                       </td>
                     </tr>
                   ))                                          // 🔹 cierra map

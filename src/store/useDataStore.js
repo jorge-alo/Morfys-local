@@ -50,9 +50,9 @@ export const useDataStore = create((set, get) => ({
     }
   },
 
-  handleDestroy: async (id) => {
+  handleDestroy: async (id, opId = null) => {
     try {
-      const result = await destroyApi(id);
+      const result = await destroyApi(id, opId);
       set({ error: null });
       return result;
     } catch (error) {
