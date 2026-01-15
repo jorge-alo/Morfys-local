@@ -3,7 +3,7 @@ import '../styles/Form.css'
 import { useFormStore } from '../store/useFormStore';
 import { useDataStore } from '../store/useDataStore';
 
-export const Form = ({ handleClose }) => {
+export const Form = ({ handleClose, handleLocales }) => {
     const [acepto, setAcepto] = useState(false);
     const valueInput = useFormStore((state) => state.valueInput);
     const setValueInput = useFormStore((state) => state.setValueInput);
