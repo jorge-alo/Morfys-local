@@ -21,6 +21,7 @@ export const Tablas = ({ setEditIndex, handleLocales, selectAll, setSelectAll })
 
   const handleEdit = (index) => {
     setEditIndex(index);
+    console.log("Valor de comidas en handleEdit", comidas[index]);
     setValueInput({
       ...comidas[index]
     })
