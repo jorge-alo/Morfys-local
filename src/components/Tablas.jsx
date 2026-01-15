@@ -30,7 +30,7 @@ export const Tablas = ({ setEditIndex, handleLocales, selectAll, setSelectAll })
   const handleEliminar = async (id, opId = null) => {
     const confirmar = confirm("Esta seguro de quere eliminar esta comida");
     if (confirmar) {
-      const result = await handleDestroy(id, opId = null)
+      const result = await handleDestroy(id, opId)
       handleLocales(userId);
     } else {
       // Si hace clic en "Cancelar"
