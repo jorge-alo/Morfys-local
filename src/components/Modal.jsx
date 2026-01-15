@@ -4,7 +4,7 @@ import { Form } from './Form';
 import { AgregarComidas } from './AgregarComidas';
 import { useFormStore } from '../store/useFormStore';
 
-export const Modal = ({ setEditIndex, showInputRow, setShowInputRow}) => {
+export const Modal = ({ setEditIndex, showInputRow, setShowInputRow, handleLocales}) => {
     const resetForm = useFormStore((state) => state.resetForm);
 
     const handleClose = () => {
@@ -26,8 +26,8 @@ export const Modal = ({ setEditIndex, showInputRow, setShowInputRow}) => {
                 <span className='close' onClick={handleClose}>X</span>
                 {
                     showInputRow
-                        ? <AgregarComidas handleClose = {handleClose} />
-                        : <Form handleClose={handleClose} />
+                        ? <AgregarComidas handleClose = {handleClose} handleLocales={handleLocales} />
+                        : <Form handleClose={handleClose} handleLocales={handleLocales} />
                 }
 
             </div>

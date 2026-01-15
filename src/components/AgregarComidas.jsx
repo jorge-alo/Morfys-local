@@ -3,7 +3,7 @@ import '../styles/AgregarComidas.css'
 import { useFormStore } from '../store/useFormStore';
 import { useDataStore } from '../store/useDataStore';
 
-export const AgregarComidas = ({ handleClose }) => {
+export const AgregarComidas = ({ handleClose, handleLocales }) => {
 
   const valueInput = useFormStore((state) => state.valueInput);
   const setValueInput = useFormStore((state) => state.setValueInput);
@@ -26,6 +26,11 @@ export const AgregarComidas = ({ handleClose }) => {
     formData.append('tamanio', valueInput.tamanio);
     formData.append('variantes', JSON.stringify(valueInput.variantes));
     const result = await handleCargarComidas(formData);
+    if (result) {
+      // Refrescar los datos en el store global antes de cerrar
+      await handleLocales();
+      handleClose();
+    }
     handleClose()
   }
 
@@ -54,19 +59,19 @@ export const AgregarComidas = ({ handleClose }) => {
     )
   }
 
-const handleOpcionChange = (vIndex, oIndex, campo, valor) => {
-  const nuevasVariantes = valueInput.variantes.map((v, i) => {
-    if (i !== vIndex) return v;
-    return {
-      ...v,
-      opciones: v.opciones.map((op, j) => 
-        j === oIndex ? { ...op, [campo]: valor } : op
-      )
-    };
-  });
-  
-  setValueInput({ variantes: nuevasVariantes });
-};
+  const handleOpcionChange = (vIndex, oIndex, campo, valor) => {
+    const nuevasVariantes = valueInput.variantes.map((v, i) => {
+      if (i !== vIndex) return v;
+      return {
+        ...v,
+        opciones: v.opciones.map((op, j) =>
+          j === oIndex ? { ...op, [campo]: valor } : op
+        )
+      };
+    });
+
+    setValueInput({ variantes: nuevasVariantes });
+  };
 
 
   return (
@@ -158,9 +163,9 @@ const handleOpcionChange = (vIndex, oIndex, campo, valor) => {
               id="nombreVariante"
               value={variante.nombre}
               onChange={(e) => {
-                  const nuevas = [...valueInput.variantes];
-                  nuevas[i].nombre = e.target.value;
-                 setValueInput({ variantes: nuevas });            
+                const nuevas = [...valueInput.variantes];
+                nuevas[i].nombre = e.target.value;
+                setValueInput({ variantes: nuevas });
               }}
             />
             <label htmlFor="cantidadVariante">Cantidad de variantes</label>
@@ -170,11 +175,11 @@ const handleOpcionChange = (vIndex, oIndex, campo, valor) => {
               id="cantidadVariante"
               value={variante.limite}
               onChange={(e) => {
-                
-                  const nuevas = [...valueInput.variantes];
-                  nuevas[i].limite = e.target.value;
-                  setValueInput({ variantes: nuevas }); 
-               
+
+                const nuevas = [...valueInput.variantes];
+                nuevas[i].limite = e.target.value;
+                setValueInput({ variantes: nuevas });
+
               }}
             />
 
@@ -188,7 +193,7 @@ const handleOpcionChange = (vIndex, oIndex, campo, valor) => {
                     name="nombreopcion"
                     id={`nombreopcion-${i}-${j}`}
                     value={op.nombre}
-                   onChange={(e) => handleOpcionChange(i, j, 'nombre', e.target.value)}
+                    onChange={(e) => handleOpcionChange(i, j, 'nombre', e.target.value)}
                   />
                 </div>
                 <div>
@@ -205,18 +210,18 @@ const handleOpcionChange = (vIndex, oIndex, campo, valor) => {
             ))}
 
             <button type='button' onClick={() => {
-              
-                const nuevas = valueInput.variantes.map((v, index) => {
-                  if (index === i) {
-                    return {
-                      ...v,
-                      opciones: [...v.opciones, { nombre: "", precio_adicional: 0 }]
-                    };
-                  }
-                  return v;
-                });
-                setValueInput({ variantes: nuevas });
-              
+
+              const nuevas = valueInput.variantes.map((v, index) => {
+                if (index === i) {
+                  return {
+                    ...v,
+                    opciones: [...v.opciones, { nombre: "", precio_adicional: 0 }]
+                  };
+                }
+                return v;
+              });
+              setValueInput({ variantes: nuevas });
+
             }}>
               +opcion
             </button>

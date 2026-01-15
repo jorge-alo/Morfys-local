@@ -9,7 +9,7 @@ export const Form = ({ handleClose }) => {
     const setValueInput = useFormStore((state) => state.setValueInput);
     const handleChange = useFormStore((state) => state.handleChange);
     const imageFile = useFormStore((state) => state.imageFile);
-    
+
     const handleUpdate = useDataStore((state) => state.handleUpdate);
     const variantesBackup = useRef([]);
 
@@ -26,7 +26,12 @@ export const Form = ({ handleClose }) => {
         formData.append('price', valueInput.price);
         formData.append('categoria', valueInput.categoria);
         formData.append('variantes', JSON.stringify(valueInput.variantes));
-        await handleUpdate(formData);
+        const result = await handleUpdate(formData);
+        if (result) {
+            // Refrescar los datos en el store global antes de cerrar
+            await handleLocales();
+            handleClose();
+        }
         handleClose()
     }
 
@@ -168,7 +173,7 @@ export const Form = ({ handleClose }) => {
                                         name="nombreopcion"
                                         id={`nombreopcion-${i}-${j}`}
                                         value={op.nombre}
-                                        onChange={(e) => handleOpcionChange(i,j, 'nombre', e.target.value)}
+                                        onChange={(e) => handleOpcionChange(i, j, 'nombre', e.target.value)}
                                     />
                                 </div>
                                 <div>
@@ -178,25 +183,25 @@ export const Form = ({ handleClose }) => {
                                         name="precioopcion"
                                         id={`precioopcion-${i}-${j}`}
                                         value={op.precio_adicional}
-                                        onChange={(e) => handleOpcionChange(i,j, 'precio_adicional', e.target.value)}
+                                        onChange={(e) => handleOpcionChange(i, j, 'precio_adicional', e.target.value)}
                                     />
                                 </div>
                             </div>
                         ))}
 
                         <button className='button-opcion' type='button' onClick={() => {
-                           
-                                const nuevas = valueInput.variantes.map((v, index) => {
-                                    if (index === i) {
-                                        return {
-                                            ...v,
-                                            opciones: [...v.opciones, { nombre: "", precio_adicional: 0 }]
-                                        };
-                                    }
-                                    return v;
-                                });
-                                setValueInput({  variantes: nuevas });
-                            
+
+                            const nuevas = valueInput.variantes.map((v, index) => {
+                                if (index === i) {
+                                    return {
+                                        ...v,
+                                        opciones: [...v.opciones, { nombre: "", precio_adicional: 0 }]
+                                    };
+                                }
+                                return v;
+                            });
+                            setValueInput({ variantes: nuevas });
+
                         }}>
                             +opcion
                         </button>
