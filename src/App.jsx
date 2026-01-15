@@ -62,9 +62,9 @@ export const App = () => {
           <Route path='dashboard' element={<DashboardAdmin />} />
         </Route>
       </Routes>
-      {showModalPay && (
+    {/*showModalPay && (
         <ModalPay/>
-      )}
+      )*/}
 
     </div>
   )
