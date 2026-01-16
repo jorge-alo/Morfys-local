@@ -3,7 +3,7 @@ import '../styles/AgregarComidas.css'
 import { useFormStore } from '../store/useFormStore';
 import { useDataStore } from '../store/useDataStore';
 
-export const AgregarComidas = ({ handleClose, handleLocales }) => {
+/*export const AgregarComidas = ({ handleClose, handleLocales }) => {
 
   const valueInput = useFormStore((state) => state.valueInput);
   const setValueInput = useFormStore((state) => state.setValueInput);
@@ -234,4 +234,228 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
       <button type='button' onClick={handleSaveEdit}>Enviar</button>
     </form>
   )
-}
+}*/
+
+export const AgregarComidas = ({ handleClose, handleLocales }) => {
+  const valueInput = useFormStore((state) => state.valueInput);
+  const setValueInput = useFormStore((state) => state.setValueInput);
+  const handleChange = useFormStore((state) => state.handleChange);
+  const imageFile = useFormStore((state) => state.imageFile);
+  const handleCargarComidas = useDataStore((state) => state.handleCargarComidas);
+
+  const [productMode, setProductMode] = useState('simple');
+  const [precioGlobalOpciones, setPrecioGlobalOpciones] = useState(0);
+
+  useEffect(() => {
+    if (valueInput.tamanio === 1) {
+      setProductMode('sizes');
+    } else if (valueInput.variantes?.length > 0) {
+      if (valueInput.price == 0) setProductMode('selection');
+      else setProductMode('addons');
+    } else {
+      setProductMode('simple');
+    }
+  }, []);
+
+  const handleSaveEdit = async () => {
+    const formData = new FormData();
+    if (imageFile) formData.append('image', imageFile);
+
+    const finalData = { ...valueInput };
+
+    if (productMode === 'simple') {
+      finalData.tamanio = 0;
+      finalData.variantes = [];
+    } else if (productMode === 'sizes') {
+      finalData.price = 0;
+      finalData.tamanio = 1;
+      // Forzamos límite 0 para tamaños
+      finalData.variantes = finalData.variantes.map(v => ({ ...v, limite: 0 }));
+    } else if (productMode === 'addons') {
+      finalData.tamanio = 0;
+      // Forzamos límite 0 para agregados
+      finalData.variantes = finalData.variantes.map(v => ({ ...v, limite: 0 }));
+    } else if (productMode === 'selection') {
+      finalData.price = 0;
+      finalData.tamanio = 0;
+      finalData.variantes = finalData.variantes.map(v => ({
+        ...v,
+        opciones: v.opciones.map(op => ({ ...op, precio_adicional: precioGlobalOpciones }))
+      }));
+    }
+
+    formData.append('id', finalData.id);
+    formData.append('name', finalData.name);
+    formData.append('description', finalData.description);
+    formData.append('price', finalData.price);
+    formData.append('categoria', finalData.categoria);
+    formData.append('tamanio', finalData.tamanio);
+    formData.append('variantes', JSON.stringify(finalData.variantes));
+
+    const result = await handleCargarComidas(formData);
+    if (result) {
+      await handleLocales();
+      handleClose();
+    }
+  };
+
+  const handleOpcionChange = (vIndex, oIndex, campo, valor) => {
+    const nuevasVariantes = valueInput.variantes.map((v, i) => {
+      if (i !== vIndex) return v;
+      return {
+        ...v,
+        opciones: v.opciones.map((op, j) =>
+          j === oIndex ? { ...op, [campo]: valor } : op
+        )
+      };
+    });
+    setValueInput({ variantes: nuevasVariantes });
+  };
+
+  const agregarVarianteInicial = (nombreDefecto = "Opciones") => {
+    // Por defecto el límite es 0, excepto si el negocio requiere lo contrario.
+    // Para 'selection' (promo) se actualizará manualmente en el input.
+    setValueInput({
+      variantes: [{ nombre: nombreDefecto, limite: 0, opciones: [{ nombre: "", precio_adicional: 0 }] }]
+    });
+  };
+
+  return (
+    <form className='form' onSubmit={(e) => e.preventDefault()}>
+      <div className="product-mode-selector">
+        <label>¿Qué tipo de producto es?</label>
+        <div className="mode-options">
+          {['simple', 'sizes', 'selection', 'addons'].map((mode) => (
+            <button
+              key={mode}
+              type="button"
+              className={productMode === mode ? 'active' : ''}
+              onClick={() => {
+                setProductMode(mode);
+                if (mode === 'simple') setValueInput({ variantes: [], tamanio: 0 });
+                else if (mode === 'sizes') agregarVarianteInicial("Tamaño");
+                else if (mode === 'selection') agregarVarianteInicial("Sabores");
+                else if (mode === 'addons') agregarVarianteInicial("Extras");
+              }}
+            >
+              {mode === 'simple' && 'Simple / Promo'}
+              {mode === 'sizes' && 'Por Tamaños'}
+              {mode === 'selection' && 'Empanadas / Sabores'}
+              {mode === 'addons' && 'Base + Agregados'}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className='form__item'>
+        <label>Nombre del producto</label>
+        <input type="text" name="name" value={valueInput.name} onChange={handleChange} placeholder="Ej: Pizza Muzarella" />
+      </div>
+
+      <div className='form__item'>
+        <label>Descripción</label>
+        <input type="text" name="description" value={valueInput.description} onChange={handleChange} />
+      </div>
+
+      {(productMode === 'simple' || productMode === 'addons') && (
+        <div className='form__item'>
+          <label>{productMode === 'addons' ? 'Precio Base' : 'Precio Final'}</label>
+          <input type="number" name="price" value={valueInput.price} onChange={handleChange} />
+        </div>
+      )}
+
+      {productMode === 'selection' && (
+        <div className='form__item'>
+          <label>Precio por Unidad (se aplicará a todos los sabores)</label>
+          <input type="number" value={precioGlobalOpciones} onChange={(e) => setPrecioGlobalOpciones(Number(e.target.value))} />
+        </div>
+      )}
+
+      {productMode !== 'simple' && valueInput.variantes.map((variante, i) => (
+        <div className='form__item variantes-container' key={i}>
+          <div className="variante-header">
+            <div className="input-group">
+              <label>Nombre del Grupo</label>
+              <input
+                type="text"
+                placeholder="Ej: Elegí tus sabores"
+                value={variante.nombre}
+                onChange={(e) => {
+                  const nuevas = valueInput.variantes.map((v, index) => 
+                    index === i ? { ...v, nombre: e.target.value } : v
+                  );
+                  setValueInput({ variantes: nuevas });
+                }}
+              />
+            </div>
+
+            {/* SOLO MOSTRAR LÍMITE EN MODO SELECCIÓN (PROMOS) */}
+            {productMode === 'selection' && (
+              <div className="input-group-limit">
+                <label>Cantidad incluida</label>
+                <input
+                  type="number"
+                  min="1"
+                  value={variante.limite}
+                  onChange={(e) => {
+                    const nuevas = valueInput.variantes.map((v, index) =>
+                      index === i ? { ...v, limite: Number(e.target.value) } : v
+                    );
+                    setValueInput({ variantes: nuevas });
+                  }}
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="opciones-lista">
+            <label>Opciones:</label>
+            {variante.opciones.map((op, j) => (
+              <div key={j} className='opcion-row'>
+                <input
+                  type="text"
+                  placeholder="Nombre"
+                  value={op.nombre}
+                  onChange={(e) => handleOpcionChange(i, j, 'nombre', e.target.value)}
+                />
+                {productMode !== 'selection' && (
+                  <input
+                    type="number"
+                    placeholder="Precio"
+                    value={op.precio_adicional}
+                    onChange={(e) => handleOpcionChange(i, j, 'precio_adicional', Number(e.target.value))}
+                  />
+                )}
+                {/* Botón opcional para eliminar opción individual */}
+                <button type="button" className="btn-remove" onClick={() => {
+                   const nuevas = valueInput.variantes.map((v, vIdx) => {
+                     if(vIdx !== i) return v;
+                     return { ...v, opciones: v.opciones.filter((_, oIdx) => oIdx !== j) };
+                   });
+                   setValueInput({ variantes: nuevas });
+                }}>✕</button>
+              </div>
+            ))}
+          </div>
+
+          <button type='button' className="btn-add-opcion" onClick={() => {
+            const nuevas = valueInput.variantes.map((v, index) => {
+              if (index === i) {
+                return { ...v, opciones: [...v.opciones, { nombre: "", precio_adicional: 0 }] };
+              }
+              return v;
+            });
+            setValueInput({ variantes: nuevas });
+          }}>
+            + Añadir Opción
+          </button>
+        </div>
+      ))}
+
+      <div className="form-actions">
+        <button type='button' className="btn-cancel" onClick={handleClose}>Cancelar</button>
+        <button type='button' className="btn-submit" onClick={handleSaveEdit}>Guardar Producto</button>
+      </div>
+    </form>
+  );
+};
