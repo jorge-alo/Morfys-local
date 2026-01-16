@@ -16,12 +16,16 @@
 .form__item {
   display: flex;
   flex-direction: column;
- 
+  gap: 5px;
 }
 .variantes {
     border: 1px solid #ccc;
     padding: 20px 5px;
     border-radius: 4px;
+}
+.nombre-grupo {
+  display: flex;
+  flex-direction: column;
 }
 .form__item__variantes {
     display: flex;
@@ -36,16 +40,13 @@
   outline: none;
   padding: 3px;
   border: none;
-  font-size: 1rem
+  font-size: 1rem;
 }
 
 .opcion-container {
     display: flex;
     overflow: auto;
-}
-.opcion-container div {
-    display: flex;
-    flex-direction: column;
+    gap: 5px;
 }
 
 .form button {

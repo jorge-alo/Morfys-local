@@ -4,3 +4,60 @@
     align-items: center;
    
 }
+.btn-remove {
+    height: fit-content;
+    width: fit-content;
+    
+}
+
+.container-input-precioAdicional {
+    display: flex;
+    height: fit-content;
+}
+.container-input-precioAdicional button {
+    font-size: .7rem;
+}
+.mode-options {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.nombreOpcion {
+    display: flex;
+    flex-direction: column;
+     width: 100%;
+}
+
+.precio-opcion {
+    display: flex;
+    flex-direction: column;  
+     width: 100%;
+}
+
+.nombreOpcion input, 
+.precio-opcion input {
+    width: 100%; /* Ocupa el total de su columna asignada */
+    box-sizing: border-box;
+    font-size: 0.9rem; /* Un poco más chico para que quepa en mobile */
+}
+.mode-options .active {
+    background-color: #5b5b70;
+}
+
+.form .btn-cancel {
+    background-color: #cd5959;
+}
+.form .btn-cancel:hover {
+     background-color: #ad5959;
+}
+.product-mode-selector label {
+    display: block;
+    text-align: center;
+    border: none;
+}
+.container-input-opciones {
+    display: flex;
+}
+

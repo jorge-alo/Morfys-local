@@ -243,6 +243,8 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
   const imageFile = useFormStore((state) => state.imageFile);
   const handleCargarComidas = useDataStore((state) => state.handleCargarComidas);
 
+  // 'unit' será para gustos sueltos (precio final 0)
+  // 'selection' será para Promos (precio final fijo, ej: $15000)
   const [productMode, setProductMode] = useState('simple');
   const [precioGlobalOpciones, setPrecioGlobalOpciones] = useState(0);
 
@@ -250,8 +252,8 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
     if (valueInput.tamanio === 1) {
       setProductMode('sizes');
     } else if (valueInput.variantes?.length > 0) {
-      if (valueInput.price == 0) setProductMode('selection');
-      else setProductMode('addons');
+      if (valueInput.price == 0) setProductMode('unit'); // Es venta por unidad
+      else setProductMode('selection'); // Es una promo con precio fijo
     } else {
       setProductMode('simple');
     }
@@ -261,36 +263,45 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
     const formData = new FormData();
     if (imageFile) formData.append('image', imageFile);
 
-    const finalData = { ...valueInput };
+    // Creamos copias locales para no mutar el estado global directamente
+    let variantesFinales = [...valueInput.variantes];
+    let precioFinal = valueInput.price;
+    let tamanioFinal = valueInput.tamanio;
 
     if (productMode === 'simple') {
-      finalData.tamanio = 0;
-      finalData.variantes = [];
-    } else if (productMode === 'sizes') {
-      finalData.price = 0;
-      finalData.tamanio = 1;
-      // Forzamos límite 0 para tamaños
-      finalData.variantes = finalData.variantes.map(v => ({ ...v, limite: 0 }));
-    } else if (productMode === 'addons') {
-      finalData.tamanio = 0;
-      // Forzamos límite 0 para agregados
-      finalData.variantes = finalData.variantes.map(v => ({ ...v, limite: 0 }));
-    } else if (productMode === 'selection') {
-      finalData.price = 0;
-      finalData.tamanio = 0;
-      finalData.variantes = finalData.variantes.map(v => ({
+      tamanioFinal = 0;
+      variantesFinales = [];
+    } else if (productMode === 'unit') {
+      precioFinal = 0; // Obligamos a 0 porque se cobra por unidad
+      tamanioFinal = 0;
+      variantesFinales = valueInput.variantes.map(v => ({
         ...v,
+        limite: 0,
         opciones: v.opciones.map(op => ({ ...op, precio_adicional: precioGlobalOpciones }))
       }));
+    } else if (productMode === 'selection') {
+      tamanioFinal = 0;
+      // En Promo, las opciones NO suman precio (precio_adicional: 0)
+      variantesFinales = valueInput.variantes.map(v => ({
+        ...v,
+        opciones: v.opciones.map(op => ({ ...op, precio_adicional: 0 }))
+      }));
+    } else if (productMode === 'sizes') {
+      precioFinal = 0;
+      tamanioFinal = 1;
+      variantesFinales = valueInput.variantes.map(v => ({ ...v, limite: 0 }));
+    } else if (productMode === 'addons') {
+      tamanioFinal = 0;
+      variantesFinales = valueInput.variantes.map(v => ({ ...v, limite: 0 }));
     }
 
-    formData.append('id', finalData.id);
-    formData.append('name', finalData.name);
-    formData.append('description', finalData.description);
-    formData.append('price', finalData.price);
-    formData.append('categoria', finalData.categoria);
-    formData.append('tamanio', finalData.tamanio);
-    formData.append('variantes', JSON.stringify(finalData.variantes));
+    formData.append('id', valueInput.id);
+    formData.append('name', valueInput.name);
+    formData.append('description', valueInput.description);
+    formData.append('price', precioFinal);
+    formData.append('categoria', valueInput.categoria);
+    formData.append('tamanio', tamanioFinal);
+    formData.append('variantes', JSON.stringify(variantesFinales));
 
     const result = await handleCargarComidas(formData);
     if (result) {
@@ -313,8 +324,6 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
   };
 
   const agregarVarianteInicial = (nombreDefecto = "Opciones") => {
-    // Por defecto el límite es 0, excepto si el negocio requiere lo contrario.
-    // Para 'selection' (promo) se actualizará manualmente en el input.
     setValueInput({
       variantes: [{ nombre: nombreDefecto, limite: 0, opciones: [{ nombre: "", precio_adicional: 0 }] }]
     });
@@ -325,7 +334,7 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
       <div className="product-mode-selector">
         <label>¿Qué tipo de producto es?</label>
         <div className="mode-options">
-          {['simple', 'sizes', 'selection', 'addons'].map((mode) => (
+          {['simple', 'unit', 'selection', 'sizes', 'addons'].map((mode) => (
             <button
               key={mode}
               type="button"
@@ -333,14 +342,16 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
               onClick={() => {
                 setProductMode(mode);
                 if (mode === 'simple') setValueInput({ variantes: [], tamanio: 0 });
+                else if (mode === 'unit') agregarVarianteInicial("Sabores/Gustos");
+                else if (mode === 'selection') agregarVarianteInicial("Elegí tus sabores");
                 else if (mode === 'sizes') agregarVarianteInicial("Tamaño");
-                else if (mode === 'selection') agregarVarianteInicial("Sabores");
-                else if (mode === 'addons') agregarVarianteInicial("Extras");
+                else if (mode === 'addons') agregarVarianteInicial("Agregados");
               }}
             >
-              {mode === 'simple' && 'Simple / Promo'}
-              {mode === 'sizes' && 'Por Tamaños'}
-              {mode === 'selection' && 'Empanadas / Sabores'}
+              {mode === 'simple' && 'Simple'}
+              {mode === 'unit' && 'Unidad'}
+              {mode === 'selection' && 'Promo'}
+              {mode === 'sizes' && 'Tamaños'}
               {mode === 'addons' && 'Base + Agregados'}
             </button>
           ))}
@@ -357,93 +368,116 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
         <input type="text" name="description" value={valueInput.description} onChange={handleChange} />
       </div>
 
-      {(productMode === 'simple' || productMode === 'addons') && (
+      <div className='form__item'>
+        <label htmlFor="image">Imagen</label>
+        <label htmlFor="image" className="agregararchivo">{imageFile ? imageFile.name : "cargar imagen"}</label>
+        <input type="file" name="image" id="image" className="file" onChange={handleChange} />
+      </div>
+
+      <div className='form__item'>
+        <label htmlFor="categoria">Categoria</label>
+        <input type="text" name="categoria" id="categoria" value={valueInput.categoria} onChange={handleChange} />
+      </div>
+
+      {/* Precio visible para Simple, Addons y Promos */}
+      {(productMode === 'simple' || productMode === 'addons' || productMode === 'selection') && (
         <div className='form__item'>
-          <label>{productMode === 'addons' ? 'Precio Base' : 'Precio Final'}</label>
+          <label>{productMode === 'selection' ? 'Precio de la Promo' : 'Precio Final'}</label>
           <input type="number" name="price" value={valueInput.price} onChange={handleChange} />
         </div>
       )}
 
-      {productMode === 'selection' && (
+      {/* Precio global solo para Venta por Unidad */}
+      {productMode === 'unit' && (
         <div className='form__item'>
-          <label>Precio por Unidad (se aplicará a todos los sabores)</label>
+          <label>Precio por Unidad (se aplica a cada gusto)</label>
           <input type="number" value={precioGlobalOpciones} onChange={(e) => setPrecioGlobalOpciones(Number(e.target.value))} />
         </div>
       )}
 
       {productMode !== 'simple' && valueInput.variantes.map((variante, i) => (
         <div className='form__item variantes' key={i}>
-          
-            <div>
-              <label>Nombre del Grupo</label>
+          <div className='nombre-grupo'>
+            <label>Nombre del Grupo</label>
+            <input
+              type="text"
+              placeholder="Ej: Elegí tus sabores"
+              value={variante.nombre}
+              onChange={(e) => {
+                const nuevas = valueInput.variantes.map((v, index) =>
+                  index === i ? { ...v, nombre: e.target.value } : v
+                );
+                setValueInput({ variantes: nuevas });
+              }}
+            />
+          </div>
+
+          {/* Solo en Promo mostramos el límite (ej: incluye 6 empanadas) */}
+          {productMode === 'selection' && (
+            <div className='form__item'>
+              <label>Cantidad incluida en la promo</label>
               <input
-                type="text"
-                placeholder="Ej: Elegí tus sabores"
-                value={variante.nombre}
+                type="number"
+                min="1"
+                value={variante.limite}
                 onChange={(e) => {
                   const nuevas = valueInput.variantes.map((v, index) =>
-                    index === i ? { ...v, nombre: e.target.value } : v
+                    index === i ? { ...v, limite: Number(e.target.value) } : v
                   );
                   setValueInput({ variantes: nuevas });
                 }}
               />
             </div>
-
-            {/* SOLO MOSTRAR LÍMITE EN MODO SELECCIÓN (PROMOS) */}
-            {productMode === 'selection' && (
-              <>
-                <label>Cantidad incluida</label>
-                <input
-                  type="number"
-                  min="1"
-                  value={variante.limite}
-                  onChange={(e) => {
-                    const nuevas = valueInput.variantes.map((v, index) =>
-                      index === i ? { ...v, limite: Number(e.target.value) } : v
-                    );
-                    setValueInput({ variantes: nuevas });
-                  }}
-                />
-              </>
-            )}
-          
-
-
+          )}
 
           {variante.opciones.map((op, j) => (
             <div key={j} className='opcion-container'>
-              <div>
+              <div className='nombreOpcion'>
                 <label>Opciones:</label>
-                <input
-                  type="text"
-                  placeholder="Nombre"
-                  value={op.nombre}
-                  onChange={(e) => handleOpcionChange(i, j, 'nombre', e.target.value)}
-                />
-              </div>
-              {productMode !== 'selection' && (
-                <div>
-                  <label htmlFor={`precioopcion-${i}-${j}`}>Precio</label>
+                <div className='container-input-opciones'>
                   <input
-                    type="number"
-                    id={`precioopcion-${i}-${j}`}
-                    placeholder="Precio"
-                    value={op.precio_adicional}
-                    onChange={(e) => handleOpcionChange(i, j, 'precio_adicional', Number(e.target.value))}
+                    type="text"
+                    placeholder="Nombre"
+                    value={op.nombre}
+                    onChange={(e) => handleOpcionChange(i, j, 'nombre', e.target.value)}
                   />
+                  {(productMode == 'selection' || productMode == 'unit') &&
+                    (<button type="button" className="btn-remove" onClick={() => {
+                      const nuevas = valueInput.variantes.map((v, vIdx) => {
+                        if (vIdx !== i) return v;
+                        return { ...v, opciones: v.opciones.filter((_, oIdx) => oIdx !== j) };
+                      });
+                      setValueInput({ variantes: nuevas });
+                    }}>✕</button>)
+                  }
+                </div>
+              </div>
+
+              {/* El precio individual se oculta en Promo (porque es fijo) y en Unit (porque es global) */}
+              {(productMode !== 'selection' && productMode !== 'unit') && (
+                <div className='precio-opcion'>
+                  <label htmlFor={`precioopcion-${i}-${j}`}>Precio</label>
+                  <div className='container-input-precioAdicional'>
+                    <input
+                      type="number"
+                      id={`precioopcion-${i}-${j}`}
+                      value={op.precio_adicional}
+                      onChange={(e) => handleOpcionChange(i, j, 'precio_adicional', Number(e.target.value))}
+                    />
+                    <button type="button" className="btn-remove" onClick={() => {
+                      const nuevas = valueInput.variantes.map((v, vIdx) => {
+                        if (vIdx !== i) return v;
+                        return { ...v, opciones: v.opciones.filter((_, oIdx) => oIdx !== j) };
+                      });
+                      setValueInput({ variantes: nuevas });
+                    }}>✕</button>
+                  </div>
                 </div>
               )}
-              {/* Botón opcional para eliminar opción individual */}
-              <button type="button" className="btn-remove" onClick={() => {
-                const nuevas = valueInput.variantes.map((v, vIdx) => {
-                  if (vIdx !== i) return v;
-                  return { ...v, opciones: v.opciones.filter((_, oIdx) => oIdx !== j) };
-                });
-                setValueInput({ variantes: nuevas });
-              }}>✕</button>
+
+
             </div>
           ))}
-
 
           <button type='button' className="btn-add-opcion" onClick={() => {
             const nuevas = valueInput.variantes.map((v, index) => {
@@ -459,10 +493,8 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
         </div>
       ))}
 
-      <div className="form-actions">
-        <button type='button' className="btn-cancel" onClick={handleClose}>Cancelar</button>
-        <button type='button' className="btn-submit" onClick={handleSaveEdit}>Guardar Producto</button>
-      </div>
+      <button type='button' className="btn-cancel" onClick={handleClose}>Cancelar</button>
+      <button type='button' className="btn-submit" onClick={handleSaveEdit}>Guardar Producto</button>
     </form>
   );
 };
