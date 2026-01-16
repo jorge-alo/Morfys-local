@@ -329,6 +329,17 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
     });
   };
 
+  // Función auxiliar para obtener textos de ayuda dinámicos
+  const getHelperText = () => {
+    switch (productMode) {
+      case 'unit': return "Ideal para empanadas sueltas o helados. El precio se calcula por cada unidad elegida.";
+      case 'selection': return "Ideal para combos (Ej: 1 Pizza + 6 empanadas). El cliente elige hasta un límite por un precio fijo.";
+      case 'sizes': return "Configura diferentes tamaños (Ej: Individual, Familiar) con sus respectivos precios.";
+      case 'addons': return "Un producto base (Ej: Hamburguesa) al que se le pueden sumar extras con cargo.";
+      default: return "Producto simple con un precio único.";
+    }
+  };
+
   return (
     <form className='form' onSubmit={(e) => e.preventDefault()}>
       <div className="product-mode-selector">
@@ -356,6 +367,7 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
             </button>
           ))}
         </div>
+        <p className="mode-helper-text">{getHelperText()}</p>
       </div>
 
       <div className='form__item'>
@@ -415,7 +427,7 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
           {/* Solo en Promo mostramos el límite (ej: incluye 6 empanadas) */}
           {productMode === 'selection' && (
             <div className='form__item'>
-              <label>Cantidad incluida en la promo</label>
+              <label>¿Cuántas unidades puede elegir el cliente?</label>
               <input
                 type="number"
                 min="1"

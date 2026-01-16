@@ -60,4 +60,9 @@
 .container-input-opciones {
     display: flex;
 }
-
+.mode-helper-text {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 8px;
+  font-style: italic;
+}
