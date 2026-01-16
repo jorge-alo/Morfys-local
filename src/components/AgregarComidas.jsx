@@ -411,7 +411,7 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
           <div className="opciones-lista">
             <label>Opciones:</label>
             {variante.opciones.map((op, j) => (
-              <div key={j} className='opcion-row'>
+              <div key={j} className='opcion-container'>
                 <input
                   type="text"
                   placeholder="Nombre"
@@ -419,12 +419,16 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
                   onChange={(e) => handleOpcionChange(i, j, 'nombre', e.target.value)}
                 />
                 {productMode !== 'selection' && (
+                  <div>
+                  <label htmlFor={`precioopcion-${i}-${j}`}>Precio</label>
                   <input
                     type="number"
+                    id={`precioopcion-${i}-${j}`}
                     placeholder="Precio"
                     value={op.precio_adicional}
                     onChange={(e) => handleOpcionChange(i, j, 'precio_adicional', Number(e.target.value))}
                   />
+                  </div>
                 )}
                 {/* Botón opcional para eliminar opción individual */}
                 <button type="button" className="btn-remove" onClick={() => {
