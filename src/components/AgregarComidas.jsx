@@ -374,7 +374,7 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
       {productMode !== 'simple' && valueInput.variantes.map((variante, i) => (
         <div className='form__item variantes' key={i}>
           
-            
+            <div>
               <label>Nombre del Grupo</label>
               <input
                 type="text"
@@ -387,7 +387,7 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
                   setValueInput({ variantes: nuevas });
                 }}
               />
-            
+            </div>
 
             {/* SOLO MOSTRAR LÍMITE EN MODO SELECCIÓN (PROMOS) */}
             {productMode === 'selection' && (
