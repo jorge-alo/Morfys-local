@@ -332,8 +332,8 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
   // Función auxiliar para obtener textos de ayuda dinámicos
   const getHelperText = () => {
     switch (productMode) {
-      case 'unit': return "Ideal para empanadas sueltas o helados. El precio se calcula por cada unidad elegida.";
-      case 'selection': return "Ideal para combos (Ej: 1 Pizza + 6 empanadas). El cliente elige hasta un límite por un precio fijo.";
+      case 'unit': return "Ideal para empanadas sueltas, porciones etc. El precio se calcula por cada unidad elegida.";
+      case 'selection': return "Ideal para combos de comida con acompañamiento (Ej: 1 Pizza + 6 empanadas). Con límite de acompañamiento.";
       case 'sizes': return "Configura diferentes tamaños (Ej: Individual, Familiar) con sus respectivos precios.";
       case 'addons': return "Un producto base (Ej: Hamburguesa) al que se le pueden sumar extras con cargo.";
       default: return "Producto simple con un precio único.";
@@ -410,7 +410,7 @@ export const AgregarComidas = ({ handleClose, handleLocales }) => {
       {productMode !== 'simple' && valueInput.variantes.map((variante, i) => (
         <div className='form__item variantes' key={i}>
           <div className='nombre-grupo'>
-            <label>Nombre del Grupo</label>
+            <label>Nombre de acompañamiento</label>
             <input
               type="text"
               placeholder="Ej: Elegí tus sabores"
