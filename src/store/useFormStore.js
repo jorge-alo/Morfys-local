@@ -99,7 +99,8 @@ export const useFormStore = create((set) => ({
   resetForm: () => set({
     valueInput: initialFormValues,
     fileLogo: null,
-    fileBanner: null
+    fileBanner: null,
+    imageFile: null
   }),
 
   setFormValues: (user) => set((state) => ({
