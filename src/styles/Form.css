@@ -70,3 +70,9 @@
 .agregararchivo {
   overflow: hidden;
 }
+.form__buttons .btn-submit{
+  background-color: #83c5d0;
+}
+.form__buttons .btn-submit:hover{
+  background-color: #83b5c0;
+}

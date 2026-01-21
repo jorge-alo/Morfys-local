@@ -47,10 +47,11 @@
 }
 
 .form .btn-cancel {
-    background-color: #cd5959;
+    background-color: #cd5999;
+    margin-right: 5px;
 }
 .form .btn-cancel:hover {
-     background-color: #ad5959;
+     background-color: #bd5979;
 }
 .product-mode-selector label {
     display: block;
