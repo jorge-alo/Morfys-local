@@ -69,13 +69,7 @@ export const Login = () => {
                     </>
                 ) : (
                     <>
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Ingrese nombre"
-                            value={valueInput.name}
-                            onChange={handleChange}
-                        />
+                       
                         <input
                             type="email"
                             name="email"
