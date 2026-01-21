@@ -71,8 +71,8 @@
   overflow: hidden;
 }
 .form__buttons .btn-submit{
-  background-color: #83c5d0;
+  background-color: #5395f0;
 }
 .form__buttons .btn-submit:hover{
-  background-color: #83b5c0;
+  background-color: #5375c0;
 }
