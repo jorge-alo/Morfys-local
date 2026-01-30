@@ -30,7 +30,8 @@ export const FormProvider = ({ children }) => {
     celNumero: "",
     celPais: "",
     celProvincia: "",
-    variantes: [], // <--- nuevo campo
+    variantes: [],
+    tipo: "", // <--- nuevo campo
     envio: "",
     envioMinimo: "",
     diaMañanaEntrada: "",
@@ -81,7 +82,8 @@ export const FormProvider = ({ children }) => {
       celPais: "",
       celProvincia: "",
       tamanio: 0,
-      variantes: [], // <--- nuevo campo
+      variantes: [],
+      tipo: "", // <--- nuevo campo
       envio: "",
       envioMinimo: "",
       diaMañanaEntrada: "",

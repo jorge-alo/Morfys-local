@@ -20,7 +20,8 @@ const initialFormValues = {
     active_until: null,
     celPais: "",
     celProvincia: "",
-    variantes: [], // <--- nuevo campo
+    variantes: [],
+    productMode: "",// <--- nuevo campo
     envio: "",
     envioMinimo: "",
     diaMañanaEntrada: "",

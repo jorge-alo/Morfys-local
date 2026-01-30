@@ -15,43 +15,28 @@ export const Form = ({ handleClose, handleLocales }) => {
     const [precioGlobalOpciones, setPrecioGlobalOpciones] = useState(0);
     const [acepto, setAcepto] = useState(false);
 
-    // Lógica para detectar el modo del producto al cargar los datos del store
    useEffect(() => {
-    // 1. Caso Tamaños: Basado en el flag 'tamanio'
-    if (valueInput.tamanio === 1) {
-        setProductMode('sizes');
-    } 
-    // Si tiene variantes, determinamos cuál de los 3 modos es
-    else if (valueInput.variantes?.length > 0) {
-        
-        // 2. Caso Unidad: Precio base es 0
-        if (Number(valueInput.price) === 0) {
-            setProductMode('unit');
-            const primerPrecio = valueInput.variantes[0].opciones[0]?.precio_adicional || 0;
-            setPrecioGlobalOpciones(primerPrecio);
-        } 
-        else {
-            // Diferenciamos entre 'Promo' (selection) y 'Addons' (agregados)
-            // Revisamos si alguna opción tiene precio extra
-            const tienePreciosAdicionales = valueInput.variantes.some(v => 
-                v.opciones.some(op => Number(op.precio_adicional) > 0)
-            );
+  // Verificamos si existe el productMode (que es el productMode guardado)
+  if (valueInput.productMode) {
+    const modoGuardado = valueInput.productMode;
+    
+    setProductMode(modoGuardado);
 
-            if (tienePreciosAdicionales) {
-                // 3. Caso Addons: El producto tiene un precio base Y las opciones cuestan extra
-                setProductMode('addons');
-            } else {
-                // 4. Caso Selection (Promo): Tiene precio base pero las opciones son "gratis" (límite de sabores)
-                setProductMode('selection');
-                setAcepto(true);
-            }
-        }
-    } 
-    // 5. Caso Simple: Sin variantes ni flags especiales
-    else {
-        setProductMode('simple');
+    // Si es una promo, activamos el flag visual de 'acepto'
+    if (modoGuardado === 'selection') {
+      setAcepto(true);
     }
-}, []);
+    
+    // Si es modo unidad, opcionalmente puedes setear el precio global 
+    // tomando el valor de la primera opción encontrada
+    if (modoGuardado === 'unit' && valueInput.variantes?.[0]?.opciones?.[0]) {
+      setPrecioGlobalOpciones(valueInput.variantes[0].opciones[0].precio_adicional);
+    }
+  } else {
+    // Si es un producto nuevo sin 'productMode' definido todavía
+    setProductMode('simple');
+  }
+}, [valueInput.productMode]); // Se dispara cuando carga la info del producto
 
     const agregarVarianteInicial = (nombreDefecto = "Opciones") => {
         setValueInput({
@@ -95,7 +80,7 @@ export const Form = ({ handleClose, handleLocales }) => {
         formData.append('categoria', valueInput.categoria);
         formData.append('tamanio', tamanioFinal);
         formData.append('variantes', JSON.stringify(variantesFinales));
-
+        formData.append('productMode', productMode);
         const result = await handleUpdate(formData);
         if (result) {
             await handleLocales();
@@ -129,7 +114,7 @@ export const Form = ({ handleClose, handleLocales }) => {
     return (
         <form className='form' onSubmit={(e) => e.preventDefault()}>
             <div className="product-mode-selector">
-                <label>¿Qué tipo de producto es?</label>
+                <label>¿Qué productMode de producto es?</label>
                 <div className="mode-options">
                     {['simple', 'unit', 'selection', 'sizes', 'addons'].map((mode) => (
                         <button
