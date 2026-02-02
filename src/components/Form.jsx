@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import '../styles/Form.css';
 import { useFormStore } from '../store/useFormStore';
@@ -15,34 +14,39 @@ export const Form = ({ handleClose, handleLocales }) => {
     const [precioGlobalOpciones, setPrecioGlobalOpciones] = useState(0);
     const [acepto, setAcepto] = useState(false);
 
-   useEffect(() => {
-  // Verificamos si existe el productMode (que es el productMode guardado)
-  if (valueInput.productMode) {
-    const modoGuardado = valueInput.productMode;
-    
-    setProductMode(modoGuardado);
+    useEffect(() => {
+        if (valueInput.productMode) {
+            const modoGuardado = valueInput.productMode;
+            setProductMode(modoGuardado);
 
-    // Si es una promo, activamos el flag visual de 'acepto'
-    if (modoGuardado === 'selection') {
-      setAcepto(true);
-    }
-    
-    // Si es modo unidad, opcionalmente puedes setear el precio global 
-    // tomando el valor de la primera opción encontrada
-    if (modoGuardado === 'unit' && valueInput.variantes?.[0]?.opciones?.[0]) {
-      setPrecioGlobalOpciones(valueInput.variantes[0].opciones[0].precio_adicional);
-    }
-  } else {
-    // Si es un producto nuevo sin 'productMode' definido todavía
-    setProductMode('simple');
-  }
-}, [valueInput.productMode]); // Se dispara cuando carga la info del producto
+            if (modoGuardado === 'selection') {
+                setAcepto(true);
+            }
 
-    const agregarVarianteInicial = (nombreDefecto = "Opciones") => {
-        setValueInput({
-            ...valueInput,
-            variantes: [{ nombre: nombreDefecto, limite: 0, opciones: [{ nombre: "", precio_adicional: 0 }] }]
-        });
+            if (modoGuardado === 'unit' && valueInput.variantes?.[0]?.opciones?.[0]) {
+                setPrecioGlobalOpciones(valueInput.variantes[0].opciones[0].precio_adicional);
+            }
+        } else {
+            setProductMode('simple');
+        }
+    }, [valueInput.productMode]);
+
+    // Función unificada para agregar variantes sin romper el estado previo
+    const agregarVariante = (nombreDefecto = "Opciones", reset = false) => {
+        const nuevaVariante = { 
+            nombre: nombreDefecto, 
+            limite: 0, 
+            opciones: [{ nombre: "", precio_adicional: 0 }] 
+        };
+
+        if (reset) {
+            setValueInput({ ...valueInput, variantes: [nuevaVariante] });
+        } else {
+            setValueInput({ 
+                ...valueInput, 
+                variantes: [...(valueInput.variantes || []), nuevaVariante] 
+            });
+        }
     };
 
     const handleSaveEdit = async () => {
@@ -53,7 +57,6 @@ export const Form = ({ handleClose, handleLocales }) => {
         let precioFinal = valueInput.price;
         let tamanioFinal = 0;
 
-        // Lógica de limpieza según el modo
         if (productMode === 'simple' || (productMode === 'selection' && !acepto)) {
             variantesFinales = [];
         } else if (productMode === 'unit') {
@@ -81,6 +84,7 @@ export const Form = ({ handleClose, handleLocales }) => {
         formData.append('tamanio', tamanioFinal);
         formData.append('variantes', JSON.stringify(variantesFinales));
         formData.append('productMode', productMode);
+
         const result = await handleUpdate(formData);
         if (result) {
             await handleLocales();
@@ -114,7 +118,7 @@ export const Form = ({ handleClose, handleLocales }) => {
     return (
         <form className='form' onSubmit={(e) => e.preventDefault()}>
             <div className="product-mode-selector">
-                <label>¿Qué productMode de producto es?</label>
+                <label>¿Qué tipo de producto es?</label>
                 <div className="mode-options">
                     {['simple', 'unit', 'selection', 'sizes', 'addons'].map((mode) => (
                         <button
@@ -126,9 +130,9 @@ export const Form = ({ handleClose, handleLocales }) => {
                                 setAcepto(false);
                                 if (mode === 'simple') {
                                     setValueInput({ ...valueInput, variantes: [], tamanio: 0 });
-                                } else if (mode === 'unit') agregarVarianteInicial("Sabores/Gustos");
-                                else if (mode === 'sizes') agregarVarianteInicial("Tamaño");
-                                else if (mode === 'addons') agregarVarianteInicial("Agregados");
+                                } else if (mode === 'unit') agregarVariante("Sabores/Gustos", true);
+                                else if (mode === 'sizes') agregarVariante("Tamaño", true);
+                                else if (mode === 'addons') agregarVariante("Agregados", true);
                             }}
                         >
                             {mode === 'simple' && 'Simple'}
@@ -175,10 +179,10 @@ export const Form = ({ handleClose, handleLocales }) => {
             {productMode === 'unit' && (
                 <div className='form__item'>
                     <label>Precio por Unidad</label>
-                    <input 
-                        type="number" 
-                        value={precioGlobalOpciones} 
-                        onChange={(e) => setPrecioGlobalOpciones(Number(e.target.value))} 
+                    <input
+                        type="number"
+                        value={precioGlobalOpciones}
+                        onChange={(e) => setPrecioGlobalOpciones(Number(e.target.value))}
                     />
                 </div>
             )}
@@ -191,7 +195,7 @@ export const Form = ({ handleClose, handleLocales }) => {
                             checked={acepto}
                             onChange={(e) => {
                                 setAcepto(e.target.checked);
-                                if (e.target.checked) agregarVarianteInicial("Elegí tus sabores");
+                                if (e.target.checked) agregarVariante("Elegí tus sabores", true);
                                 else setValueInput({ ...valueInput, variantes: [] });
                             }}
                         />
@@ -203,7 +207,15 @@ export const Form = ({ handleClose, handleLocales }) => {
             {productMode !== 'simple' && valueInput.variantes?.map((variante, i) => (
                 <div className='form__item variantes' key={i}>
                     <div className='nombre-grupo'>
-                        <label>Nombre del grupo</label>
+                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                            <label>Nombre del grupo</label>
+                            {valueInput.variantes.length > 1 && (
+                                <button type="button" className="btn-remove" onClick={() => {
+                                    const nuevas = valueInput.variantes.filter((_, idx) => idx !== i);
+                                    setValueInput({ ...valueInput, variantes: nuevas });
+                                }}>Eliminar Grupo</button>
+                            )}
+                        </div>
                         <input
                             type="text"
                             value={variante.nombre}
@@ -273,6 +285,18 @@ export const Form = ({ handleClose, handleLocales }) => {
                     </button>
                 </div>
             ))}
+
+            {/* BOTÓN PARA AGREGAR NUEVOS GRUPOS EN MODO PROMO */}
+            {productMode === 'selection' && acepto && (
+                <button 
+                    type="button" 
+                    className="btn-add-opcion" 
+                    style={{marginBottom: '20px', width: '100%', background: '#f0f0f0', color: '#333', border: '1px solid #ccc'}}
+                    onClick={() => agregarVariante("Nuevo Grupo (ej. Bebidas)")}
+                >
+                    + Añadir otro Grupo de Selección (Bebida, Postre, etc.)
+                </button>
+            )}
 
             <div className="form__buttons">
                 <button type='button' className="btn-cancel" onClick={handleClose}>Cancelar</button>
