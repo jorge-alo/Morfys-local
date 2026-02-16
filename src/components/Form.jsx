@@ -33,18 +33,18 @@ export const Form = ({ handleClose, handleLocales }) => {
 
     // Función unificada para agregar variantes sin romper el estado previo
     const agregarVariante = (nombreDefecto = "Opciones", reset = false) => {
-        const nuevaVariante = { 
-            nombre: nombreDefecto, 
-            limite: 0, 
-            opciones: [{ nombre: "", precio_adicional: 0 }] 
+        const nuevaVariante = {
+            nombre: nombreDefecto,
+            limite: 0,
+            opciones: [{ nombre: "", precio_adicional: 0 }]
         };
 
         if (reset) {
             setValueInput({ ...valueInput, variantes: [nuevaVariante] });
         } else {
-            setValueInput({ 
-                ...valueInput, 
-                variantes: [...(valueInput.variantes || []), nuevaVariante] 
+            setValueInput({
+                ...valueInput,
+                variantes: [...(valueInput.variantes || []), nuevaVariante]
             });
         }
     };
@@ -64,7 +64,7 @@ export const Form = ({ handleClose, handleLocales }) => {
             variantesFinales = valueInput.variantes.map(v => ({
                 ...v,
                 limite: 0,
-                opciones: v.opciones.map(op => ({ ...op, precio_adicional: precioGlobalOpciones }))
+                opciones: v.opciones.map(op => ({ ...op, precio_adicional: op.precio_adicional > 0 ? op.precio_adicional : precioGlobalOpciones }))
             }));
         } else if (productMode === 'selection' && acepto) {
             variantesFinales = valueInput.variantes.map(v => ({
@@ -207,7 +207,7 @@ export const Form = ({ handleClose, handleLocales }) => {
             {productMode !== 'simple' && valueInput.variantes?.map((variante, i) => (
                 <div className='form__item variantes' key={i}>
                     <div className='nombre-grupo'>
-                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <label>Nombre del grupo</label>
                             {valueInput.variantes.length > 1 && (
                                 <button type="button" className="btn-remove" onClick={() => {
@@ -262,14 +262,18 @@ export const Form = ({ handleClose, handleLocales }) => {
                                 </div>
                             </div>
 
-                            {(productMode !== 'selection' && productMode !== 'unit') && (
+                            {(productMode !== 'selection') && (
                                 <div className='precio-opcion'>
-                                    <label>Precio Adicional</label>
+                                    <label>Precio {productMode === 'unit' ? 'Especial' : 'Adicional'}</label>
                                     <input
                                         type="number"
                                         value={op.precio_adicional}
+                                        placeholder={precioGlobalOpciones} // El global aparece como guía
                                         onChange={(e) => handleOpcionChange(i, j, 'precio_adicional', Number(e.target.value))}
                                     />
+                                    {productMode === 'unit' && op.precio_adicional === 0 && (
+                                        <small style={{ fontSize: '10px', color: 'gray' }}>Usando precio global</small>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -288,10 +292,10 @@ export const Form = ({ handleClose, handleLocales }) => {
 
             {/* BOTÓN PARA AGREGAR NUEVOS GRUPOS EN MODO PROMO */}
             {productMode === 'selection' && acepto && (
-                <button 
-                    type="button" 
-                    className="btn-add-opcion" 
-                    style={{marginBottom: '20px', width: '100%', background: '#f0f0f0', color: '#333', border: '1px solid #ccc'}}
+                <button
+                    type="button"
+                    className="btn-add-opcion"
+                    style={{ marginBottom: '20px', width: '100%', background: '#f0f0f0', color: '#333', border: '1px solid #ccc' }}
                     onClick={() => agregarVariante("Nuevo Grupo (ej. Bebidas)")}
                 >
                     + Añadir otro Grupo de Selección (Bebida, Postre, etc.)
