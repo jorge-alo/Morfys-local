@@ -36,9 +36,6 @@ export const App = () => {
   if (loading) return <div>Cargando...</div>;
   return (
     <div className="app-container">
-
-
-
       <Routes>
         {/* Rutas públicas */}
         <Route path='/' element={<PublicPage><Login /></PublicPage>} />
