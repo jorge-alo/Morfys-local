@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom"
-import "../styles/Sidebar.css"
-import { AuthContext } from "../context/AuthContext";
+import "../../styles/Sidebar.css"
+import { AuthContext } from "../../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
-import { useForm } from "../context/FormProvider";
-import { useFormStore } from "../store/useFormStore";
-import { useAuthStore } from "../store/useAuthStore";
+import { useForm } from "../../context/FormProvider";
+import { useFormStore } from "../../store/useFormStore";
+import { useAuthStore } from "../../store/useAuthStore";
 
 export const Sidebar = () => {
   

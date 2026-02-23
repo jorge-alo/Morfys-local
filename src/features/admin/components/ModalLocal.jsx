@@ -1,6 +1,6 @@
-import '../styles/ModalLocal.css'
-import { useFormStore } from '../store/useFormStore';
-import { useDataStore } from '../store/useDataStore';
+import '../../../styles/ModalLocal.css'
+import { useFormStore } from '../../../store/useFormStore';
+import { useDataStore } from '../../../store/useDataStore';
 
 export const ModalLocal = ({ userId, setShowModalLocal }) => {
     const valueInput = useFormStore((state) => state.valueInput);

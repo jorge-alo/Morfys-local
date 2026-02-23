@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import '../styles/Form.css';
-import { useFormStore } from '../store/useFormStore';
-import { useDataStore } from '../store/useDataStore';
+import '../../../styles/Form.css';
+import { useFormStore } from '../../../store/useFormStore';
+import { useDataStore } from '../../../store/useDataStore';
 
 export const Form = ({ handleClose, handleLocales }) => {
     const valueInput = useFormStore((state) => state.valueInput);

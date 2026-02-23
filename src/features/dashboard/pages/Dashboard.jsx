@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import '../styles/Dashboard.css';
-import { useAuthStore } from '../store/useAuthStore';
-import { useDataStore } from '../store/useDataStore';
+import '../../../styles/Dashboard.css';
+import { useAuthStore } from '../../../store/useAuthStore';
+import { useDataStore } from '../../../store/useDataStore';
 
 export const Dashboard = ({ restaurantId }) => {
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import '../styles/TablaUser.css'
-import { useDataStore } from "../store/useDataStore";
+import '../../../styles/TablaUser.css'
+import { useDataStore } from "../../../store/useDataStore";
 
 export const TablaUser = ({onEdit, handleAddLocal}) => {
 

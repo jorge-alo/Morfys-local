@@ -1,7 +1,7 @@
 
-import '../styles/Ajustes.css'
-import { useFormStore } from '../store/useFormStore';
-import { useDataStore } from '../store/useDataStore';
+import '../../../styles/Ajustes.css'
+import { useFormStore } from '../../../store/useFormStore';
+import { useDataStore } from '../../../store/useDataStore';
 
 
 export const Ajustes = () => {

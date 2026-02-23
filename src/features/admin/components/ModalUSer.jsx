@@ -1,7 +1,7 @@
 
-import '../styles/ModalUser.css'
-import { useFormStore } from "../store/useFormStore";
-import { useDataStore } from "../store/useDataStore";
+import '../../../styles/ModalUser.css'
+import { useFormStore } from "../../../store/useFormStore";
+import { useDataStore } from "../../../store/useDataStore";
 import { useEffect } from 'react';
 export const ModalUSer = ({ setShowModalUser, userToEdit }) => {
 

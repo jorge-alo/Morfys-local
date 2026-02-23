@@ -1,9 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import { useAuthStore } from "../../store/useAuthStore";
-
-
+import { useAuthStore } from "../../../store/useAuthStore";
 
 export const PublicPage = ( {children} ) => {
   

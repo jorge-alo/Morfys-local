@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import '../styles/Filter.css'
-import { useForm } from '../context/FormProvider';
-import { useFormStore } from '../store/useFormStore';
+import '../../../styles/Filter.css'
+import { useForm } from '../../../context/FormProvider';
+import { useFormStore } from '../../../store/useFormStore';
 
 export const Filter = () => {
 

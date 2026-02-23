@@ -1,9 +1,9 @@
 
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useFormStore } from '../store/useFormStore';
-import { useDataStore } from '../store/useDataStore';
-import { useAuthStore } from '../store/useAuthStore';
+import { useFormStore } from '../../../store/useFormStore';
+import { useDataStore } from '../../../store/useDataStore';
+import { useAuthStore } from '../../../store/useAuthStore';
 
 export const ResetPassword = () => {
    /* const { handleChange, valueInput, resetForm } = useForm();*/

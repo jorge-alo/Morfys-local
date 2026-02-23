@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import '../styles/AgregarComidas.css'
-import { useFormStore } from '../store/useFormStore';
-import { useDataStore } from '../store/useDataStore';
+import '../../../styles/AgregarComidas.css'
+import { useFormStore } from '../../../store/useFormStore';
+import { useDataStore } from '../../../store/useDataStore';
 
 export const AgregarComidas = ({ handleClose, handleLocales }) => {
   const valueInput = useFormStore((state) => state.valueInput);

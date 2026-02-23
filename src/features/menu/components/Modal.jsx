@@ -1,8 +1,8 @@
 
-import '../styles/Modal.css'
+import '../../../styles/Modal.css'
 import { Form } from './Form';
 import { AgregarComidas } from './AgregarComidas';
-import { useFormStore } from '../store/useFormStore';
+import { useFormStore } from '../../../store/useFormStore';
 
 export const Modal = ({ setEditIndex, showInputRow, setShowInputRow, handleLocales}) => {
     const resetForm = useFormStore((state) => state.resetForm);

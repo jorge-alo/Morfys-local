@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import '../styles/ModalPay.css';
-import { useAuthStore } from '../store/useAuthStore';
-import { useDataStore } from '../store/useDataStore';
-import { useFormStore } from '../store/useFormStore';
+import '../../../styles/ModalPay.css';
+import { useAuthStore } from '../../../store/useAuthStore';
+import { useDataStore } from '../../../store/useDataStore';
+import { useFormStore } from '../../../store/useFormStore';
 
 export const ModalPay = () => {
 

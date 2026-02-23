@@ -1,15 +1,12 @@
 import { useEffect } from "react"
-import '../styles/Menu.css'
+import '../../../styles/Menu.css'
 import { useState } from "react";
 import { Modal } from "../components/Modal";
 import { Tablas } from "../components/Tablas";
 import { Filter } from "../components/Filter";
-import { TablaUser } from "../components/TablaUser";
-import { ModalUSer } from "../components/ModalUSer";
-import { ModalPay } from "../components/ModalPay";
-import { useFormStore } from "../store/useFormStore";
-import { useAuthStore } from "../store/useAuthStore";
-import { useDataStore } from "../store/useDataStore";
+import { useFormStore } from "../../../store/useFormStore";
+import { useAuthStore } from "../../../store/useAuthStore";
+import { useDataStore } from "../../../store//useDataStore";
 
 
 export const Menu = () => {

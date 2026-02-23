@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import '../styles/Login.css'
-import { useFormStore } from "../store/useFormStore";
-import { useAuthStore } from "../store/useAuthStore";
+import '../../../styles/Login.css'
+import { useFormStore } from "../../../store/useFormStore";
+import { useAuthStore } from "../../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {

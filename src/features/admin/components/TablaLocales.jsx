@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { useDataStore } from "../store/useDataStore";
-import '../styles/TablaLocales.css'
+import { useDataStore } from "../../../store/useDataStore";
+import '../../../styles/TablaLocales.css'
 
 export const TablaLocales = () => {
     const getLocales = useDataStore((state) => state.getLocales);

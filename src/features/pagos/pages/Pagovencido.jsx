@@ -1,7 +1,7 @@
 
-import { useAuthStore } from "../store/useAuthStore";
+import { useAuthStore } from "../../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
-import { useDataStore } from "../store/useDataStore";
+import { useDataStore } from "../../../store/useDataStore";
 
 export const PagoVencido = () => {
 

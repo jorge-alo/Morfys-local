@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import '../styles/Tablas.css'
-import { useFormStore } from '../store/useFormStore';
-import { useAuthStore } from '../store/useAuthStore';
-import { useDataStore } from '../store/useDataStore';
+import '../../../styles/Tablas.css'
+import { useFormStore } from '../../../store/useFormStore';
+import { useAuthStore } from '../../../store/useAuthStore';
+import { useDataStore } from '../../../store/useDataStore';
 
 export const Tablas = ({ setEditIndex, handleLocales, selectAll, setSelectAll }) => {
   

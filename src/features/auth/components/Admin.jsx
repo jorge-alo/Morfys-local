@@ -1,7 +1,5 @@
-import { useContext } from "react"
 import { Navigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useAuthStore } from "../../../store/useAuthStore";
 
 export const Admin = ({ children }) => {
   
