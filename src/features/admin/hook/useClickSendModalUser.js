@@ -59,6 +59,5 @@ export const useClickSendModalUser = (setShowModalUser, userToEdit, valueInput) 
         handleClose,
         handleOverlayCloseModal,
         handleEnviarUser,
-        handleUseEffectModalUser
     }
 }

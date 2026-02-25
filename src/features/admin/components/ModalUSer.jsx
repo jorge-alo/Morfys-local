@@ -13,7 +13,6 @@ export const ModalUSer = ({ setShowModalUser, userToEdit }) => {
         handleEnviarUser,
     } = useClickSendModalUser(setShowModalUser, userToEdit, valueInput)
 
-    handleUseEffectModalUser();
 
     return (
         <div className='modal-overlay' onClick={handleOverlayCloseModal}>
