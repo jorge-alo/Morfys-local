@@ -54,7 +54,7 @@ export const ModalPay = () => {
     console.log('valor de init_point en handleGetPreferencePay', response.data.init_point);
     if (response?.data?.init_point) {
       // redirige al checkout de Mercado Pago
-      window.open(response.data.init_point, '_blank');
+      window.location.href = response.data.init_point;
     }
   }
   return (
