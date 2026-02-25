@@ -20,7 +20,7 @@ export const useHandleSubmitResetPassword = (valueInput, token) => {
         setError("");
         setSuccess(false);
 
-       if (pass.trim().length < 8) {
+       if (valueInput.password.trim().length < 8) {
             setError("La contraseña debe tener al menos 6 caracteres");
             return; // 🛑 Se detiene aquí
         }
