@@ -3,14 +3,12 @@ import { TablaUser } from "../components/TablaUser"
 import { ModalUSer } from "../components/ModalUSer";
 import { ModalLocal } from "../components/ModalLocal";
 
-
-
-
 export const GestionUsuarios = () => {
     const [showModalUser, setShowModalUser] = useState(false);
     const [showModalLocal, setShowModalLocal] = useState(false);
     const [userToEdit, setUserToEdit] = useState(null)
     const [userId, setUserId] = useState(null)
+
     const handleAddUser = () => {
         setUserToEdit(null);
         setShowModalUser(true);

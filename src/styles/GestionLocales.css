@@ -1,0 +1,7 @@
+.container-GestionLocales {
+    display: flex;
+    padding: 20px;
+    overflow: auto;
+    justify-content: center;
+    align-items: center;
+}

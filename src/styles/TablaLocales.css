@@ -1,14 +1,16 @@
 .container-tablaLocales {
     display: flex;
     justify-content: center;
-    align-items: center;
     width: 100dvw;
-    height: 100dvh;
+    max-height: 70dvh;
+    overflow: auto;
+    padding: 20px;
 }
 
 .container-tabalLocales__container-tabla {
    overflow: auto;
 }
+
 
 .local-info div {
     width: 60px;

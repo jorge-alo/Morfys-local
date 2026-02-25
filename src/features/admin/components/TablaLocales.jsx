@@ -1,28 +1,10 @@
-import { useEffect, useState } from "react"
-import { useDataStore } from "../../../store/useDataStore";
 import '../../../styles/TablaLocales.css'
+import { useGetLocalesEffect } from "../hook/useGetLocalesEffect";
 
 export const TablaLocales = () => {
-    const getLocales = useDataStore((state) => state.getLocales);
-    const [locales, setLocales] = useState([]);
 
-    const handleGetLocales = async () => {
-
-        try {
-            const result = await getLocales();
-            const lista = result?.data.locales || result || [];
-            setLocales(lista);
-        } catch (error) {
-            console.error("Error al obtener locales:", error);
-        }
-
-        console.log("Valor de locales en TablaUser", locales);
-    }
-
-    useEffect(() => {
-        handleGetLocales()
-    }, [])
-
+    const { loading, locales } = useGetLocalesEffect();
+    if (loading) return <p>Cargando locales...</p>;
 
     return (
         <div className="container-tablaLocales">
@@ -43,7 +25,7 @@ export const TablaLocales = () => {
 
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className='tbody-tablaLocales'>
                             {locales.map((res) => (
                                 <tr key={res.id}>
                                     <td>{res.id}</td>

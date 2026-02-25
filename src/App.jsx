@@ -3,12 +3,12 @@ import { Routes, Route, useNavigate } from 'react-router-dom'
 import { Sidebar } from './shared/components/Sidebar.jsx'
 import { Dashboard } from './features/dashboard/pages/Dashboard.jsx'
 import { Menu } from './features/menu/pages/Menu.jsx'
-import { Login } from './features/auth/pages/login.jsx'
-import { PrivatePage } from './features/auth/components/PrivatePage.jsx'
-import { PublicPage } from './features/auth/components/PublicPage.jsx'
+import { LoginPage } from './features/auth/pages/LoginPage.jsx'
+import { PrivatePage } from './features/auth/components/guards/PrivatePage.jsx'
+import { PublicPage } from './features/auth/components/guards/PublicPage.jsx'
 import { Ajustes } from './features/ajustes/pages/Ajustes.jsx'
 import { ResetPassword } from './features/auth/pages/ResetPassword.jsx'
-import { Admin } from './features/auth/components/Admin.jsx'
+import { Admin } from './features/auth/components/guards/Admin.jsx'
 import { Outlet } from 'react-router-dom'
 import { PagoExitoso } from './features/pagos/pages/PagoExitoso.jsx'
 import { PagoFallido } from './features/pagos/pages/PagoFallido.jsx'
@@ -38,7 +38,7 @@ export const App = () => {
     <div className="app-container">
       <Routes>
         {/* Rutas públicas */}
-        <Route path='/' element={<PublicPage><Login /></PublicPage>} />
+        <Route path='/' element={<PublicPage><LoginPage /></PublicPage>} />
         <Route path='/reset-password/:token' element={<PublicPage><ResetPassword /></PublicPage>} />
         <Route path='/pago-exitoso' element={<PagoExitoso />} />
         <Route path='/pago-fallido' element={<PagoFallido />} />

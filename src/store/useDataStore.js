@@ -109,7 +109,14 @@ export const useDataStore = create((set, get) => ({
       }
       return response;
     } catch (error) {
-      set({ error: error.message || "Error al actualizar" });
+      // 🛡️ Extraemos el mensaje real enviado por el backend (res.json)
+      const serverMessage = error.response?.data?.message || "Error al procesar la solicitud";
+
+      set({ error: serverMessage });
+      console.error("Error detallado:", error.response?.data);
+
+      // Retornamos algo para que el hook no intente cerrar el modal
+      return null;
     }
   },
   updateUserData: async (value, id) => {
@@ -157,15 +164,15 @@ export const useDataStore = create((set, get) => ({
     }
   },
   sendDataNewLocal: async (localData) => {
-  try {
-    const response = await sendDataNewLocalApi(localData);
-    await get().getLocales(); // Actualiza la tabla de locales
-    return response.data;
-  } catch (error) {
-    console.error("Error al crear local");
-    console.error(error.response.data);
+    try {
+      const response = await sendDataNewLocalApi(localData);
+      await get().getLocales(); // Actualiza la tabla de locales
+      return response.data;
+    } catch (error) {
+      console.error("Error al crear local");
+      console.error(error.response.data);
+    }
   }
-}
 }))
 
 

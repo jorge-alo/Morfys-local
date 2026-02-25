@@ -7,26 +7,20 @@ import { Filter } from "../components/Filter";
 import { useFormStore } from "../../../store/useFormStore";
 import { useAuthStore } from "../../../store/useAuthStore";
 import { useDataStore } from "../../../store//useDataStore";
+import { ActualizarPrecio } from "../components/ActualizarPrecio";
 
 
 export const Menu = () => {
 
   const admin = useAuthStore((state) => state.admin);
   const local = useAuthStore((state) => state.local);
-  const localId = useAuthStore((state) => state.localId);
   const handleGetData = useDataStore((state) => state.handleGetData);
-  const sendPorcentage = useDataStore((state) => state.sendPorcentage);
   const comidas = useFormStore((state) => state.comidas);
   const setComidas = useFormStore((state) => state.setComidas);
-  const acceptSelection = useFormStore((state) => state.acceptSelection);
   const setAcceptSelection = useFormStore((state) => state.setAcceptSelection);
-
   const [showInputRow, setShowInputRow] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
-  const [selectItem, setSelectItem] = useState({});
-  const [porcentage, setPorcentage] = useState("");
   const [selectAll, setSelectAll] = useState(false);
-
 
   const handleLocales = async () => {
     const result = await handleGetData(local);
@@ -34,58 +28,14 @@ export const Menu = () => {
   }
 
   useEffect(() => {
-    handleSendPorcentageAPi();
-    setAcceptSelection({})
     if (!admin) {
       handleLocales();
     }
-
-  }, [selectItem])
-
-  useEffect(() => {
-    if (!admin) {
-      handleLocales();
-    }
-  }, [selectItem])
+  }, []);
 
   const handleShowForm = () => {
     setShowInputRow(true);
 
-  }
-
-  const handleChangePercentage = (value) => {
-    setPorcentage(value);
-  }
-
-  const handleSendPorcentageAPi = async () => {
-    const response = await sendPorcentage(selectItem);
-  }
-
-  const handleSendChangePorsentage = () => {
-    if (porcentage == null) return
-    const updateItem = [];
-    comidas.forEach(comida => {
-      if (acceptSelection[`item-${comida.id}`]) {
-        updateItem.push({
-          idItem: comida.id,
-          newPrice: Math.round(((comida.price * porcentage / 100) + Number(comida.price)) / 100) * 100
-        })
-      }
-      if ((comida.tamanio == 1 && Array.isArray(comida.variantes)) || (comida.price == 0 && Array.isArray(comida.variantes))) {
-        comida.variantes[0].opciones.forEach(op => {
-          if (acceptSelection[`op-${op.id}`]) {
-            updateItem.push({
-              idOp: op.id,
-              newPrice: Math.round((Number((op.precio_adicional * porcentage / 100)) + Number(op.precio_adicional)) / 100) * 100
-            })
-          }
-        })
-      }
-    })
-
-    setSelectItem(updateItem);
-    setPorcentage("");
-    setSelectAll(false);
   }
 
   return (
@@ -102,19 +52,7 @@ export const Menu = () => {
       <Filter />
       <div className="container-table__mainButtons">
         <button className="container-table__agregarcomida" onClick={handleShowForm}>Agregar Comida</button>
-        <div className="container-table__update-porcentage">
-          <div className="container-table__actualizarPrecio">
-            <label htmlFor="percentagePrice">%</label>
-            <input
-              type="number"
-              name="percentagePrice"
-              id="percentagePrice"
-              value={porcentage}
-              onChange={(e) => handleChangePercentage(e.target.value)}
-            />
-          </div>
-          <button onClick={handleSendChangePorsentage}>Actualizar precio</button>
-        </div>
+        <ActualizarPrecio setAcceptSelection={setAcceptSelection} handleLocales={handleLocales} setSelectAll={setSelectAll} />
       </div>
 
 
