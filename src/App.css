@@ -14,8 +14,9 @@ body, html {
     background-image: linear-gradient(to bottom, #f0e2ff, #fff);
     height: 100dvh;
     max-width: 100%;
-    width: 100%;
+    width: 100dvw;
     display: flex;
+    overflow: auto;
 }
 
 /*--------------------------mobile design--------------------------------*/

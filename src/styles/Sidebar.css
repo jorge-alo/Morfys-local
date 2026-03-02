@@ -61,16 +61,17 @@ a {
         position: fixed; /* 👈 Fundamental: se queda fijo arriba */
         top: 0;
         left: 0;
-        width: 100%;
-        
+        width: 100dvw;
         padding: 10px;
+        background-image: linear-gradient(to bottom, #f0e2ff, #f0e2fc);
         box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra para separar de la tabla */
-        z-index: 1000; /* Asegura que esté por encima de la tabla */
+        z-index: 100000; /* Asegura que esté por encima de la tabla */
     }
 
     .nav-mobile__container-icon {
         text-align: end;
         padding-right: 15px;
+
     }
 
     .ul-menu-mobile {
