@@ -59,7 +59,7 @@ export const cargarComidasApi = async (data) => {
 
 export const destroyApi = async (id, opId) => {
   // Si opId existe, lo agregamos como parámetro de consulta
-  const url = opId ? `comidas/destroy/${id}?opId=${opId}` : `/destroy/${id}`;
+  const url = opId ? `comidas/destroy/${id}?opId=${opId}` : `comidas/destroy/${id}`;
   return await api.delete(url);
 }
 
