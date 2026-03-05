@@ -34,7 +34,7 @@ export const forgotEmailApi = async (email) => {
 }
 
 export const verifyTokenApi = async () => {
-  return await api.get(`user/verify-token`);
+  return await api.get(`users/verify-token`);
 }
 
 export const getAllData = async (local) => {
