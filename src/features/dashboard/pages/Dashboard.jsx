@@ -125,6 +125,7 @@ export const Dashboard = ({ restaurantId }) => {
                             <thead>
                                 <tr>
                                     <th>Producto</th>
+                                    <th>Cantidad</th>
                                     <th>Total Generado</th>
                                 </tr>
                             </thead>
@@ -132,6 +133,7 @@ export const Dashboard = ({ restaurantId }) => {
                                 {dataChart.platos.map((plato, idx) => (
                                     <tr key={idx}>
                                         <td>{plato.nombre_item}</td>
+                                        <td>{plato.cantidad}</td>
                                         <td>${Number(plato.total).toLocaleString('es-AR')}</td>
                                     </tr>
                                 ))}
