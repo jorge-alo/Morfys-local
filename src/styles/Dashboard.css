@@ -115,11 +115,21 @@
     overflow-y: auto;
 }
 
+/* Nuevo contenedor para permitir scroll horizontal */
+.table-responsive-container {
+    width: 100%;
+    overflow-x: auto;
+    /* Activa el scroll horizontal si es necesario */
+    -webkit-overflow-scrolling: touch;
+    /* Suaviza el scroll en iOS */
+    margin-top: 10px;
+}
+
 .stats-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
-
+    min-width: 500px;
 }
 
 .stats-table th {
@@ -129,10 +139,12 @@
     color: #495057;
 }
 
+.stats-table th, 
 .stats-table td {
     padding: 12px;
     border-bottom: 1px solid #eee;
-    color: #212529;
+    white-space: normal; /* Permite que el nombre del producto baje de línea si es largo */
+    font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
@@ -149,5 +161,18 @@
        para que el usuario haga scroll de la página y no solo del cuadrito */
     .table-section {
         max-height: none;
+    }
+}
+
+/* Ajuste específico para pantallas pequeñas */
+@media (max-width: 480px) {
+    .stats-table {
+        min-width: 450px; /* Un poco menos de ancho mínimo para móviles muy pequeños */
+    }
+    
+    .stats-table th, 
+    .stats-table td {
+        padding: 8px; /* Reducimos padding para ganar espacio */
+        font-size: 0.85rem;
     }
 }
