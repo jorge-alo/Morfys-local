@@ -5,6 +5,7 @@ import { RendelLiMobile } from "./RendelLiMobile";
 import { RenderLiDesktop } from "./RenderLiDesktop";
 import { useSiderBar } from "../hooks/useSiderBar";
 import { useDataStore } from "../../store/useDataStore";
+import { useEffect } from "react";
 
 export const Sidebar = () => {
 
@@ -14,7 +15,13 @@ export const Sidebar = () => {
   const checkPay = useAuthStore((state) => state.checkPay);
   const setShowModalPay = useFormStore((state) => state.setShowModalPay);
   const setStandby = useDataStore((state) => state.setStandby);
- 
+  const handleGetData = useDataStore((state) => state.handleGetData);
+
+  useEffect(() => {
+    if (local) {
+      handleGetData(local);
+    }
+  }, [local]);
 
   const {
     activeUntil,
@@ -40,6 +47,7 @@ export const Sidebar = () => {
         payStatus={payStatus}
         handleShowModalPay={handleShowModalPay}
         activeUntil={activeUntil}
+        handleStandby={handleStandby}
       />
       <RenderLiDesktop
         local={local}

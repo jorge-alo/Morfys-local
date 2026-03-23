@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useDataStore } from "../../store/useDataStore";
 
 export const RendelLiMobile = (
     {
@@ -9,9 +10,11 @@ export const RendelLiMobile = (
         admin,
         payStatus,
         handleShowModalPay,
-        activeUntil
+        activeUntil,
+        handleStandby
     }
 ) => {
+    const standby = useDataStore((state) => state.standby);
     const navigate = useNavigate();
     return (
         <nav className="nav-mobile">
@@ -31,7 +34,16 @@ export const RendelLiMobile = (
                             <li onClick={() => setOpenMenu(prev => !prev)}> <Link to="/dashboard">Dashboard</Link> </li>
                             <li onClick={() => setOpenMenu(prev => !prev)}> <Link to="/menu">Menu</Link> </li>
                             <li onClick={() => setOpenMenu(prev => !prev)}> <Link to="/ajustes">Ajustes</Link> </li>
-
+                            <li>
+                                <label className="standby-toggle">
+                                    <input
+                                        type="checkbox"
+                                        checked={standby}
+                                        onChange={(e) => handleStandby(e.target.checked)}
+                                    />
+                                    Standby
+                                </label>
+                            </li>
                         </>
                     }
                     {

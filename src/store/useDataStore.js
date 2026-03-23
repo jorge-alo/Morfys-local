@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { apiAddStandAll, cargarComidasApi, deleteUserApi, destroyApi, getAllData, getDataChartApi, getLocalesApi, getPreferencePayApi, getUsersApi, handleSetTimeApi, resetPasswordApi, sendDataNewLocalApi, sendDataNewUserApi, sendPorcentageApi, updateDataApi, updateUserDataApi } from '../api/request.api';
+import { apiAddStandAll, cargarComidasApi, deleteUserApi, destroyApi, getAllData, getDataChartApi, getLocalesApi, getPreferencePayApi, getUsersApi, handleSetTimeApi, resetPasswordApi, sendDataNewLocalApi, sendDataNewUserApi, sendPorcentageApi, setStandbyApi, updateDataApi, updateUserDataApi } from '../api/request.api';
 
 export const useDataStore = create((set, get) => ({
   error: null,
@@ -195,15 +195,24 @@ export const useDataStore = create((set, get) => ({
       console.error(error.response.data);
     }
   },
-  setStandby: async (standby) => {
-    try {
-      const response = await setStandbyApi(standby);
-      set({ error: null });
-      return response.data;
-    } catch (error) {
-      set({ error: error.message || "Error al actualizar standby" });
-    }
-  },
+ setStandby: async (standby) => {
+  console.log("CLICK, valor:", standby);
+  set({ standby }); // ⚡ UI inmediata
+
+  try {
+    const response = await setStandbyApi(standby);
+    console.log("API OK");
+    set({ error: null });
+    return response.data;
+
+  } catch (error) {
+     console.log("API ERROR ❌", error);
+    set({ error: error.message || "Error al actualizar standby" });
+
+    // ❗ rollback si falla
+    set((state) => ({ standby: !state.standby }));
+  }
+},
 }))
 
 

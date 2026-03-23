@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useDataStore } from "../../store/useDataStore";
 
 export const RenderLiDesktop = (
     {
@@ -12,7 +13,7 @@ export const RenderLiDesktop = (
     }
 ) => {
     const standby = useDataStore((state) => state.standby);
-
+    console.log("standby sidebar:", standby);
     const navigate = useNavigate();
     return (
         <nav className="nav">
