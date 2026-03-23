@@ -14,6 +14,11 @@
     padding: 5px;
 }
 
+.standby-toggle {
+    display: flex;
+    align-items: center;
+}
+
 .nav li:hover {
     background-color: #aeaeae;
 }
