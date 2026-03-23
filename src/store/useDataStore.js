@@ -1,10 +1,25 @@
 import { create } from 'zustand'
-import { apiAddStandAll, cargarComidasApi, destroyApi, getAllData, getDataChartApi, getLocalesApi, getPreferencePayApi, getUsersApi, handleSetTimeApi, resetPasswordApi, sendDataNewLocalApi, sendDataNewUserApi, sendPorcentageApi, updateDataApi, updateUserDataApi } from '../api/request.api';
+import { apiAddStandAll, cargarComidasApi, deleteUserApi, destroyApi, getAllData, getDataChartApi, getLocalesApi, getPreferencePayApi, getUsersApi, handleSetTimeApi, resetPasswordApi, sendDataNewLocalApi, sendDataNewUserApi, sendPorcentageApi, updateDataApi, updateUserDataApi } from '../api/request.api';
 
 export const useDataStore = create((set, get) => ({
   error: null,
   users: [],
   setError: (error) => set({ error }),
+
+  handleDeleteUser: async (id) => {
+    try {
+      const response = await deleteUserApi(id)
+      if (response.data.status === 'ok') {
+        // Usamos 'state' para acceder a la lista actual de usuarios
+        set((state) => ({
+          users: state.users.filter((user) => user.id !== id),
+          error: null // Limpiamos errores previos si sale bien
+        }));
+      }
+    } catch (error) {
+      set({ error: error.message })
+    }
+  },
 
   handleUpdate: async (formData) => {
     console.log("valor de formData en dataProvider", formData)
@@ -93,8 +108,10 @@ export const useDataStore = create((set, get) => ({
   getUsers: async () => {
     try {
       const response = await getUsersApi()
-      set({ error: null });
-      set({ users: response.data.users });
+      set({
+        users: response.data.users,
+        error: null
+      });
 
     } catch (error) {
       set({ error: error.message || "Error al actualizar" });

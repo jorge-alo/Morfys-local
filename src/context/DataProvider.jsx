@@ -131,6 +131,8 @@ export const DataProvider = ({ children }) => {
       console.log("Error:", error);
     }
   }
+
+  
   return (
     <DataContext.Provider value={{getLocales, getDataChart, getPreferencePay, sendDataNewUser, getUsers, handleResetPassword, sendPorcentage, addStandbyAll, handleSetTime, handleUpdateBanner, handleDestroy, setError, handleGetData, handleCargarComidas, handleUpdate }}>
       {children}

@@ -2,13 +2,13 @@ import { useEffect, useState } from "react"
 import '../../../styles/TablaUser.css'
 import { useDataStore } from "../../../store/useDataStore";
 
-export const TablaUser = ({onEdit, handleAddLocal}) => {
+export const TablaUser = ({ onEdit, handleAddLocal }) => {
 
   const getUsers = useDataStore((state) => state.getUsers);
   const users = useDataStore((state) => state.users);
-
+  const handleDeleteUser = useDataStore((state) => state.handleDeleteUser)
   useEffect(() => {
-   getUsers()
+    getUsers()
   }, [])
 
 
@@ -34,7 +34,12 @@ export const TablaUser = ({onEdit, handleAddLocal}) => {
               <td>
                 <button onClick={() => handleAddLocal(user.id)}>Datos del local</button>
                 <button onClick={() => onEdit(user)}>Editar</button>
-                <button onClick={() => handleDelete(user.id)}>Eliminar</button>
+                <button onClick={() => {
+                  if (window.confirm("¿Estás seguro de que quieres eliminar este usuario?")) {
+                    handleDeleteUser(user.id)
+                  }
+                }}
+                >Eliminar</button>
               </td>
             </tr>
           ))}

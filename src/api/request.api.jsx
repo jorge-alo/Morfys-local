@@ -18,11 +18,11 @@ export const updateLoginApi = async (login) => {
 }
 
 export const sendDataNewUserApi = async (value) => {
-  return await api.post('users/addUser', value)
+  return await api.post('/users/addUser', value)
 }
 
 export const logOutApi = async () => {
-  return await api.post('users/logout')
+  return await api.post('/users/logout')
 }
 
 export const resetPasswordApi = async (password, token) => {
@@ -34,15 +34,15 @@ export const forgotEmailApi = async (email) => {
 }
 
 export const verifyTokenApi = async () => {
-  return await api.get(`users/verify-token`);
+  return await api.get(`/users/verify-token`);
 }
 
 export const getAllData = async (local) => {
   console.log("valor de userId en api", local);
-  return await api.get(`comidas/comidas?local=${local}`);
+  return await api.get(`/comidas/comidas?local=${local}`);
 }
 export const updateDataApi = async (data) => {
-  return await api.put('comidas/update', data, {
+  return await api.put('/comidas/update', data, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -50,7 +50,7 @@ export const updateDataApi = async (data) => {
 }
 
 export const cargarComidasApi = async (data) => {
-  return await api.post('comidas/cargarcomidas', data, {
+  return await api.post('/comidas/cargarcomidas', data, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -59,31 +59,31 @@ export const cargarComidasApi = async (data) => {
 
 export const destroyApi = async (id, opId) => {
   // Si opId existe, lo agregamos como parámetro de consulta
-  const url = opId ? `comidas/destroy/${id}?opId=${opId}` : `comidas/destroy/${id}`;
+  const url = opId ? `/comidas/destroy/${id}?opId=${opId}` : `/comidas/destroy/${id}`;
   return await api.delete(url);
 }
 
 export const apiAddStandAll = async (categoria, data) => {
-  return await api.put('comidas/standbyAll', { categoria, data });
+  return await api.put('/comidas/standbyAll', { categoria, data });
 }
 
 export const sendPorcentageApi = async (data) => {
-  return await api.put('comidas/porcentage', data);
+  return await api.put('/comidas/porcentage', data);
 }
 
 export const updateUserDataApi = async ({value, id}) => {
-  return await api.put('users/updateUser', {value, id});
+  return await api.put('/users/updateUser', {value, id});
 }
 
 export const handleSetTimeApi = async (data) => {
-  return await api.put('restaurant/horario', data, {
+  return await api.put('/restaurant/horario', data, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
   });
 }
 export const sendDataNewLocalApi = async (data) => {
-  return await api.put('restaurant/addLocal', data, {
+  return await api.put('/restaurant/addLocal', data, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -91,26 +91,32 @@ export const sendDataNewLocalApi = async (data) => {
 }
 
 export const getUsersApi = async () => {
-  return await api.get("users/users");
+  return await api.get("/users/users");
 }
 
 export const getPreferencePayApi = async ({ userId }) => {
-  return await api.post('mercado/preference', { userId });
+  return await api.post('/mercado/preference', { userId });
 }
 
 export const checkPayAPi = async () => {
-  return await api.get("users/checkPay");
+  return await api.get("/users/checkPay");
 }
 
 export const getDataChartApi = async (localId, periodo) => {
-  return await api.get(`pedidos/chart/${localId}`, {
+  return await api.get(`/pedidos/chart/${localId}`, {
     params: { periodo } // Esto generará: /chart/123?periodo=7d
   });
 }
 
 export const getLocalesApi = async () => {
-  return await api.get("restaurant/restaurantes");
+  return await api.get("/restaurant/restaurantes");
 }
+
+export const deleteUserApi = async ( id ) => {
+  return await api.delete(`/users/destroy/${ id }`);
+}
+
+
 
 
 

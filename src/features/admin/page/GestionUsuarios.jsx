@@ -24,6 +24,7 @@ export const GestionUsuarios = () => {
         setShowModalLocal(true);
     }
 
+   
     return (
         <div className="container-table">
             {
