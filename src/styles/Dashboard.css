@@ -3,6 +3,7 @@
     background: transparent;
     min-height: 100vh;
     width: 100%;
+    overflow: hidden;
 }
 
 .dashboard-header {
@@ -103,16 +104,17 @@
     border-radius: 12px;
     padding: 20px 0px 0px 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden; /* Importante */
 }
 
 .table-section {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-
+    width: 100%;
+    overflow-x: auto; /* Scroll horizontal */
+    overflow-y: auto; /* Scroll vertical para el max-height */
     max-height: 450px;
-    /* Opcional: para que no sea infinita si hay muchos platos */
-    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Nuevo contenedor para permitir scroll horizontal */
@@ -123,6 +125,7 @@
     -webkit-overflow-scrolling: touch;
     /* Suaviza el scroll en iOS */
     margin-top: 10px;
+    
 }
 
 .stats-table {
@@ -132,22 +135,37 @@
     min-width: 500px;
 }
 
-.stats-table th {
-    text-align: left;
-    padding: 12px;
-    border-bottom: 2px solid #eee;
-    color: #495057;
-}
-
 .stats-table th, 
 .stats-table td {
     padding: 12px;
+    text-align: left;
     border-bottom: 1px solid #eee;
-    white-space: normal; /* Permite que el nombre del producto baje de línea si es largo */
-    font-size: 0.9rem;
+    /* Evita que el precio se parta en dos líneas */
+    white-space: nowrap; 
 }
 
 @media (max-width: 768px) {
+    .dashboard-wrapper {
+        padding: 10px;
+        overflow-x: hidden; /* Evita que rebote todo el sitio */
+    }
+
+    .table-section {
+        padding: 0; /* Aprovechamos todo el ancho en móvil */
+        max-height: none; /* Que el scroll sea de la página, no del cuadrito */
+    }
+    .stats-table {
+        min-width: 450px;
+        /* Un poco menos de ancho mínimo para móviles muy pequeños */
+    }
+
+    .stats-table th,
+    .stats-table td {
+        padding: 8px;
+        /* Reducimos padding para ganar espacio */
+        font-size: 0.85rem;
+    }
+
     .dashboard-main-content {
         grid-template-columns: 1fr;
     }
@@ -161,18 +179,5 @@
        para que el usuario haga scroll de la página y no solo del cuadrito */
     .table-section {
         max-height: none;
-    }
-}
-
-/* Ajuste específico para pantallas pequeñas */
-@media (max-width: 480px) {
-    .stats-table {
-        min-width: 450px; /* Un poco menos de ancho mínimo para móviles muy pequeños */
-    }
-    
-    .stats-table th, 
-    .stats-table td {
-        padding: 8px; /* Reducimos padding para ganar espacio */
-        font-size: 0.85rem;
     }
 }
