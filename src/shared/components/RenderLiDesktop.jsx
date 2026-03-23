@@ -11,6 +11,7 @@ export const RenderLiDesktop = (
         handleStandby
     }
 ) => {
+    const standby = useDataStore((state) => state.standby);
 
     const navigate = useNavigate();
     return (
@@ -31,6 +32,7 @@ export const RenderLiDesktop = (
                             <label className="standby-toggle">
                                 <input
                                     type="checkbox"
+                                    checked={standby}
                                     onChange={(e) => handleStandby(e.target.checked)}
                                 />
                                 Standby

@@ -5,6 +5,8 @@ export const useDataStore = create((set, get) => ({
   error: null,
   users: [],
   setError: (error) => set({ error }),
+  standby: false,
+  setStandbyState: (value) => set({ standby: value }),
 
   handleDeleteUser: async (id) => {
     try {
@@ -57,7 +59,10 @@ export const useDataStore = create((set, get) => ({
     console.log("valor de userId en dataProvidre", local);
     try {
       const result = await getAllData(local);
-      set({ error: null });
+      set({
+        error: null,
+        standby: result.data.standby // 🔥 CLAVE
+      });
       console.log("valoe de result en dataProvider", result);
       return result;
     } catch (error) {
@@ -189,7 +194,16 @@ export const useDataStore = create((set, get) => ({
       console.error("Error al crear local");
       console.error(error.response.data);
     }
-  }
+  },
+  setStandby: async (standby) => {
+    try {
+      const response = await setStandbyApi(standby);
+      set({ error: null });
+      return response.data;
+    } catch (error) {
+      set({ error: error.message || "Error al actualizar standby" });
+    }
+  },
 }))
 
 
