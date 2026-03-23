@@ -116,6 +116,9 @@ export const deleteUserApi = async ( id ) => {
   return await api.delete(`/users/destroy/${ id }`);
 }
 
+export const setStandbyApi = async (standby) => {
+  return await api.put('/restaurant/standby', { standby });
+};
 
 
 

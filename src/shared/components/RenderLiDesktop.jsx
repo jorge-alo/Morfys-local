@@ -7,10 +7,11 @@ export const RenderLiDesktop = (
         admin,
         payStatus,
         handleShowModalPay,
-        activeUntil
+        activeUntil,
+        handleStandby
     }
 ) => {
-    
+
     const navigate = useNavigate();
     return (
         <nav className="nav">
@@ -26,6 +27,15 @@ export const RenderLiDesktop = (
                         <li> <Link to="/dashboard">Dashboard</Link> </li>
                         <li> <Link to="/menu">Menu</Link> </li>
                         <li> <Link to="/ajustes">Ajustes</Link> </li>
+                        <li>
+                            <label className="standby-toggle">
+                                <input
+                                    type="checkbox"
+                                    onChange={(e) => handleStandby(e.target.checked)}
+                                />
+                                Standby
+                            </label>
+                        </li>
                         {payStatus.show && (
                             <li>
                                 <div className={`container-pagar ${payStatus.isExpired ? 'vencido' : ''}`} onClick={handleShowModalPay}>

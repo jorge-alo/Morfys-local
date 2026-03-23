@@ -4,6 +4,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { RendelLiMobile } from "./RendelLiMobile";
 import { RenderLiDesktop } from "./RenderLiDesktop";
 import { useSiderBar } from "../hooks/useSiderBar";
+import { useDataStore } from "../../store/useDataStore";
 
 export const Sidebar = () => {
 
@@ -12,7 +13,7 @@ export const Sidebar = () => {
   const handleLogOut = useAuthStore((state) => state.handleLogOut);
   const checkPay = useAuthStore((state) => state.checkPay);
   const setShowModalPay = useFormStore((state) => state.setShowModalPay);
-  
+  const setStandby = useDataStore((state) => state.setStandby);
 
   const {
     activeUntil,
@@ -23,7 +24,9 @@ export const Sidebar = () => {
     setOpenMenu
   } = useSiderBar(checkPay, admin, setShowModalPay);
 
-
+  const handleStandby = async (value) => {
+    await setStandby(value);
+  };
 
   return (
     <>
@@ -44,6 +47,7 @@ export const Sidebar = () => {
         payStatus={payStatus}
         handleShowModalPay={handleShowModalPay}
         activeUntil={activeUntil}
+        handleStandby={handleStandby}
       />
 
     </>
